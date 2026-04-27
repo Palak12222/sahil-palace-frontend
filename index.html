@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sahil Palace & Restaurant | Sangaria – Comfort, Affordability & Quality</title>
+  <meta name="description" content="Sahil Palace and Restaurant in Sangaria offers 10 premium rooms from ₹1000–₹4000/night with delicious veg & non-veg food. Book now for the best experience!" />
+  <meta name="keywords" content="Sahil Palace, hotel Sangaria, restaurant Sangaria, budget hotel Rajasthan, rooms Sangaria" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===== STICKY NAV ===== -->
+<nav id="navbar" class="navbar">
+  <div class="nav-container">
+    <a href="#home" class="nav-logo">
+      <span class="logo-icon">🏨</span>
+      <div>
+        <span class="logo-name">Sahil Palace</span>
+        <span class="logo-sub">& Restaurant</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#rooms">Rooms</a></li>
+      <li><a href="#food">Menu</a></li>
+      <li><a href="#amenities">Amenities</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="tel:8742026903" class="nav-phone">📞 8742026903</a>
+      <a href="#rooms" class="btn-nav">Book Now</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+
+
+<!-- ===== HERO ===== -->
+<section id="home" class="hero">
+  <div class="hero-bg">
+    <img src="images/hotel_hero.png" alt="Sahil Palace Hotel exterior" class="hero-img" />
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-tagline-top">Welcome to</p>
+    <h1 class="hero-title">Sahil Palace<br /><span>&amp; Restaurant</span></h1>
+    <p class="hero-subtitle">Comfort · Affordability · Quality Food<br />Sangaria, Rajasthan</p>
+    <div class="hero-badges">
+      <span>🛜 Free WiFi</span>
+      <span>🅿️ Free Parking</span>
+      <span>✨ Affordable Luxury</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#rooms" class="btn-primary">🏨 Book Now</a>
+      <a href="#food" class="btn-secondary">🍽️ Order Food</a>
+    </div>
+  </div>
+  <!-- Quick Booking Form -->
+  <div class="quick-booking">
+    <h3>Quick Booking</h3>
+    <form class="booking-form" id="quickBookForm">
+      <div class="form-group">
+        <label>Check-in</label>
+        <input type="date" id="qCheckIn" required />
+      </div>
+      <div class="form-group">
+        <label>Check-out</label>
+        <input type="date" id="qCheckOut" required />
+      </div>
+      <div class="form-group">
+        <label>Guests</label>
+        <select id="qGuests">
+          <option value="1">1 Guest</option>
+          <option value="2" selected>2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-book-quick">Check Availability</button>
+    </form>
+  </div>
+</section>
+
+<!-- ===== HIGHLIGHTS ===== -->
+<section class="highlights">
+  <div class="container">
+    <div class="highlights-grid">
+      <div class="highlight-card"><div class="h-icon">🛜</div><h4>Free High-Speed WiFi</h4><p>Stay connected throughout your stay</p></div>
+      <div class="highlight-card"><div class="h-icon">🅿️</div><h4>Free Parking</h4><p>Spacious parking for all guests</p></div>
+      <div class="highlight-card"><div class="h-icon">🍽️</div><h4>In-House Restaurant</h4><p>Veg &amp; Non-veg delicacies available</p></div>
+      <div class="highlight-card"><div class="h-icon">🌙</div><h4>24/7 Service</h4><p>Round-the-clock support for guests</p></div>
+      <div class="highlight-card"><div class="h-icon">💰</div><h4>Best Price Guarantee</h4><p>Rooms from just ₹1000/night</p></div>
+      <div class="highlight-card"><div class="h-icon">⭐</div><h4>Premium Experience</h4><p>Affordable luxury you deserve</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROOMS ===== -->
+<section id="rooms" class="section rooms-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Our Accommodation</p>
+      <h2 class="section-title">Choose Your Room</h2>
+      <p class="section-desc">10 carefully designed rooms for a comfortable and memorable stay</p>
+    </div>
+    <!-- Price Filter -->
+    <div class="room-filters">
+      <span>Filter by price:</span>
+      <button class="filter-btn active" data-max="9999">All Rooms</button>
+      <button class="filter-btn" data-max="1500">Under ₹1500</button>
+      <button class="filter-btn" data-max="2500">Under ₹2500</button>
+      <button class="filter-btn" data-max="4000">Under ₹4000</button>
+    </div>
+    <div class="rooms-grid" id="roomsGrid">
+      <!-- Rooms injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOD ORDER ===== -->
+<section id="food" class="section food-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Our Restaurant</p>
+      <h2 class="section-title">Delicious Food Menu</h2>
+      <p class="section-desc">Enjoy authentic Indian flavors — from breakfast to dinner</p>
+    </div>
+    <div class="menu-links-row">
+      <a href="https://drive.google.com/file/d/1OPu6-5KxtY-X85K-YUSI1s2bTczpnJOL/view?usp=drivesdk" target="_blank" class="menu-link-btn veg-link">🥦 View Full Veg Menu (PDF)</a>
+      <a href="https://drive.google.com/file/d/1RQbQGr32C95zLzsqAnZl1ADDEAoW8Vt1/view?usp=drivesdk" target="_blank" class="menu-link-btn nonveg-link">🍗 View Full Non-Veg Menu (PDF)</a>
+    </div>
+    <!-- Category Tabs -->
+    <div class="food-tabs">
+      <button class="food-tab active" data-cat="breakfast">🌅 Breakfast</button>
+      <button class="food-tab" data-cat="lunch">☀️ Lunch</button>
+      <button class="food-tab" data-cat="dinner">🌙 Dinner</button>
+    </div>
+    <!-- Veg / Non-Veg Toggle -->
+    <div class="veg-toggle">
+      <button class="vt-btn active" data-type="all">All</button>
+      <button class="vt-btn" data-type="veg">🟢 Veg</button>
+      <button class="vt-btn" data-type="nonveg">🔴 Non-Veg</button>
+    </div>
+    <div class="food-grid" id="foodGrid"></div>
+    <!-- Cart -->
+    <div class="cart-section" id="cartSection">
+      <div class="cart-header">
+        <h3>🛒 Your Cart <span id="cartCount">0</span></h3>
+        <button id="clearCart">Clear Cart</button>
+      </div>
+      <div id="cartItems"></div>
+      <div class="cart-total">
+        <strong>Total: ₹<span id="cartTotal">0</span></strong>
+        <button id="checkoutBtn" class="btn-primary" onclick="checkout()">Checkout &amp; Call</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AMENITIES ===== -->
+<section id="amenities" class="section amenities-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">What We Offer</p>
+      <h2 class="section-title">Hotel Amenities</h2>
+    </div>
+    <div class="amenities-grid">
+      <div class="amenity-card"><div class="am-icon">🛜</div><h4>High-Speed WiFi</h4><p>Complimentary high-speed internet in all rooms and common areas</p></div>
+      <div class="amenity-card"><div class="am-icon">🅿️</div><h4>Free Parking</h4><p>Secure and spacious parking available for cars and two-wheelers</p></div>
+      <div class="amenity-card"><div class="am-icon">🛏️</div><h4>Clean Comfortable Rooms</h4><p>Fresh linen, tidy spaces, and daily housekeeping included</p></div>
+      <div class="amenity-card"><div class="am-icon">🌙</div><h4>24/7 Service</h4><p>Our staff is always available for any assistance, day or night</p></div>
+      <div class="amenity-card"><div class="am-icon">❄️</div><h4>Air Conditioning</h4><p>All rooms equipped with modern air conditioning units</p></div>
+      <div class="amenity-card"><div class="am-icon">📺</div><h4>LED TV</h4><p>Entertainment with cable TV in every room</p></div>
+      <div class="amenity-card"><div class="am-icon">🚿</div><h4>Private Bathroom</h4><p>Attached bathroom with hot/cold water and toiletries</p></div>
+      <div class="amenity-card"><div class="am-icon">🍽️</div><h4>In-House Dining</h4><p>Veg &amp; Non-veg restaurant serving breakfast, lunch and dinner</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="section about-section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="images/restaurant_dining.png" alt="Sahil Palace Restaurant dining area" />
+        <div class="about-badge">Est. Since Years</div>
+      </div>
+      <div class="about-content">
+        <p class="section-label">Our Story</p>
+        <h2 class="section-title">About Sahil Palace<br />&amp; Restaurant</h2>
+        <p>Nestled in the heart of <strong>Sangaria, Rajasthan</strong>, Sahil Palace and Restaurant is your home away from home. We believe that great hospitality should be accessible to everyone — which is why we offer premium comfort at truly affordable prices.</p>
+        <p>With <strong>10 well-appointed rooms</strong> ranging from ₹1000 to ₹4000 per night, our hotel caters to families, business travellers, and leisure guests alike. Our in-house restaurant serves a wide spread of authentic Indian cuisine — both vegetarian and non-vegetarian — freshly prepared to delight your taste buds.</p>
+        <p>We take pride in our <strong>warm hospitality, clean spaces, and round-the-clock service</strong>. Every guest who walks through our doors is treated like family.</p>
+        <div class="about-stats">
+          <div><strong>10</strong><span>Rooms</span></div>
+          <div><strong>₹1000</strong><span>Starting from</span></div>
+          <div><strong>24/7</strong><span>Service</span></div>
+          <div><strong>100%</strong><span>Satisfaction</span></div>
+        </div>
+        <div class="about-social">
+          <a href="https://www.instagram.com/sahilhotelsangaria33/" target="_blank" class="social-btn instagram">📸 @sahilhotelsangaria33</a>
+          <a href="https://www.instagram.com/raju_sahil_hotel_sangaria" target="_blank" class="social-btn instagram">📸 @raju_sahil_hotel_sangaria</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REVIEWS ===== -->
+<section id="reviews" class="section reviews-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Guest Experiences</p>
+      <h2 class="section-title">What Our Guests Say</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Absolutely loved my stay! The room was clean, staff was very helpful and the food was outstanding. Dal makhani was the best I've ever had!"</p>
+        <div class="reviewer"><div class="reviewer-avatar">R</div><div><strong>Ramesh Sharma</strong><span>Hanumangarh</span></div></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Best budget hotel in Sangaria. Great value for money. The non-veg menu is amazing — chicken biryani was top-notch. Will definitely visit again."</p>
+        <div class="reviewer"><div class="reviewer-avatar">P</div><div><strong>Priya Mehta</strong><span>Jaipur</span></div></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Stayed for 3 nights and felt completely at home. Free WiFi, parking, and the 24/7 service made my business trip very smooth. Highly recommend!"</p>
+        <div class="reviewer"><div class="reviewer-avatar">A</div><div><strong>Anil Bishnoi</strong><span>Sri Ganganagar</span></div></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Sahil Palace has the best food in town. Even if you are not staying, visit for the restaurant alone. The paneer dishes are excellent!"</p>
+        <div class="reviewer"><div class="reviewer-avatar">S</div><div><strong>Sunita Yadav</strong><span>Sirsa</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="section contact-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Contact Us</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="ci-icon">📍</div>
+          <div>
+            <h4>Address</h4>
+            <p>Sahil Palace &amp; Restaurant<br />Sangaria, Hanumangarh<br />Rajasthan, India</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <a href="tel:8742026903">8742026903</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">⏰</div>
+          <div>
+            <h4>Hours</h4>
+            <p>Reception: 24/7<br />Restaurant: 7:00 AM – 11:00 PM</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">📸</div>
+          <div>
+            <h4>Follow Us</h4>
+            <a href="https://www.instagram.com/sahilhotelsangaria33/" target="_blank">@sahilhotelsangaria33</a><br />
+            <a href="https://www.instagram.com/raju_sahil_hotel_sangaria" target="_blank">@raju_sahil_hotel_sangaria</a>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <h3>Send Us a Message</h3>
+        <div class="form-row">
+          <div class="form-group"><label>Your Name</label><input type="text" id="cName" placeholder="Full Name" required /></div>
+          <div class="form-group"><label>Phone</label><input type="tel" id="cPhone" placeholder="Phone Number" required /></div>
+        </div>
+        <div class="form-group"><label>Subject</label><select id="cSubject"><option>Room Booking Enquiry</option><option>Food Order</option><option>General Query</option><option>Feedback</option></select></div>
+        <div class="form-group"><label>Message</label><textarea id="cMessage" rows="4" placeholder="Write your message here..."></textarea></div>
+        <button type="submit" class="btn-primary">Send Message 📨</button>
+      </form>
+    </div>
+    <!-- MAP -->
+    <div class="map-container">
+      <h3>📍 Find Us on Map</h3>
+      <div class="map-wrap">
+        <iframe
+          src="https://maps.google.com/maps?q=Sangaria,+Hanumangarh,+Rajasthan&output=embed"
+          width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" title="Sahil Palace location map">
+        </iframe>
+        <a href="https://maps.app.goo.gl/tUt6158L5gvfwMiu9" target="_blank" class="map-open-btn">📍 Open in Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">🏨 Sahil Palace &amp; Restaurant</div>
+        <p>Your home away from home in Sangaria, Rajasthan. Affordable luxury, authentic food, warm hospitality.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/sahilhotelsangaria33/" target="_blank">📸 Instagram (Hotel)</a>
+          <a href="https://www.instagram.com/raju_sahil_hotel_sangaria" target="_blank">📸 Instagram (Raju)</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#rooms">Rooms</a></li>
+          <li><a href="#food">Food Menu</a></li>
+          <li><a href="#amenities">Amenities</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Menus</h4>
+        <ul>
+          <li><a href="https://drive.google.com/file/d/1OPu6-5KxtY-X85K-YUSI1s2bTczpnJOL/view" target="_blank">🥦 Veg Menu (PDF)</a></li>
+          <li><a href="https://drive.google.com/file/d/1RQbQGr32C95zLzsqAnZl1ADDEAoW8Vt1/view" target="_blank">🍗 Non-Veg Menu (PDF)</a></li>
+          <li><a href="https://maps.app.goo.gl/tUt6158L5gvfwMiu9" target="_blank">📍 Location on Maps</a></li>
+          <li><a href="tel:8742026903">📞 Call Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>📍 Sangaria, Hanumangarh, Rajasthan</p>
+        <p>📞 <a href="tel:8742026903">8742026903</a></p>
+        <p>⏰ 24/7 Reception</p>
+        <p>🍽️ Restaurant: 7AM – 11PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Sahil Palace &amp; Restaurant, Sangaria. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Room Booking Modal -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('bookingModal')">✕</button>
+    <h2>Book Room</h2>
+    <p id="modalRoomName" class="modal-room-name"></p>
+    <form id="bookingFormModal">
+      <div class="form-row">
+        <div class="form-group"><label>Check-in Date</label><input type="date" id="mCheckIn" required /></div>
+        <div class="form-group"><label>Check-out Date</label><input type="date" id="mCheckOut" required /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Guests</label><select id="mGuests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+        <div class="form-group"><label>Your Name</label><input type="text" id="mName" placeholder="Full Name" required /></div>
+      </div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" id="mPhone" placeholder="Enter phone" required /></div>
+      <p class="modal-price-info">Price: <strong id="modalPrice"></strong> per night</p>
+      <button type="submit" class="btn-primary" style="width:100%">Confirm Booking 🏨</button>
+    </form>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('paymentModal')">✕</button>
+    <h2>💳 Payment</h2>
+    <p class="modal-room-name" id="paymentTitle">Complete Your Payment</p>
+    <div class="payment-summary" id="paymentSummary"></div>
+    <div class="payment-methods">
+      <h4>Choose Payment Method</h4>
+      <label class="pay-option selected" data-method="upi">
+        <input type="radio" name="payMethod" value="upi" checked />
+        <div class="pay-option-content">
+          <span class="pay-icon">📱</span>
+          <div><strong>UPI / Google Pay / PhonePe</strong><br/><small>Pay instantly via UPI</small></div>
+        </div>
+      </label>
+      <label class="pay-option" data-method="cash">
+        <input type="radio" name="payMethod" value="cash" />
+        <div class="pay-option-content">
+          <span class="pay-icon">💵</span>
+          <div><strong>Cash on Arrival</strong><br/><small>Pay at the hotel reception</small></div>
+        </div>
+      </label>
+      <label class="pay-option" data-method="card">
+        <input type="radio" name="payMethod" value="card" />
+        <div class="pay-option-content">
+          <span class="pay-icon">💳</span>
+          <div><strong>Debit / Credit Card</strong><br/><small>Pay via card at the hotel</small></div>
+        </div>
+      </label>
+    </div>
+    <div class="upi-details" id="upiDetails">
+      <div class="upi-id-box">
+        <span>UPI ID:</span>
+        <strong id="upiIdText">8742026903@ybl</strong>
+        <button class="btn-copy" onclick="copyUPI()">📋 Copy</button>
+      </div>
+      <!-- QR Code -->
+      <div class="qr-section">
+        <p class="qr-label">Scan QR to Pay</p>
+        <div class="qr-code-wrap">
+          <img id="upiQrCode" src="" alt="UPI QR Code" />
+        </div>
+      </div>
+      <!-- Direct UPI App Button -->
+      <a id="upiDeepLink" href="#" class="btn-upi-app">
+        <span class="upi-app-icon">📲</span> Pay via UPI App (GPay / PhonePe / Paytm)
+      </a>
+      <p class="upi-note">Pay via QR or UPI app, then share screenshot on WhatsApp for confirmation.</p>
+      <a href="https://wa.me/918742026903?text=Hi%2C%20I%20have%20made%20a%20payment.%20Here%20is%20my%20screenshot." target="_blank" class="btn-whatsapp-pay">💬 Share Payment Proof on WhatsApp</a>
+    </div>
+    <button class="btn-primary" style="width:100%;margin-top:16px" onclick="confirmPayment()">✅ Confirm Booking</button>
+  </div>
+</div>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/918742026903?text=Hi%2C%20I%20want%20to%20enquire%20about%20Sahil%20Palace%20%26%20Restaurant%2C%20Sangaria." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" width="32" height="32" fill="#fff"><path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.129 6.742 3.047 9.379l-1.994 5.946 6.146-1.97A15.906 15.906 0 0016.004 32C24.826 32 32 24.826 32 16.004 32 7.176 24.826 0 16.004 0zm9.31 22.602c-.39 1.1-1.932 2.014-3.164 2.281-.844.18-1.945.324-5.656-1.215-4.75-1.969-7.805-6.793-8.04-7.109-.226-.316-1.898-2.527-1.898-4.82 0-2.293 1.2-3.422 1.625-3.89.39-.43.93-.607 1.242-.607.15 0 .285.008.406.014.39.016.586.039.844.652.32.766 1.1 2.68 1.195 2.875.098.195.195.45.07.703-.117.258-.22.418-.414.645-.195.226-.41.504-.586.676-.195.195-.398.406-.172.797.227.39 1.008 1.664 2.164 2.695 1.488 1.328 2.742 1.742 3.133 1.937.39.196.617.164.844-.098.234-.27.992-1.152 1.258-1.55.258-.398.523-.328.879-.196.36.125 2.273 1.07 2.664 1.266.39.195.648.293.746.453.094.164.094.934-.297 2.035z"/></svg>
+  <span class="wa-tooltip">Chat with us!</span>
+</a>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
