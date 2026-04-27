@@ -293,28 +293,44 @@ async function checkout(){
 // ===== CONTACT FORM =====
 document.getElementById("contactForm").addEventListener("submit", async e=>{
   e.preventDefault();
-  const nm  = document.getElementById("cName").value;
-  const ph  = document.getElementById("cPhone").value;
+  const nm  = document.getElementById("cName").value.trim();
+  const ph  = document.getElementById("cPhone").value.trim();
   const sub = document.getElementById("cSubject").value;
-  const msg = document.getElementById("cMessage").value;
+  const msg = document.getElementById("cMessage").value.trim();
   const btn = e.target.querySelector("button[type=submit]");
+
   btn.textContent = "Sending...";
   btn.disabled = true;
+
+  // Step 1 — Save to backend database (TiDB Cloud)
   try {
-    const res = await fetch(`${API_BASE}/api/contact`, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({name:nm, phone:ph, subject:sub, message:msg})
+    await fetch(`${API_BASE}/api/contact`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ name: nm, phone: ph, subject: sub, message: msg })
     });
-    const data = await res.json();
-    showToast(data.message || "Message sent! We will contact you shortly.", "success");
-    document.getElementById("contactForm").reset();
   } catch(err){
-    showToast("Could not send message. Please call 8742026903 directly.","error");
-  } finally {
-    btn.textContent = "Send Message 📨";
-    btn.disabled = false;
+    console.warn("Backend save failed:", err.message);
   }
+
+  // Step 2 — ALWAYS send to WhatsApp
+  const waMsg =
+    `🏨 *New Enquiry – Sahil Palace & Restaurant*\n\n` +
+    `👤 *Name:* ${nm}\n` +
+    `📞 *Phone:* ${ph}\n` +
+    `📋 *Subject:* ${sub}\n` +
+    `💬 *Message:* ${msg || "No message provided"}`;
+
+  window.open(
+    `https://wa.me/918742026903?text=${encodeURIComponent(waMsg)}`,
+    "_blank"
+  );
+
+  // Step 3 — Toast + reset
+  showToast("✅ Enquiry sent! We will reply on WhatsApp shortly.", "success");
+  document.getElementById("contactForm").reset();
+  btn.textContent = "Send Message 📨";
+  btn.disabled = false;
 });
 
 // ===== INTERSECTION OBSERVER =====
