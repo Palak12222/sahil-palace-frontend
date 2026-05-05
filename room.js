@@ -182,6 +182,23 @@ const today = new Date().toISOString().split("T")[0];
 document.getElementById("rCheckIn").min  = today;
 document.getElementById("rCheckOut").min = today;
 
+// Auto-set check-out to next day when check-in changes
+document.getElementById("rCheckIn").addEventListener("change", function() {
+  const ci = this.value;
+  if (!ci) return;
+  const nextDay = new Date(ci);
+  nextDay.setDate(nextDay.getDate() + 1);
+  const nextDayStr = nextDay.toISOString().split("T")[0];
+  const coInput = document.getElementById("rCheckOut");
+  coInput.min = nextDayStr;
+  if (!coInput.value || coInput.value <= ci) {
+    coInput.value = nextDayStr;
+  }
+  updateSummary();
+});
+
+document.getElementById("rCheckOut").addEventListener("change", updateSummary);
+
 // ===== SLIDESHOW =====
 const slideshow  = document.getElementById("slideshow");
 const slideDots  = document.getElementById("slideDots");
@@ -221,10 +238,7 @@ room.amenities.forEach(a => {
   amenGrid.innerHTML += `<div class="amenity-item"><span class="icon">${a.icon}</span>${a.name}</div>`;
 });
 
-// ===== STAY SUMMARY (live calc) =====
-["rCheckIn","rCheckOut"].forEach(id => {
-  document.getElementById(id).addEventListener("change", updateSummary);
-});
+
 
 function updateSummary() {
   const ci = document.getElementById("rCheckIn").value;
