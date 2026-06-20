@@ -102,3 +102,14 @@ tr:hover td{background:#fdfaf5}
   .admin-main{margin-left:64px;padding:16px}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ACTION BUTTONS */
+.action-btns{display:flex;flex-direction:column;gap:5px;min-width:110px}
+.btn-confirm,.btn-cancel,.btn-whatsapp{border:none;border-radius:7px;padding:6px 10px;font-size:.78rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap;width:100%}
+.btn-confirm{background:#d1fae5;color:#065f46}
+.btn-confirm:hover{background:#065f46;color:#fff}
+.btn-cancel{background:#fee2e2;color:#991b1b}
+.btn-cancel:hover{background:#991b1b;color:#fff}
+.btn-whatsapp{background:#dcfce7;color:#15803d}
+.btn-whatsapp:hover{background:#25d366;color:#fff}
+

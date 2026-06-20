@@ -91,10 +91,10 @@ async function loadBookings() {
           <thead><tr>
             <th>#</th><th>Guest</th><th>Phone</th><th>Room</th>
             <th>Check-in</th><th>Check-out</th><th>Nights</th>
-            <th>Guests</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th>
+            <th>Guests</th><th>Total</th><th>Payment</th><th>Status</th><th>Actions</th><th>Date</th>
           </tr></thead>
           <tbody>${rows.map(b => `
-            <tr>
+            <tr id="row-${b.id}">
               <td>${b.id}</td>
               <td><strong>${b.guest_name}</strong></td>
               <td><a href="tel:${b.phone}">${b.phone}</a></td>
@@ -105,12 +105,19 @@ async function loadBookings() {
               <td>${b.guests}</td>
               <td><strong>₹${Number(b.total).toLocaleString("en-IN")}</strong></td>
               <td>${b.payment_method || "upi"}</td>
+              <td><span class="badge badge-${b.status||'pending'}">${statusLabel(b.status)}</span></td>
               <td>
-                <select class="status-select" onchange="updateStatus(${b.id}, this.value)">
-                  <option value="pending"   ${b.status==="pending"   ?"selected":""}>⏳ Pending</option>
-                  <option value="confirmed" ${b.status==="confirmed" ?"selected":""}>✅ Confirmed</option>
-                  <option value="cancelled" ${b.status==="cancelled" ?"selected":""}>❌ Cancelled</option>
-                </select>
+                ${b.status === 'pending' ? `
+                  <div class="action-btns">
+                    <button class="btn-confirm" onclick='confirmBooking(${JSON.stringify(b)})'>✅ Confirm</button>
+                    <button class="btn-cancel"  onclick="cancelBooking(${b.id})">❌ Cancel</button>
+                  </div>
+                ` : b.status === 'confirmed' ? `
+                  <div class="action-btns">
+                    <button class="btn-whatsapp" onclick='sendWhatsApp(${JSON.stringify(b)})'>📲 WhatsApp</button>
+                    <button class="btn-cancel" onclick="cancelBooking(${b.id})">❌ Cancel</button>
+                  </div>
+                ` : `<span style="color:#999;font-size:.8rem">—</span>`}
               </td>
               <td>${fmtDateTime(b.created_at)}</td>
             </tr>`).join("")}
@@ -121,7 +128,7 @@ async function loadBookings() {
     document.getElementById("recentBookings").innerHTML = rows.length === 0
       ? `<div class="empty-state"><div class="empty-icon">🏨</div><p>No bookings yet</p></div>`
       : `<table>
-          <thead><tr><th>#</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Total</th><th>Status</th></tr></thead>
+          <thead><tr><th>#</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
           <tbody>${rows.slice(0,5).map(b=>`
             <tr>
               <td>${b.id}</td>
@@ -129,12 +136,14 @@ async function loadBookings() {
               <td>${b.room_name}</td>
               <td>${fmtDate(b.checkin)}</td>
               <td><strong>₹${Number(b.total).toLocaleString("en-IN")}</strong></td>
-              <td><span class="badge badge-${b.status||"pending"}">${b.status||"pending"}</span></td>
+              <td><span class="badge badge-${b.status||"pending"}">${statusLabel(b.status)}</span></td>
+              <td>${b.status === 'pending' ? `<button class="btn-confirm" onclick='confirmBooking(${JSON.stringify(b)})'>✅ Confirm</button>` : ''}</td>
             </tr>`).join("")}
           </tbody>
         </table>`;
   } catch(e) { document.getElementById("bookingsTable").innerHTML = `<div class="loading">Failed to load</div>`; }
 }
+
 
 // ===== ORDERS =====
 async function loadOrders() {
@@ -191,10 +200,17 @@ async function loadContacts() {
   } catch(e) { document.getElementById("contactsTable").innerHTML = `<div class="loading">Failed to load</div>`; }
 }
 
+// ===== STATUS LABEL HELPER =====
+function statusLabel(s) {
+  if (s === "confirmed") return "✅ Confirmed";
+  if (s === "cancelled") return "❌ Cancelled";
+  return "⏳ Pending";
+}
+
 // ===== UPDATE BOOKING STATUS =====
 async function updateStatus(id, status) {
   try {
-    await fetch(`${API_BASE}/api/admin/bookings/${id}`, {
+    const res = await fetch(`${API_BASE}/api/admin/bookings/${id}`, {
       method:  "PATCH",
       headers: {
         "Content-Type":     "application/json",
@@ -203,8 +219,51 @@ async function updateStatus(id, status) {
       },
       body: JSON.stringify({ status })
     });
-    showToast(`✅ Booking #${id} marked as ${status}`, "green");
-  } catch(e) { showToast("Failed to update status", "red"); }
+    return res.ok;
+  } catch(e) { showToast("Failed to update status", "red"); return false; }
+}
+
+// ===== CONFIRM BOOKING + WHATSAPP =====
+async function confirmBooking(b) {
+  const ok = await updateStatus(b.id, "confirmed");
+  if (!ok) return;
+  showToast(`✅ Booking #${b.id} confirmed!`, "green");
+  await loadBookings();
+  sendWhatsApp(b);
+}
+
+function sendWhatsApp(b) {
+  const phone = String(b.phone).replace(/\D/g, "");
+  const dialCode = phone.startsWith("91") ? phone : `91${phone}`;
+  const msg = encodeURIComponent(
+`🏨 *Sahil Palace Hotel*
+
+Namaste *${b.guest_name}* ji! 🙏
+
+Aapki booking *confirm* ho gayi hai! ✅
+
+📋 *Booking Details:*
+🛏️ Room: ${b.room_name}
+📅 Check-in: ${fmtDate(b.checkin)}
+📅 Check-out: ${fmtDate(b.checkout)}
+🌙 Nights: ${b.nights}
+👥 Guests: ${b.guests}
+💰 Total: ₹${Number(b.total).toLocaleString("en-IN")}
+💳 Payment: ${b.payment_method || "UPI"}
+
+Aapka Sahil Palace mein swagat hai! 🌟
+Kisi bhi query ke liye call karein.
+
+_Thank you for choosing Sahil Palace!_ 🏨`
+  );
+  window.open(`https://wa.me/${dialCode}?text=${msg}`, "_blank");
+}
+
+// ===== CANCEL BOOKING =====
+async function cancelBooking(id) {
+  if (!confirm(`Booking #${id} cancel karna chahte hain?`)) return;
+  const ok = await updateStatus(id, "cancelled");
+  if (ok) { showToast(`❌ Booking #${id} cancelled`, "red"); await loadBookings(); }
 }
 
 // ===== HELPERS =====
