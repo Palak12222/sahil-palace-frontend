@@ -164,14 +164,26 @@ async function loadOrders() {
             <th>Status</th><th>Actions</th><th>Date</th>
           </tr></thead>
           <tbody>${rows.map(o => {
-            const items = typeof o.items === "string" ? JSON.parse(o.items) : o.items;
-            const itemStr = Array.isArray(items) ? items.map(i=>`${i.name} ×${i.qty}`).join(", ") : "-";
-            const pmLabel = o.payment_method === "cash" ? "💵 Cash" : o.payment_method === "upi" ? "📱 UPI" : o.payment_method === "card" ? "💳 Card" : o.payment_method || "upi";
+            let parsed, customer = {}, itemsList = [];
+            try {
+              parsed = typeof o.items === "string" ? JSON.parse(o.items) : o.items;
+              if (parsed && parsed.customer) {
+                customer  = parsed.customer;
+                itemsList = parsed.items || [];
+              } else {
+                itemsList = Array.isArray(parsed) ? parsed : [];
+              }
+            } catch(e) { itemsList = []; }
+            const itemStr  = itemsList.map(i => `${i.name} ×${i.qty}`).join(", ") || "-";
+            const custName = customer.name  || o.phone || "-";
+            const custAddr = customer.address || "-";
+            const custPhone = customer.phone || o.phone || "-";
+            const pmLabel = o.payment_method === "cash" ? "💵 Cash" : o.payment_method === "upi" ? "📱 UPI" : o.payment_method === "card" ? "💳 Card" : o.payment_method || "-";
             return `<tr id="orow-${o.id}">
               <td>${o.id}</td>
-              <td><strong>${o.customer_name || "-"}</strong></td>
-              <td>${o.phone ? `<a href="tel:${o.phone}">${o.phone}</a>` : "-"}</td>
-              <td style="max-width:140px;font-size:.8rem;color:#888">${o.address || "-"}</td>
+              <td><strong>${custName}</strong></td>
+              <td><a href="tel:${custPhone}">${custPhone}</a></td>
+              <td style="max-width:140px;font-size:.8rem;color:#888">${custAddr}</td>
               <td style="max-width:200px;font-size:.82rem">${itemStr}</td>
               <td><strong>₹${Number(o.total).toLocaleString("en-IN")}</strong></td>
               <td><span class="badge badge-${o.payment_method === 'cash' ? 'confirmed' : o.payment_method === 'upi' ? 'pending' : 'cancelled'}">${pmLabel}</span></td>
@@ -179,12 +191,12 @@ async function loadOrders() {
               <td>
                 ${o.status === 'pending' ? `
                   <div class="action-btns">
-                    <button class="btn-confirm" onclick='confirmOrder(${JSON.stringify({...o, items: itemStr})})'>✅ Confirm</button>
+                    <button class="btn-confirm" onclick='confirmOrder(${JSON.stringify({...o, _custName: custName, _custPhone: custPhone, items: itemStr})})'>✅ Confirm</button>
                     <button class="btn-cancel"  onclick="cancelOrder(${o.id})">❌ Cancel</button>
                   </div>
                 ` : o.status === 'confirmed' ? `
                   <div class="action-btns">
-                    <button class="btn-whatsapp" onclick='sendOrderWhatsApp(${JSON.stringify({...o, items: itemStr})})'>📲 WhatsApp</button>
+                    <button class="btn-whatsapp" onclick='sendOrderWhatsApp(${JSON.stringify({...o, _custName: custName, _custPhone: custPhone, items: itemStr})})'>📲 WhatsApp</button>
                     <button class="btn-cancel" onclick="cancelOrder(${o.id})">❌ Cancel</button>
                   </div>
                 ` : `<span style="color:#999;font-size:.8rem">—</span>`}
