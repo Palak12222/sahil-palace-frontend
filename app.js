@@ -114,23 +114,24 @@ function renderRooms(maxPrice=9999){
   const grid = document.getElementById("roomsGrid");
   const filtered = rooms.filter(r => r.price <= maxPrice);
   grid.innerHTML = filtered.map(r => `
-    <div class="room-card fade-in" data-price="${r.price}">
-      <div style="overflow:hidden">
+    <div class="room-card fade-in" data-price="${r.price}" onclick="window.location.href='room.html?id=${r.id}'" style="cursor:pointer">
+      <div style="overflow:hidden;position:relative">
         <img src="${r.img}" alt="${r.name}" loading="lazy"/>
+        <span class="room-badge">${r.badge}</span>
       </div>
       <div class="room-card-body">
-        <span class="room-badge">${r.badge}</span>
         <h3>${r.name}</h3>
         <p>${r.desc}</p>
         <div class="room-features">${r.features.map(f=>`<span>${f}</span>`).join("")}</div>
         <div class="room-footer">
           <div class="room-price">₹${r.price.toLocaleString("en-IN")}<span>/night</span></div>
-          <button class="btn-book-room" onclick="openBookingModal(${r.id})">Book Now</button>
+          <a class="btn-book-room" href="room.html?id=${r.id}">View & Book →</a>
         </div>
       </div>
     </div>`).join("");
   observeFadeIns();
 }
+
 
 document.querySelectorAll(".filter-btn").forEach(btn => {
   btn.addEventListener("click", function(){

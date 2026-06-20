@@ -17,7 +17,7 @@ const rooms = [
     ]
   },
   {
-    id: 2, name: "Standard Double Room", price: 1200, badge: "Popular",
+    id: 2, name: "Standard Double Room", price: 1500, badge: "Popular",
     desc: "Spacious double room with modern interiors, perfect for couples or solo travellers who want extra space. Comes with a large comfortable bed and premium amenities.",
     images: [
       { src: "images/room_photo5.jpg",  label: "Bedroom View" },
@@ -33,8 +33,8 @@ const rooms = [
     ]
   },
   {
-    id: 3, name: "Deluxe Single Room", price: 1500, badge: "Deluxe",
-    desc: "Upgraded single room with premium teal-frame bed, elegant panel wall and soft lighting. Ideal for business travellers and solo explorers wanting a step up in comfort.",
+    id: 3, name: "Deluxe Single Room", price: 1800, badge: "Deluxe",
+    desc: "Upgraded single room with premium bed, elegant panel wall and soft lighting. Ideal for business travellers and solo explorers wanting a step up in comfort.",
     images: [
       { src: "images/room_photo2.jpg",  label: "Bedroom View" },
       { src: "images/room_photo1.jpg",  label: "Room Angle" },
@@ -49,7 +49,7 @@ const rooms = [
     ]
   },
   {
-    id: 4, name: "Deluxe Double Room", price: 1800, badge: "Best Value",
+    id: 4, name: "Deluxe Double Room", price: 2000, badge: "Best Value",
     desc: "Our most popular room — two plush beds, designer headboard wall and warm ambiance. The perfect choice for couples or friends travelling together.",
     images: [
       { src: "images/room_photo1.jpg",  label: "Bedroom View" },
@@ -65,7 +65,7 @@ const rooms = [
     ]
   },
   {
-    id: 5, name: "Executive Room", price: 2200, badge: "Executive",
+    id: 5, name: "Executive Room", price: 2500, badge: "Executive",
     desc: "Designed for business travellers — king bed, work desk, LED TV and premium AC. Stay productive and comfortable with high-speed WiFi and a fully equipped workspace.",
     images: [
       { src: "images/room_photo5.jpg",  label: "Bedroom View" },
@@ -81,7 +81,7 @@ const rooms = [
     ]
   },
   {
-    id: 6, name: "Family Room", price: 2500, badge: "Family",
+    id: 6, name: "Family Room", price: 3000, badge: "Family",
     desc: "Extra-large room with two double beds, ample space for families travelling with kids. Enjoy a comfortable and relaxed stay with everything your family needs.",
     images: [
       { src: "images/room_photo3.jpg",  label: "Bedroom View" },
@@ -95,72 +95,9 @@ const rooms = [
       { icon: "🛏️", name: "Extra Beds" },       { icon: "🧹", name: "Daily Housekeeping"},
       { icon: "🅿️", name: "Free Parking" },     { icon: "🛎️", name: "Room Service" }
     ]
-  },
-  {
-    id: 7, name: "Deluxe Family Room", price: 3000, badge: "Premium",
-    desc: "Premium family room with three beds, ceiling fans, LED TV unit and a spacious floor area. Everything your family needs for a memorable and comfortable stay.",
-    images: [
-      { src: "images/room_photo4.jpg",  label: "Bedroom View" },
-      { src: "images/room_photo3.jpg",  label: "Room Interior" },
-      { src: "images/room_washroom.png",label: "Bathroom" },
-      { src: "images/room_tv_desk.png", label: "TV Unit & Lounge" }
-    ],
-    amenities: [
-      { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
-      { icon: "📺", name: "LED TV" },           { icon: "🚿", name: "Hot Water" },
-      { icon: "🛋️", name: "Lounge Area" },      { icon: "🧹", name: "Daily Housekeeping"},
-      { icon: "🅿️", name: "Free Parking" },     { icon: "🛎️", name: "Room Service" }
-    ]
-  },
-  {
-    id: 8, name: "Super Deluxe Room", price: 3200, badge: "Super Deluxe",
-    desc: "Twin-bed super deluxe room with marble panel accent wall and premium blue upholstered beds. A superior choice for those who demand the very best in comfort.",
-    images: [
-      { src: "images/room_photo1.jpg",  label: "Bedroom View" },
-      { src: "images/room_angle2.png",  label: "Room Interior" },
-      { src: "images/room_washroom.png",label: "Premium Bathroom" },
-      { src: "images/room_tv_desk.png", label: "TV & Desk" }
-    ],
-    amenities: [
-      { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
-      { icon: "📺", name: "LED TV" },           { icon: "🛁", name: "Bathtub" },
-      { icon: "🚿", name: "Hot Water" },        { icon: "🧹", name: "Daily Housekeeping"},
-      { icon: "☕", name: "Tea / Coffee" },      { icon: "🛎️", name: "Room Service" }
-    ]
-  },
-  {
-    id: 9, name: "Suite Room", price: 3800, badge: "Suite",
-    desc: "Spacious suite with designer lighting, two beds, curtained windows and a lounge corner. A luxurious experience combining comfort, privacy and premium amenities.",
-    images: [
-      { src: "images/room_photo3.jpg",  label: "Bedroom View" },
-      { src: "images/room_photo1.jpg",  label: "Lounge Area" },
-      { src: "images/room_washroom.png",label: "Luxury Bathroom" },
-      { src: "images/room_tv_desk.png", label: "TV & Living Room" }
-    ],
-    amenities: [
-      { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
-      { icon: "📺", name: "LED TV" },           { icon: "🛁", name: "Bathtub" },
-      { icon: "🛋️", name: "Living Room" },      { icon: "🧹", name: "Daily Housekeeping"},
-      { icon: "☕", name: "Tea / Coffee" },      { icon: "🛎️", name: "24/7 Room Service" }
-    ]
-  },
-  {
-    id: 10, name: "Royal Suite", price: 4000, badge: "Royal",
-    desc: "The crown jewel of Sahil Palace — three beds, LED TV unit, work desk, ultimate comfort. Experience royalty with our finest suite offering every premium amenity.",
-    images: [
-      { src: "images/room_photo4.jpg",  label: "Royal Bedroom" },
-      { src: "images/room_photo5.jpg",  label: "Suite Interior" },
-      { src: "images/room_washroom.png",label: "Royal Bathroom" },
-      { src: "images/room_tv_desk.png", label: "TV Unit & Work Desk" }
-    ],
-    amenities: [
-      { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
-      { icon: "📺", name: "LED TV" },           { icon: "🛁", name: "Bathtub" },
-      { icon: "💼", name: "Work Desk" },        { icon: "🛋️", name: "Living Room" },
-      { icon: "☕", name: "Tea / Coffee" },      { icon: "🛎️", name: "24/7 Room Service" }
-    ]
   }
 ];
+
 
 // ===== INIT =====
 const params   = new URLSearchParams(window.location.search);
