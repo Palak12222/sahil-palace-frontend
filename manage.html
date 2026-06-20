@@ -61,6 +61,10 @@
         <span class="nav-icon">⭐</span> Reviews
         <span class="nav-badge" id="reviewBadge">0</span>
       </a>
+      <a class="nav-item" data-tab="events" onclick="switchTab('events',this)">
+        <span class="nav-icon">🎊</span> Events
+        <span class="nav-badge" id="eventBadge">0</span>
+      </a>
     </nav>
     <button class="btn-logout" onclick="logout()">🚪 Logout</button>
   </aside>
@@ -186,6 +190,19 @@
           <span class="total-label" id="reviewsTotal"></span>
         </div>
         <div class="table-wrap" id="reviewsTable">
+          <div class="loading">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EVENTS TAB -->
+    <div class="tab-content" id="tab-events" style="display:none">
+      <div class="section-card">
+        <div class="card-header">
+          <h3>🎊 Event Enquiries</h3>
+          <span class="total-label" id="eventsTotal"></span>
+        </div>
+        <div class="table-wrap" id="eventsTable">
           <div class="loading">Loading...</div>
         </div>
       </div>

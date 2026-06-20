@@ -31,6 +31,7 @@ const tabTitles = {
   orders:    ["Food Orders",   "All food cart orders"],
   contacts:  ["Enquiries",     "All contact form messages"],
   reviews:   ["Reviews",       "Approve or reject customer reviews"],
+  events:    ["Event Enquiries", "All event & banquet booking requests"],
 };
 
 function switchTab(name, el) {
@@ -56,7 +57,7 @@ async function apiFetch(path) {
 }
 
 async function loadAll() {
-  await Promise.all([loadStats(), loadBookings(), loadOrders(), loadContacts(), loadReviews()]);
+  await Promise.all([loadStats(), loadBookings(), loadOrders(), loadContacts(), loadReviews(), loadEvents()]);
   showToast("✅ Data refreshed!", "green");
 }
 
@@ -158,18 +159,22 @@ async function loadOrders() {
       ? `<div class="empty-state"><div class="empty-icon">🍽️</div><p>No orders yet</p></div>`
       : `<table>
           <thead><tr>
-            <th>#</th><th>Items</th><th>Total</th><th>Payment</th>
-            <th>Phone</th><th>Status</th><th>Actions</th><th>Date</th>
+            <th>#</th><th>Customer</th><th>Phone</th><th>Address</th>
+            <th>Items</th><th>Total</th><th>Payment</th>
+            <th>Status</th><th>Actions</th><th>Date</th>
           </tr></thead>
           <tbody>${rows.map(o => {
             const items = typeof o.items === "string" ? JSON.parse(o.items) : o.items;
             const itemStr = Array.isArray(items) ? items.map(i=>`${i.name} ×${i.qty}`).join(", ") : "-";
+            const pmLabel = o.payment_method === "cash" ? "💵 Cash" : o.payment_method === "upi" ? "📱 UPI" : o.payment_method === "card" ? "💳 Card" : o.payment_method || "upi";
             return `<tr id="orow-${o.id}">
               <td>${o.id}</td>
-              <td style="max-width:220px">${itemStr}</td>
-              <td><strong>₹${Number(o.total).toLocaleString("en-IN")}</strong></td>
-              <td>${o.payment_method||"upi"}</td>
+              <td><strong>${o.customer_name || "-"}</strong></td>
               <td>${o.phone ? `<a href="tel:${o.phone}">${o.phone}</a>` : "-"}</td>
+              <td style="max-width:140px;font-size:.8rem;color:#888">${o.address || "-"}</td>
+              <td style="max-width:200px;font-size:.82rem">${itemStr}</td>
+              <td><strong>₹${Number(o.total).toLocaleString("en-IN")}</strong></td>
+              <td><span class="badge badge-${o.payment_method === 'cash' ? 'confirmed' : o.payment_method === 'upi' ? 'pending' : 'cancelled'}">${pmLabel}</span></td>
               <td><span class="badge badge-${o.status||'pending'}">${statusLabel(o.status)}</span></td>
               <td>
                 ${o.status === 'pending' ? `
@@ -285,7 +290,66 @@ async function rejectReview(id) {
 }
 
 
-// ===== STATUS LABEL HELPER =====
+// ===== EVENT ENQUIRIES =====
+async function loadEvents() {
+  try {
+    const r = await apiFetch("/api/admin/events");
+    if (!r.success) return;
+    const rows = r.data;
+    const newCount = rows.filter(x => !x.status || x.status === "new").length;
+    document.getElementById("eventsTotal").textContent = `${rows.length} total`;
+    document.getElementById("eventBadge").textContent  = newCount;
+
+    document.getElementById("eventsTable").innerHTML = rows.length === 0
+      ? `<div class="empty-state"><div class="empty-icon">🎊</div><p>No event enquiries yet</p></div>`
+      : `<table>
+          <thead><tr>
+            <th>#</th><th>Name</th><th>Phone</th><th>Event Type</th>
+            <th>Date</th><th>Guests</th><th>Venue</th><th>Message</th><th>Status</th><th>Action</th><th>Received</th>
+          </tr></thead>
+          <tbody>${rows.map(ev => `
+            <tr>
+              <td>${ev.id}</td>
+              <td><strong>${ev.name}</strong></td>
+              <td><a href="tel:${ev.phone}">${ev.phone}</a></td>
+              <td>${ev.event_type || "-"}</td>
+              <td>${ev.event_date ? new Date(ev.event_date).toLocaleDateString("en-IN") : "-"}</td>
+              <td>${ev.guests || "-"}</td>
+              <td>${ev.venue || "-"}</td>
+              <td style="max-width:200px;word-break:break-word;font-size:.82rem">${ev.message || "-"}</td>
+              <td><span class="badge badge-${ev.status === 'called' ? 'confirmed' : ev.status === 'closed' ? 'cancelled' : 'pending'}">
+                ${ev.status === 'called' ? '✅ Called' : ev.status === 'closed' ? '❌ Closed' : '⏳ New'}
+              </span></td>
+              <td>
+                <div class="action-btns">
+                  <button class="btn-whatsapp" onclick="callEventEnquirer(${ev.id},'${ev.name}','${ev.phone}','${(ev.event_type||'').replace(/'/g,"'")}')">📲 WhatsApp</button>
+                  ${ev.status !== 'called' ? `<button class="btn-confirm" onclick="markEventCalled(${ev.id})">✅ Mark Called</button>` : ""}
+                </div>
+              </td>
+              <td>${fmtDateTime(ev.created_at)}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table>`;
+  } catch(e) { document.getElementById("eventsTable").innerHTML = `<div class="loading">Failed to load</div>`; }
+}
+
+function callEventEnquirer(id, name, phone, eventType) {
+  const waMsg = `Hi ${name}! 🙏\n\nThank you for enquiring about *${eventType}* at Sahil Palace.\n\nWe would love to host your event! Please let us know a convenient time to discuss the details.\n\n📍 Sahil Palace, Sangaria\n📞 8742026903`;
+  window.open(`https://wa.me/91${phone}?text=${encodeURIComponent(waMsg)}`, "_blank");
+}
+
+async function markEventCalled(id) {
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/events/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "x-admin-email": ADMIN_EMAIL, "x-admin-password": ADMIN_PASSWORD },
+      body: JSON.stringify({ status: "called" })
+    });
+    if (res.ok) { showToast("✅ Marked as called", "green"); await loadEvents(); }
+  } catch(e) { showToast("Failed to update", "red"); }
+}
+
+
 function statusLabel(s) {
   if (s === "confirmed") return "✅ Confirmed";
   if (s === "cancelled") return "❌ Cancelled";
