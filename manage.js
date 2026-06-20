@@ -156,16 +156,33 @@ async function loadOrders() {
     document.getElementById("ordersTable").innerHTML = rows.length === 0
       ? `<div class="empty-state"><div class="empty-icon">🍽️</div><p>No orders yet</p></div>`
       : `<table>
-          <thead><tr><th>#</th><th>Items</th><th>Total</th><th>Payment</th><th>Phone</th><th>Date</th></tr></thead>
+          <thead><tr>
+            <th>#</th><th>Items</th><th>Total</th><th>Payment</th>
+            <th>Phone</th><th>Status</th><th>Actions</th><th>Date</th>
+          </tr></thead>
           <tbody>${rows.map(o => {
             const items = typeof o.items === "string" ? JSON.parse(o.items) : o.items;
             const itemStr = Array.isArray(items) ? items.map(i=>`${i.name} ×${i.qty}`).join(", ") : "-";
-            return `<tr>
+            return `<tr id="orow-${o.id}">
               <td>${o.id}</td>
-              <td>${itemStr}</td>
+              <td style="max-width:220px">${itemStr}</td>
               <td><strong>₹${Number(o.total).toLocaleString("en-IN")}</strong></td>
               <td>${o.payment_method||"upi"}</td>
-              <td>${o.phone||"-"}</td>
+              <td>${o.phone ? `<a href="tel:${o.phone}">${o.phone}</a>` : "-"}</td>
+              <td><span class="badge badge-${o.status||'pending'}">${statusLabel(o.status)}</span></td>
+              <td>
+                ${o.status === 'pending' ? `
+                  <div class="action-btns">
+                    <button class="btn-confirm" onclick='confirmOrder(${JSON.stringify({...o, items: itemStr})})'>✅ Confirm</button>
+                    <button class="btn-cancel"  onclick="cancelOrder(${o.id})">❌ Cancel</button>
+                  </div>
+                ` : o.status === 'confirmed' ? `
+                  <div class="action-btns">
+                    <button class="btn-whatsapp" onclick='sendOrderWhatsApp(${JSON.stringify({...o, items: itemStr})})'>📲 WhatsApp</button>
+                    <button class="btn-cancel" onclick="cancelOrder(${o.id})">❌ Cancel</button>
+                  </div>
+                ` : `<span style="color:#999;font-size:.8rem">—</span>`}
+              </td>
               <td>${fmtDateTime(o.created_at)}</td>
             </tr>`;
           }).join("")}
@@ -173,6 +190,7 @@ async function loadOrders() {
         </table>`;
   } catch(e) { document.getElementById("ordersTable").innerHTML = `<div class="loading">Failed to load</div>`; }
 }
+
 
 // ===== CONTACTS =====
 async function loadContacts() {
@@ -265,6 +283,63 @@ async function cancelBooking(id) {
   const ok = await updateStatus(id, "cancelled");
   if (ok) { showToast(`❌ Booking #${id} cancelled`, "red"); await loadBookings(); }
 }
+
+// ===== UPDATE ORDER STATUS =====
+async function updateOrderStatus(id, status) {
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/orders/${id}`, {
+      method:  "PATCH",
+      headers: {
+        "Content-Type":     "application/json",
+        "x-admin-email":    ADMIN_EMAIL,
+        "x-admin-password": ADMIN_PASSWORD
+      },
+      body: JSON.stringify({ status })
+    });
+    return res.ok;
+  } catch(e) { showToast("Failed to update order", "red"); return false; }
+}
+
+// ===== CONFIRM ORDER + WHATSAPP =====
+async function confirmOrder(o) {
+  const ok = await updateOrderStatus(o.id, "confirmed");
+  if (!ok) return;
+  showToast(`✅ Order #${o.id} confirmed!`, "green");
+  await loadOrders();
+  sendOrderWhatsApp(o);
+}
+
+function sendOrderWhatsApp(o) {
+  if (!o.phone) { showToast("No phone number for this order", "red"); return; }
+  const phone = String(o.phone).replace(/\D/g, "");
+  const dialCode = phone.startsWith("91") ? phone : `91${phone}`;
+  const msg = encodeURIComponent(
+`🍽️ *Sahil Palace Restaurant*
+
+Namaste! 🙏
+
+Aapka food order *confirm* ho gaya hai! ✅
+
+📋 *Order Details:*
+🛒 Items: ${o.items}
+💰 Total: ₹${Number(o.total).toLocaleString("en-IN")}
+💳 Payment: ${o.payment_method || "UPI"}
+
+Aapka khana jald taiyar hoga! ⏰
+Kisi bhi query ke liye call karein.
+
+_Thank you for ordering from Sahil Palace!_ 🏨`
+  );
+  window.open(`https://wa.me/${dialCode}?text=${msg}`, "_blank");
+}
+
+// ===== CANCEL ORDER =====
+async function cancelOrder(id) {
+  if (!confirm(`Order #${id} cancel karna chahte hain?`)) return;
+  const ok = await updateOrderStatus(id, "cancelled");
+  if (ok) { showToast(`❌ Order #${id} cancelled`, "red"); await loadOrders(); }
+}
+
 
 // ===== HELPERS =====
 function fmtDate(d) {
