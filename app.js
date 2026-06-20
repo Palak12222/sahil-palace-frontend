@@ -1,12 +1,13 @@
 // ===== DATA =====
 const rooms = [
-  {id:1,  name:"Standard Single Room",  price:1000, img:"images/room_photo2.jpg", desc:"Cozy single room with stylish décor, AC, and all basic amenities for a comfortable stay.",          features:["AC","WiFi","TV"],               badge:"Budget"},
-  {id:2,  name:"Standard Double Room",  price:1500, img:"images/room_photo5.jpg", desc:"Spacious double room with modern interiors, perfect for couples or solo travellers.",                features:["AC","WiFi","TV","Parking"],     badge:"Popular"},
+  {id:1,  name:"Standard Single Room",  price:1000, img:"images/room_photo2.jpg", desc:"Cozy single room with stylish décor, AC, and all basic amenities for a comfortable stay.",          features:["AC","WiFi","TV"],               badge:"Single Bed"},
+  {id:2,  name:"Standard Double Room",  price:1500, img:"images/room_photo5.jpg", desc:"Spacious double room with modern interiors, perfect for couples or solo travellers.",                features:["AC","WiFi","TV","Parking"],     badge:"Double Bed"},
   {id:3,  name:"Deluxe Single Room",    price:1800, img:"images/room_photo2.jpg", desc:"Upgraded single room with premium bed, elegant panel wall and soft lighting.",                        features:["AC","WiFi","TV","Mini-fridge"], badge:"Deluxe"},
   {id:4,  name:"Deluxe Double Room",    price:2000, img:"images/room_photo1.jpg", desc:"Our most popular room — two plush beds, designer headboard wall and warm ambiance.",                  features:["AC","WiFi","TV","Balcony"],    badge:"Best Value"},
   {id:5,  name:"Executive Room",        price:2500, img:"images/room_photo5.jpg", desc:"Designed for business travellers — king bed, work desk, LED TV and premium AC.",                      features:["AC","WiFi","TV","Work Desk"],  badge:"Executive"},
   {id:6,  name:"Family Room",           price:3000, img:"images/room_photo3.jpg", desc:"Extra-large room with two double beds, ample space for families travelling with kids.",                features:["AC","WiFi","TV","Extra Beds"], badge:"Family"},
 ];
+
 
 
 const menuData = {
@@ -115,11 +116,11 @@ function renderRooms(maxPrice=9999){
   const filtered = rooms.filter(r => r.price <= maxPrice);
   grid.innerHTML = filtered.map(r => `
     <div class="room-card fade-in" data-price="${r.price}" onclick="window.location.href='room.html?id=${r.id}'" style="cursor:pointer">
-      <div style="overflow:hidden;position:relative">
+      <div style="overflow:hidden">
         <img src="${r.img}" alt="${r.name}" loading="lazy"/>
-        <span class="room-badge">${r.badge}</span>
       </div>
       <div class="room-card-body">
+        <span class="room-badge">${r.badge}</span>
         <h3>${r.name}</h3>
         <p>${r.desc}</p>
         <div class="room-features">${r.features.map(f=>`<span>${f}</span>`).join("")}</div>
@@ -131,6 +132,7 @@ function renderRooms(maxPrice=9999){
     </div>`).join("");
   observeFadeIns();
 }
+
 
 
 document.querySelectorAll(".filter-btn").forEach(btn => {
