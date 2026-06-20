@@ -188,27 +188,124 @@ function getPriceByKey(key) {
   return item?.price || 0;
 }
 
-// ===== CHECKOUT =====
+// ===== CHECKOUT MODAL =====
 function checkout() {
   const keys = Object.keys(cart);
-  if (!keys.length) { showToast("Your cart is empty!", "red"); return; }
+  if (!keys.length) { showToast("Your cart is empty! Add items first.", "red"); return; }
 
   const total = keys.reduce((s, k) => s + cart[k] * getPriceByKey(k), 0);
-  const lines = keys.map(k => {
+
+  // Populate order summary in modal
+  document.getElementById("modalSummary").innerHTML = keys.map(k => {
     const name  = k.split("__")[2];
     const price = getPriceByKey(k);
-    return `• ${name} ×${cart[k]} = ₹${cart[k]*price}`;
-  });
+    return `<div class="cs-item">
+      <span>${name} × ${cart[k]}</span>
+      <strong>₹${(cart[k] * price).toLocaleString("en-IN")}</strong>
+    </div>`;
+  }).join("");
 
-  const waMsg =
-    `🍽️ *Food Order – Sahil Palace Restaurant*\n\n` +
-    `${lines.join("\n")}\n\n` +
-    `💰 *Total: ₹${total.toLocaleString("en-IN")}*\n\n` +
-    `Please confirm my order. Thank you!`;
+  document.getElementById("modalTotal").textContent = `₹${total.toLocaleString("en-IN")}`;
 
-  window.open(`https://wa.me/918742026903?text=${encodeURIComponent(waMsg)}`, "_blank");
-  showToast("✅ Order sent on WhatsApp!");
+  // Set UPI QR
+  const upiStr = `upi://pay?pa=8742026903@ybl&pn=Sahil%20Palace&am=${total}&cu=INR&tn=Food%20Order`;
+  document.getElementById("upiQR").src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiStr)}`;
+  document.getElementById("upiPayLink").href = upiStr;
+
+  document.getElementById("checkoutModal").classList.add("open");
+  document.body.style.overflow = "hidden";
 }
+
+function closeCheckout() {
+  document.getElementById("checkoutModal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function closeSuccess() {
+  document.getElementById("successModal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+// Close modal on backdrop click
+document.getElementById("checkoutModal").addEventListener("click", e => {
+  if (e.target.id === "checkoutModal") closeCheckout();
+});
+
+// Payment method selector
+document.querySelectorAll(".pay-opt").forEach(opt => {
+  opt.addEventListener("click", function() {
+    document.querySelectorAll(".pay-opt").forEach(o => o.classList.remove("selected"));
+    this.classList.add("selected");
+    this.querySelector("input").checked = true;
+    document.getElementById("upiInfo").style.display =
+      this.dataset.pm === "upi" ? "block" : "none";
+  });
+});
+
+// Copy UPI
+function copyUPI() {
+  const upi = "8742026903@ybl";
+  navigator.clipboard.writeText(upi)
+    .then(() => showToast("✅ UPI ID copied!"))
+    .catch(() => prompt("Copy UPI ID:", upi));
+}
+
+// ===== PLACE ORDER (submit to backend) =====
+async function placeOrder(e) {
+  e.preventDefault();
+  const btn   = document.getElementById("placeOrderBtn");
+  const name  = document.getElementById("cfName").value.trim();
+  const phone = document.getElementById("cfPhone").value.trim();
+  const addr  = document.getElementById("cfAddress").value.trim();
+  const pm    = document.querySelector('input[name="payMethod"]:checked')?.value || "cash";
+
+  if (!name || !phone || phone.length < 10) {
+    showToast("Please fill in name and valid phone number", "red"); return;
+  }
+
+  const keys  = Object.keys(cart);
+  const total = keys.reduce((s, k) => s + cart[k] * getPriceByKey(k), 0);
+  const items = keys.map(k => ({
+    name:     k.split("__")[2],
+    qty:      cart[k],
+    price:    getPriceByKey(k),
+    subtotal: cart[k] * getPriceByKey(k)
+  }));
+
+  btn.textContent = "Placing Order..."; btn.disabled = true;
+
+  try {
+    const res  = await fetch(`${API_BASE}/api/orders`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ customer_name: name, phone, address: addr, items, total, payment_method: pm })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      closeCheckout();
+      document.getElementById("successMsg").textContent =
+        pm === "cash"
+          ? "Your order has been received! Pay cash on delivery. We'll prepare it shortly."
+          : pm === "upi"
+          ? "Your order is confirmed! Please complete the UPI payment to the ID shown."
+          : "Your order is confirmed! Pay by card when delivered.";
+      document.getElementById("successOrderId").textContent = `Order ID: #${data.orderId}`;
+      document.getElementById("successModal").classList.add("open");
+      document.body.style.overflow = "hidden";
+      cart = {};
+      updateCart();
+      renderMenu();
+      document.getElementById("checkoutForm").reset();
+    } else {
+      showToast(data.message || "Order failed. Please try again!", "red");
+    }
+  } catch(err) {
+    showToast("Could not place order. Please call us at 8742026903", "red");
+  }
+  btn.textContent = "✅ Confirm Order"; btn.disabled = false;
+}
+
 
 // ===== FILTER BUTTONS =====
 document.querySelectorAll(".filter-btn").forEach(btn => {
