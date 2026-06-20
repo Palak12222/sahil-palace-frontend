@@ -48,48 +48,74 @@
 <!-- ===== HERO ===== -->
 <section id="home" class="hero">
   <div class="hero-bg">
-    <img src="images/hotel_hero.png" alt="Sahil Palace Hotel exterior" class="hero-img" />
+    <img src="images/hotel_hero.png" alt="Sahil Palace Hotel exterior" class="hero-img"/>
     <div class="hero-overlay"></div>
   </div>
+
+  <!-- Floating award badge -->
+  <div class="hero-award">
+    <span class="ha-star">⭐</span>
+    <div>
+      <strong>Top Rated</strong>
+      <small>Sangaria's Best Hotel</small>
+    </div>
+  </div>
+
   <div class="hero-content">
-    <p class="hero-tagline-top">Welcome to</p>
-    <h1 class="hero-title">Sahil Palace<br /><span>&amp; Restaurant</span></h1>
-    <p class="hero-subtitle">Comfort · Affordability · Quality Food<br />Sangaria, Rajasthan</p>
+    <p class="hero-tagline-top">✦ Welcome to ✦</p>
+    <h1 class="hero-title">
+      Sahil Palace
+      <span>& Restaurant</span>
+    </h1>
+    <p class="hero-subtitle">Comfort · Affordability · Quality Food<br/>Sangaria, Rajasthan</p>
+
+    <!-- Feature badges -->
     <div class="hero-badges">
       <span>🛜 Free WiFi</span>
       <span>🅿️ Free Parking</span>
-      <span>✨ Affordable Luxury</span>
+      <span>❄️ AC Rooms</span>
+      <span>🍽️ In-House Restaurant</span>
     </div>
+
+    <!-- CTA buttons -->
     <div class="hero-cta">
-      <a href="#rooms" class="btn-primary">🏨 Book Now</a>
-      <a href="#food" class="btn-secondary">🍽️ Order Food</a>
+      <a href="#rooms" class="btn-primary">🏨 Book a Room</a>
+      <a href="menu.html" class="btn-secondary">🍽️ View Menu</a>
+      <a href="events.html" class="btn-secondary btn-events-hero">🎊 Events</a>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong class="stat-num">6+</strong>
+        <span>Premium Rooms</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <strong class="stat-num">₹1000</strong>
+        <span>Starting Price</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <strong class="stat-num">4.8⭐</strong>
+        <span>Guest Rating</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <strong class="stat-num">24/7</strong>
+        <span>Room Service</span>
+      </div>
     </div>
   </div>
-  <!-- Quick Booking Form -->
-  <div class="quick-booking">
-    <h3>Quick Booking</h3>
-    <form class="booking-form" id="quickBookForm">
-      <div class="form-group">
-        <label>Check-in</label>
-        <input type="date" id="qCheckIn" required />
-      </div>
-      <div class="form-group">
-        <label>Check-out</label>
-        <input type="date" id="qCheckOut" required />
-      </div>
-      <div class="form-group">
-        <label>Guests</label>
-        <select id="qGuests">
-          <option value="1">1 Guest</option>
-          <option value="2" selected>2 Guests</option>
-          <option value="3">3 Guests</option>
-          <option value="4">4 Guests</option>
-        </select>
-      </div>
-      <button type="submit" class="btn-book-quick">Check Availability</button>
-    </form>
+
+  <!-- Scroll cue -->
+  <div class="scroll-cue">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow"></div>
   </div>
 </section>
+
+
 
 <!-- ===== HIGHLIGHTS ===== -->
 <section class="highlights">

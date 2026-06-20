@@ -81,34 +81,17 @@ document.querySelectorAll(".nav-links a").forEach(link => {
   link.addEventListener("click", () => document.getElementById("navLinks").classList.remove("open"));
 });
 
-// ===== QUICK BOOKING =====
-// Set min dates
+// ===== DATE MIN LOGIC (booking modal) =====
 const today = new Date().toISOString().split("T")[0];
-document.getElementById("qCheckIn").min = today;
-document.getElementById("qCheckOut").min = today;
-document.getElementById("mCheckIn").min = today;
-document.getElementById("mCheckOut").min = today;
-
-document.getElementById("qCheckIn").addEventListener("change", e => {
-  document.getElementById("qCheckOut").min = e.target.value;
-});
-document.getElementById("mCheckIn").addEventListener("change", e => {
-  document.getElementById("mCheckOut").min = e.target.value;
-});
-
-document.getElementById("quickBookForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const ci = document.getElementById("qCheckIn").value;
-  const co = document.getElementById("qCheckOut").value;
-  const g  = document.getElementById("qGuests").value;
-  if(!ci || !co){ alert("Please select check-in and check-out dates."); return; }
-  if(ci >= co){ alert("Check-out must be after check-in."); return; }
-  const nights = Math.ceil((new Date(co)-new Date(ci))/(1000*60*60*24));
-  alert(`✅ Availability checked!\n\n📅 Check-in: ${formatDate(ci)}\n📅 Check-out: ${formatDate(co)}\n👥 Guests: ${g}\n🌙 Nights: ${nights}\n\nPlease scroll to Rooms section to book. Or call: 8742026903`);
-  document.querySelector("#rooms").scrollIntoView({behavior:"smooth"});
-});
+const mCI = document.getElementById("mCheckIn");
+const mCO = document.getElementById("mCheckOut");
+if(mCI) mCI.min = today;
+if(mCO) mCO.min = today;
+if(mCI) mCI.addEventListener("change", e => { if(mCO) mCO.min = e.target.value; });
 
 function formatDate(str){ return new Date(str).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}); }
+
+
 
 // ===== ROOMS =====
 const roomGuests = { 1:1, 2:2, 3:1, 4:2, 5:2, 6:4 };
