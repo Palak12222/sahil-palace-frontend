@@ -164,45 +164,74 @@
   </div>
 </section>
 
-<!-- ===== FOOD ORDER ===== -->
+<!-- ===== FOOD TEASER ===== -->
 <section id="food" class="section food-section">
   <div class="container">
     <div class="section-header">
       <p class="section-label">Our Restaurant</p>
-      <h2 class="section-title">Delicious Food Menu</h2>
-      <p class="section-desc">Enjoy authentic Indian flavors — from breakfast to dinner</p>
+      <h2 class="section-title">Authentic Indian Cuisine</h2>
+      <p class="section-desc">From sizzling breakfast to grand dinners — freshly prepared by our expert chefs</p>
     </div>
+
+    <!-- PDF Menu Buttons -->
     <div class="menu-links-row">
-      <a href="https://drive.google.com/file/d/1klvx3Zv3SEVPHMmvkMwGuQZwAsB7maed/view?usp=drivesdk" target="_blank" class="menu-link-btn veg-link">🥦 View Full Veg Menu (PDF)</a>
-      <a href="https://drive.google.com/file/d/1rh7tFKR6nFJ3XrHRHrGHIPUbTESS4Etf/view?usp=drivesdk" target="_blank" class="menu-link-btn nonveg-link">🍗 View Full Non-Veg Menu (PDF)</a>
+      <a href="https://drive.google.com/file/d/1klvx3Zv3SEVPHMmvkMwGuQZwAsB7maed/view?usp=drivesdk" target="_blank" class="menu-link-btn veg-link">🥦 View Veg Menu (PDF)</a>
+      <a href="https://drive.google.com/file/d/1rh7tFKR6nFJ3XrHRHrGHIPUbTESS4Etf/view?usp=drivesdk" target="_blank" class="menu-link-btn nonveg-link">🍗 View Non-Veg Menu (PDF)</a>
     </div>
-    <!-- Category Tabs -->
-    <div class="food-tabs">
-      <button class="food-tab active" data-cat="breakfast">🌅 Breakfast</button>
-      <button class="food-tab" data-cat="lunch">☀️ Lunch</button>
-      <button class="food-tab" data-cat="dinner">🌙 Dinner</button>
-    </div>
-    <!-- Veg / Non-Veg Toggle -->
-    <div class="veg-toggle">
-      <button class="vt-btn active" data-type="all">All</button>
-      <button class="vt-btn" data-type="veg">🟢 Veg</button>
-      <button class="vt-btn" data-type="nonveg">🔴 Non-Veg</button>
-    </div>
-    <div class="food-grid" id="foodGrid"></div>
-    <!-- Cart -->
-    <div class="cart-section" id="cartSection">
-      <div class="cart-header">
-        <h3>🛒 Your Cart <span id="cartCount">0</span></h3>
-        <button id="clearCart">Clear Cart</button>
+
+    <!-- Popular Dishes Preview -->
+    <div class="food-preview-grid">
+      <div class="fp-card">
+        <div class="fp-img fp-veg">🥘</div>
+        <div class="fp-body">
+          <span class="fp-dot veg"></span>
+          <h4>Dal Makhani</h4>
+          <p>Creamy black lentil curry slow-cooked overnight</p>
+          <span class="fp-price">₹120</span>
+        </div>
       </div>
-      <div id="cartItems"></div>
-      <div class="cart-total">
-        <strong>Total: ₹<span id="cartTotal">0</span></strong>
-        <button id="checkoutBtn" class="btn-primary" onclick="checkout()">Checkout &amp; Call</button>
+      <div class="fp-card">
+        <div class="fp-img fp-veg">🧀</div>
+        <div class="fp-body">
+          <span class="fp-dot veg"></span>
+          <h4>Paneer Butter Masala</h4>
+          <p>Cottage cheese in rich tomato-cream gravy</p>
+          <span class="fp-price">₹160</span>
+        </div>
       </div>
+      <div class="fp-card">
+        <div class="fp-img fp-nonveg">🍗</div>
+        <div class="fp-body">
+          <span class="fp-dot nonveg"></span>
+          <h4>Chicken Biryani</h4>
+          <p>Tender chicken layered with saffron basmati rice</p>
+          <span class="fp-price">₹180</span>
+        </div>
+      </div>
+      <div class="fp-card">
+        <div class="fp-img fp-nonveg">🍖</div>
+        <div class="fp-body">
+          <span class="fp-dot nonveg"></span>
+          <h4>Butter Chicken</h4>
+          <p>Tandoori chicken in creamy tomato gravy</p>
+          <span class="fp-price">₹190</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA to full menu page -->
+    <div class="food-cta-row">
+      <div class="food-cta-info">
+        <span>🌅 Breakfast</span>
+        <span>☀️ Lunch</span>
+        <span>🌙 Dinner</span>
+        <span>🟢 Veg &amp; 🔴 Non-Veg</span>
+      </div>
+      <a href="menu.html" class="btn-full-menu">🍽️ View Full Menu &amp; Order →</a>
     </div>
   </div>
 </section>
+
 
 <!-- ===== AMENITIES ===== -->
 <section id="amenities" class="section amenities-section">

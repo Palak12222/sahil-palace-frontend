@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Food Menu – Sahil Palace & Restaurant | Order Online</title>
+  <meta name="description" content="Explore the full food menu at Sahil Palace Restaurant, Sangaria. Order delicious veg & non-veg breakfast, lunch and dinner online."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="menu.css"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a class="nav-brand" href="index.html">
+      <span>🏨</span>
+      <div>
+        <span class="brand-name">Sahil Palace</span>
+        <span class="brand-sub">& Restaurant</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#rooms">Rooms</a></li>
+      <li><a href="menu.html" class="active">Menu</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="tel:8742026903" class="nav-phone">📞 8742026903</a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="menu-hero">
+  <div class="menu-hero-overlay"></div>
+  <div class="menu-hero-content">
+    <p class="hero-tag">🍽️ Sahil Palace Restaurant</p>
+    <h1>Our Food Menu</h1>
+    <p>Authentic Indian cuisine — fresh, flavorful & made with love</p>
+    <div class="hero-badges">
+      <span>🌅 Breakfast</span>
+      <span>☀️ Lunch</span>
+      <span>🌙 Dinner</span>
+      <span>🟢 Veg</span>
+      <span>🔴 Non-Veg</span>
+    </div>
+  </div>
+</div>
+
+<!-- PDF DOWNLOAD LINKS -->
+<div class="pdf-bar">
+  <div class="pdf-bar-inner">
+    <span>📄 Full Printed Menu:</span>
+    <a href="https://drive.google.com/file/d/1klvx3Zv3SEVPHMmvkMwGuQZwAsB7maed/view?usp=drivesdk" target="_blank" class="pdf-btn veg">🥦 Veg Menu PDF</a>
+    <a href="https://drive.google.com/file/d/1rh7tFKR6nFJ3XrHRHrGHIPUbTESS4Etf/view?usp=drivesdk" target="_blank" class="pdf-btn nonveg">🍗 Non-Veg Menu PDF</a>
+  </div>
+</div>
+
+<!-- MENU CONTENT -->
+<main class="menu-main">
+  <div class="menu-layout">
+
+    <!-- LEFT: Filters & Cart -->
+    <aside class="menu-sidebar">
+
+      <!-- Meal Category -->
+      <div class="filter-card">
+        <h4>🕐 Meal Time</h4>
+        <div class="filter-list">
+          <button class="filter-btn active" data-cat="all">🍴 All Items</button>
+          <button class="filter-btn" data-cat="breakfast">🌅 Breakfast</button>
+          <button class="filter-btn" data-cat="lunch">☀️ Lunch</button>
+          <button class="filter-btn" data-cat="dinner">🌙 Dinner</button>
+        </div>
+      </div>
+
+      <!-- Type -->
+      <div class="filter-card">
+        <h4>🟢 Food Type</h4>
+        <div class="filter-list">
+          <button class="type-btn active" data-type="all">All</button>
+          <button class="type-btn" data-type="veg">🟢 Veg Only</button>
+          <button class="type-btn" data-type="nonveg">🔴 Non-Veg Only</button>
+        </div>
+      </div>
+
+      <!-- Cart -->
+      <div class="cart-card" id="cartCard">
+        <div class="cart-top">
+          <h4>🛒 Your Cart</h4>
+          <span class="cart-count-badge" id="cartBadge">0</span>
+        </div>
+        <div class="cart-empty" id="cartEmpty">
+          <div>🍽️</div>
+          <p>Your cart is empty</p>
+          <small>Add items to order</small>
+        </div>
+        <div class="cart-items-list" id="cartItemsList" style="display:none"></div>
+        <div class="cart-footer" id="cartFooter" style="display:none">
+          <div class="cart-total-row">
+            <span>Total</span>
+            <strong id="cartTotal">₹0</strong>
+          </div>
+          <button class="btn-checkout" onclick="checkout()">📞 Place Order</button>
+          <button class="btn-clear" onclick="clearCart()">🗑️ Clear Cart</button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT: Menu Grid -->
+    <div class="menu-right">
+      <!-- Search -->
+      <div class="search-bar">
+        <input type="text" id="menuSearch" placeholder="🔍 Search dishes..." oninput="renderMenu()"/>
+      </div>
+
+      <!-- Results count -->
+      <div class="results-bar">
+        <span id="resultsCount">Showing all items</span>
+        <span class="tag-veg-info">🟢 = Veg &nbsp; 🔴 = Non-Veg</span>
+      </div>
+
+      <!-- Grid -->
+      <div class="menu-grid" id="menuGrid"></div>
+    </div>
+
+  </div>
+</main>
+
+<!-- TOAST -->
+<div id="menuToast"></div>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/918742026903?text=Hi%2C%20I%20want%20to%20order%20food%20from%20Sahil%20Palace%20Restaurant." target="_blank" class="whatsapp-float" aria-label="Order on WhatsApp">
+  <svg viewBox="0 0 32 32" width="32" height="32" fill="#fff"><path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.129 6.742 3.047 9.379l-1.994 5.946 6.146-1.97A15.906 15.906 0 0016.004 32C24.826 32 32 24.826 32 16.004 32 7.176 24.826 0 16.004 0zm9.31 22.602c-.39 1.1-1.932 2.014-3.164 2.281-.844.18-1.945.324-5.656-1.215-4.75-1.969-7.805-6.793-8.04-7.109-.226-.316-1.898-2.527-1.898-4.82 0-2.293 1.2-3.422 1.625-3.89.39-.43.93-.607 1.242-.607.15 0 .285.008.406.014.39.016.586.039.844.652.32.766 1.1 2.68 1.195 2.875.098.195.195.45.07.703-.117.258-.22.418-.414.645-.195.226-.41.504-.586.676-.195.195-.398.406-.172.797.227.39 1.008 1.664 2.164 2.695 1.488 1.328 2.742 1.742 3.133 1.937.39.196.617.164.844-.098.234-.27.992-1.152 1.258-1.55.258-.398.523-.328.879-.196.36.125 2.273 1.07 2.664 1.266.39.195.648.293.746.453.094.164.094.934-.297 2.035z"/></svg>
+</a>
+
+<script src="config.js"></script>
+<script src="menu.js"></script>
+</body>
+</html>
