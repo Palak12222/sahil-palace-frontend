@@ -30,6 +30,7 @@ const tabTitles = {
   bookings:  ["Room Bookings", "All room reservations"],
   orders:    ["Food Orders",   "All food cart orders"],
   contacts:  ["Enquiries",     "All contact form messages"],
+  reviews:   ["Reviews",       "Approve or reject customer reviews"],
 };
 
 function switchTab(name, el) {
@@ -55,7 +56,7 @@ async function apiFetch(path) {
 }
 
 async function loadAll() {
-  await Promise.all([loadStats(), loadBookings(), loadOrders(), loadContacts()]);
+  await Promise.all([loadStats(), loadBookings(), loadOrders(), loadContacts(), loadReviews()]);
   showToast("✅ Data refreshed!", "green");
 }
 
@@ -217,6 +218,72 @@ async function loadContacts() {
         </table>`;
   } catch(e) { document.getElementById("contactsTable").innerHTML = `<div class="loading">Failed to load</div>`; }
 }
+
+// ===== REVIEWS =====
+async function loadReviews() {
+  try {
+    const r = await apiFetch("/api/admin/reviews");
+    if (!r.success) return;
+    const rows = r.data;
+    const pending = rows.filter(x => x.status === "pending").length;
+    document.getElementById("reviewsTotal").textContent = `${rows.length} total`;
+    document.getElementById("reviewBadge").textContent  = pending;
+
+    document.getElementById("reviewsTable").innerHTML = rows.length === 0
+      ? `<div class="empty-state"><div class="empty-icon">⭐</div><p>No reviews yet</p></div>`
+      : `<table>
+          <thead><tr>
+            <th>#</th><th>Name</th><th>Location</th><th>Rating</th>
+            <th>Review</th><th>Status</th><th>Actions</th><th>Date</th>
+          </tr></thead>
+          <tbody>${rows.map(rv => `
+            <tr id="rvrow-${rv.id}">
+              <td>${rv.id}</td>
+              <td><strong>${rv.name}</strong></td>
+              <td>${rv.location || "-"}</td>
+              <td>${"⭐".repeat(Math.min(5, rv.rating || 5))}</td>
+              <td style="max-width:260px;word-break:break-word;font-style:italic">"${rv.message}"</td>
+              <td><span class="badge badge-${rv.status === 'approved' ? 'confirmed' : rv.status === 'rejected' ? 'cancelled' : 'pending'}">
+                ${rv.status === 'approved' ? '✅ Approved' : rv.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}
+              </span></td>
+              <td>
+                ${rv.status === 'pending' ? `
+                  <div class="action-btns">
+                    <button class="btn-confirm" onclick="approveReview(${rv.id})">✅ Approve</button>
+                    <button class="btn-cancel"  onclick="rejectReview(${rv.id})">❌ Reject</button>
+                  </div>` : rv.status === 'approved' ? `
+                  <button class="btn-cancel" onclick="rejectReview(${rv.id})">❌ Reject</button>` : `
+                  <button class="btn-confirm" onclick="approveReview(${rv.id})">✅ Approve</button>`}
+              </td>
+              <td>${fmtDateTime(rv.created_at)}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table>`;
+  } catch(e) { document.getElementById("reviewsTable").innerHTML = `<div class="loading">Failed to load</div>`; }
+}
+
+async function updateReviewStatus(id, status) {
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/reviews/${id}`, {
+      method:  "PATCH",
+      headers: { "Content-Type": "application/json", "x-admin-email": ADMIN_EMAIL, "x-admin-password": ADMIN_PASSWORD },
+      body:    JSON.stringify({ status })
+    });
+    return res.ok;
+  } catch(e) { showToast("Failed to update review", "red"); return false; }
+}
+
+async function approveReview(id) {
+  const ok = await updateReviewStatus(id, "approved");
+  if (ok) { showToast(`✅ Review #${id} approved — now live on website!`, "green"); await loadReviews(); }
+}
+
+async function rejectReview(id) {
+  if (!confirm(`Reject review #${id}?`)) return;
+  const ok = await updateReviewStatus(id, "rejected");
+  if (ok) { showToast(`❌ Review #${id} rejected`, "red"); await loadReviews(); }
+}
+
 
 // ===== STATUS LABEL HELPER =====
 function statusLabel(s) {

@@ -57,6 +57,10 @@
         <span class="nav-icon">📞</span> Enquiries
         <span class="nav-badge" id="contactBadge">0</span>
       </a>
+      <a class="nav-item" data-tab="reviews" onclick="switchTab('reviews',this)">
+        <span class="nav-icon">⭐</span> Reviews
+        <span class="nav-badge" id="reviewBadge">0</span>
+      </a>
     </nav>
     <button class="btn-logout" onclick="logout()">🚪 Logout</button>
   </aside>
@@ -169,6 +173,19 @@
           <span class="total-label" id="contactsTotal"></span>
         </div>
         <div class="table-wrap" id="contactsTable">
+          <div class="loading">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS TAB -->
+    <div class="tab-content" id="tab-reviews" style="display:none">
+      <div class="section-card">
+        <div class="card-header">
+          <h3>⭐ Customer Reviews</h3>
+          <span class="total-label" id="reviewsTotal"></span>
+        </div>
+        <div class="table-wrap" id="reviewsTable">
           <div class="loading">Loading...</div>
         </div>
       </div>

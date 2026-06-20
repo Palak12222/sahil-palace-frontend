@@ -108,8 +108,6 @@ ul{list-style:none}
 .room-price span{font-size:.75rem;color:var(--text-light);font-family:'Inter',sans-serif;font-weight:400}
 .btn-book-room{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);padding:9px 20px;border-radius:50px;border:none;font-size:.83rem;font-weight:600;cursor:pointer;transition:var(--transition)}
 .btn-book-room:hover{transform:translateY(-1px);box-shadow:var(--shadow-gold)}
-.btn-view-room{display:inline-block;padding:9px 18px;border-radius:50px;border:1.5px solid var(--gold);color:var(--gold-dark);font-size:.83rem;font-weight:600;cursor:pointer;transition:var(--transition);text-decoration:none;white-space:nowrap}
-.btn-view-room:hover{background:var(--gold);color:var(--white);transform:translateY(-1px)}
 
 /* ===== FOOD ===== */
 .food-section{background:var(--white)}
@@ -301,3 +299,15 @@ ul{list-style:none}
   .hero-cta{flex-direction:column;align-items:center}
   .about-stats{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ===== REVIEW FORM ===== */
+.btn-write-review{background:transparent;border:2px solid var(--gold);color:var(--gold-dark);padding:13px 36px;border-radius:50px;font-size:.95rem;font-weight:600;cursor:pointer;transition:var(--transition)}
+.btn-write-review:hover{background:var(--gold);color:var(--white);transform:translateY(-2px);box-shadow:var(--shadow-gold)}
+.review-form-wrap{margin-top:36px;animation:fadeUp .4s ease}
+.review-form-card{background:var(--cream);border-radius:var(--radius-lg);padding:36px;max-width:680px;margin:0 auto;border:1.5px solid #e8ddd0;box-shadow:var(--shadow)}
+.review-form-card h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--dark);margin-bottom:6px}
+.review-form-sub{color:var(--text-light);font-size:.87rem;margin-bottom:24px}
+.star-selector{display:flex;gap:6px;margin-top:6px}
+.star-btn{font-size:2rem;color:#ddd;cursor:pointer;transition:color .15s ease;line-height:1;user-select:none}
+.star-btn.active,.star-btn:hover{color:var(--gold)}
+.review-form-card .btn-primary{width:100%;margin-top:8px;text-align:center;justify-content:center}

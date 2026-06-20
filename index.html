@@ -222,7 +222,10 @@
       <p class="section-label">Guest Experiences</p>
       <h2 class="section-title">What Our Guests Say</h2>
     </div>
-    <div class="reviews-grid">
+
+    <!-- Dynamic Reviews Grid -->
+    <div class="reviews-grid" id="reviewsGrid">
+      <!-- Default reviews shown while loading -->
       <div class="review-card">
         <div class="stars">⭐⭐⭐⭐⭐</div>
         <p>"Absolutely loved my stay! The room was clean, staff was very helpful and the food was outstanding. Dal makhani was the best I've ever had!"</p>
@@ -244,8 +247,54 @@
         <div class="reviewer"><div class="reviewer-avatar">S</div><div><strong>Sunita Yadav</strong><span>Sirsa</span></div></div>
       </div>
     </div>
+
+    <!-- Write a Review Button -->
+    <div style="text-align:center;margin-top:36px">
+      <button class="btn-write-review" id="toggleReviewForm" onclick="toggleReviewForm()">
+        ✍️ Write Your Review
+      </button>
+    </div>
+
+    <!-- Review Submission Form -->
+    <div class="review-form-wrap" id="reviewFormWrap" style="display:none">
+      <div class="review-form-card">
+        <h3>⭐ Share Your Experience</h3>
+        <p class="review-form-sub">Your review helps other guests. It will appear after approval.</p>
+        <form id="reviewForm" onsubmit="submitReview(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name *</label>
+              <input type="text" id="rvName" placeholder="e.g. Rahul Sharma" required />
+            </div>
+            <div class="form-group">
+              <label>Your City</label>
+              <input type="text" id="rvLocation" placeholder="e.g. Jaipur" />
+            </div>
+          </div>
+          <!-- Star Rating -->
+          <div class="form-group">
+            <label>Rating *</label>
+            <div class="star-selector" id="starSelector">
+              <span class="star-btn" data-val="1">★</span>
+              <span class="star-btn" data-val="2">★</span>
+              <span class="star-btn" data-val="3">★</span>
+              <span class="star-btn" data-val="4">★</span>
+              <span class="star-btn active" data-val="5">★</span>
+            </div>
+            <input type="hidden" id="rvRating" value="5" />
+          </div>
+          <div class="form-group">
+            <label>Your Review *</label>
+            <textarea id="rvMessage" rows="4" placeholder="Tell us about your stay at Sahil Palace..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" id="rvSubmitBtn">Submit Review ⭐</button>
+        </form>
+      </div>
+    </div>
+
   </div>
 </section>
+
 
 <!-- ===== CONTACT ===== -->
 <section id="contact" class="section contact-section">

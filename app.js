@@ -346,11 +346,96 @@ function observeFadeIns(){
 document.addEventListener("DOMContentLoaded",()=>{
   renderRooms();
   renderFood();
+  loadApprovedReviews();
+  initStarSelector();
   document.querySelectorAll(".section,.highlight-card,.amenity-card,.review-card").forEach(el=>{
     el.classList.add("fade-in");
   });
   observeFadeIns();
 });
+
+// ===== REVIEWS =====
+async function loadApprovedReviews() {
+  try {
+    const res = await fetch(`${API_BASE}/api/reviews`);
+    const data = await res.json();
+    if (!data.success || !data.data.length) return; // keep default cards
+    const grid = document.getElementById("reviewsGrid");
+    const stars = n => "⭐".repeat(Math.min(5, n || 5));
+    grid.innerHTML = data.data.map(r => `
+      <div class="review-card fade-in">
+        <div class="stars">${stars(r.rating)}</div>
+        <p>"${r.message}"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">${r.name.charAt(0).toUpperCase()}</div>
+          <div><strong>${r.name}</strong><span>${r.location || "Guest"}</span></div>
+        </div>
+      </div>`).join("");
+    observeFadeIns();
+  } catch(e) { /* keep default cards on error */ }
+}
+
+function toggleReviewForm() {
+  const wrap = document.getElementById("reviewFormWrap");
+  const btn  = document.getElementById("toggleReviewForm");
+  const open = wrap.style.display === "none";
+  wrap.style.display = open ? "block" : "none";
+  btn.textContent    = open ? "✕ Close Form" : "✍️ Write Your Review";
+  if (open) wrap.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function initStarSelector() {
+  document.querySelectorAll(".star-btn").forEach(btn => {
+    btn.addEventListener("click", function() {
+      const val = parseInt(this.dataset.val);
+      document.getElementById("rvRating").value = val;
+      document.querySelectorAll(".star-btn").forEach((s, i) => {
+        s.classList.toggle("active", i < val);
+      });
+    });
+    btn.addEventListener("mouseover", function() {
+      const val = parseInt(this.dataset.val);
+      document.querySelectorAll(".star-btn").forEach((s, i) => {
+        s.style.color = i < val ? "var(--gold)" : "#ddd";
+      });
+    });
+    btn.addEventListener("mouseout", function() {
+      const val = parseInt(document.getElementById("rvRating").value);
+      document.querySelectorAll(".star-btn").forEach((s, i) => {
+        s.style.color = "";
+        s.classList.toggle("active", i < val);
+      });
+    });
+  });
+}
+
+async function submitReview(e) {
+  e.preventDefault();
+  const btn  = document.getElementById("rvSubmitBtn");
+  const name = document.getElementById("rvName").value.trim();
+  const loc  = document.getElementById("rvLocation").value.trim();
+  const rat  = document.getElementById("rvRating").value;
+  const msg  = document.getElementById("rvMessage").value.trim();
+  if (!name || !msg) { showToast("Please fill in name and review", "error"); return; }
+  btn.textContent = "Submitting..."; btn.disabled = true;
+  try {
+    const res  = await fetch(`${API_BASE}/api/reviews`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ name, location: loc, rating: rat, message: msg })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast("✅ Thank you! Your review has been submitted for approval.", "success");
+      document.getElementById("reviewForm").reset();
+      document.querySelectorAll(".star-btn").forEach((s,i) => s.classList.toggle("active", i < 4));
+      document.getElementById("rvRating").value = 5;
+      toggleReviewForm();
+    } else { showToast(data.message || "Failed to submit", "error"); }
+  } catch(err) { showToast("Something went wrong. Try again!", "error"); }
+  btn.textContent = "Submit Review ⭐"; btn.disabled = false;
+}
+
 
 // ===== PAYMENT MODAL =====
 let pendingPaymentTotal = 0;
