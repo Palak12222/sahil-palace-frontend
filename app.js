@@ -1,16 +1,13 @@
 // ===== DATA =====
 const rooms = [
-  {id:1,  name:"Standard Single Room",   price:1000, img:"images/room_photo2.jpg", desc:"Cozy single room with stylish décor, AC, and all basic amenities for a comfortable stay.",     features:["AC","WiFi","TV"],              badge:"Budget"},
-  {id:2,  name:"Standard Double Room",   price:1200, img:"images/room_photo5.jpg", desc:"Spacious double room with modern interiors, perfect for couples or solo travellers.",            features:["AC","WiFi","TV","Parking"],    badge:"Popular"},
-  {id:3,  name:"Deluxe Single Room",     price:1500, img:"images/room_photo2.jpg", desc:"Upgraded single room with premium teal-frame bed, elegant panel wall and soft lighting.",        features:["AC","WiFi","TV","Mini-fridge"],badge:"Deluxe"},
-  {id:4,  name:"Deluxe Double Room",     price:1800, img:"images/room_photo1.jpg", desc:"Our most popular room — two plush beds, designer headboard wall and warm ambiance.",             features:["AC","WiFi","TV","Balcony"],   badge:"Best Value"},
-  {id:5,  name:"Executive Room",         price:2200, img:"images/room_photo5.jpg", desc:"Designed for business travellers — king bed, work desk, LED TV and premium AC.",                 features:["AC","WiFi","TV","Work Desk"], badge:"Executive"},
-  {id:6,  name:"Family Room",            price:2500, img:"images/room_photo3.jpg", desc:"Extra-large room with two double beds, ample space for families travelling with kids.",           features:["AC","WiFi","TV","Extra Beds"],badge:"Family"},
-  {id:7,  name:"Deluxe Family Room",     price:3000, img:"images/room_photo4.jpg", desc:"Premium family room with three beds, ceiling fans, LED TV unit and a spacious floor area.",      features:["AC","WiFi","TV","Lounge Area"],badge:"Premium"},
-  {id:8,  name:"Super Deluxe Room",      price:3200, img:"images/room_photo1.jpg", desc:"Twin-bed super deluxe room with marble panel accent wall and premium blue upholstered beds.",    features:["AC","WiFi","TV","Bathtub"],   badge:"Super Deluxe"},
-  {id:9,  name:"Suite Room",             price:3800, img:"images/room_photo3.jpg", desc:"Spacious suite with designer lighting, two beds, curtained windows and a lounge corner.",        features:["AC","WiFi","TV","Living Room"],badge:"Suite"},
-  {id:10, name:"Royal Suite",            price:4000, img:"images/room_photo4.jpg", desc:"The crown jewel of Sahil Palace — three beds, LED TV unit, work desk, ultimate comfort.",        features:["AC","WiFi","TV","TV Unit","Work Desk"],badge:"Royal"}
+  {id:1,  name:"Standard Single Room",  price:1000, img:"images/room_photo2.jpg", desc:"Cozy single room with stylish décor, AC, and all basic amenities for a comfortable stay.",          features:["AC","WiFi","TV"],               badge:"Budget"},
+  {id:2,  name:"Standard Double Room",  price:1500, img:"images/room_photo5.jpg", desc:"Spacious double room with modern interiors, perfect for couples or solo travellers.",                features:["AC","WiFi","TV","Parking"],     badge:"Popular"},
+  {id:3,  name:"Deluxe Single Room",    price:1800, img:"images/room_photo2.jpg", desc:"Upgraded single room with premium bed, elegant panel wall and soft lighting.",                        features:["AC","WiFi","TV","Mini-fridge"], badge:"Deluxe"},
+  {id:4,  name:"Deluxe Double Room",    price:2000, img:"images/room_photo1.jpg", desc:"Our most popular room — two plush beds, designer headboard wall and warm ambiance.",                  features:["AC","WiFi","TV","Balcony"],    badge:"Best Value"},
+  {id:5,  name:"Executive Room",        price:2500, img:"images/room_photo5.jpg", desc:"Designed for business travellers — king bed, work desk, LED TV and premium AC.",                      features:["AC","WiFi","TV","Work Desk"],  badge:"Executive"},
+  {id:6,  name:"Family Room",           price:3000, img:"images/room_photo3.jpg", desc:"Extra-large room with two double beds, ample space for families travelling with kids.",                features:["AC","WiFi","TV","Extra Beds"], badge:"Family"},
 ];
+
 
 const menuData = {
   breakfast:{
