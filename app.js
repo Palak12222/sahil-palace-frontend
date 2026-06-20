@@ -1,11 +1,11 @@
 // ===== DATA =====
 const rooms = [
-  {id:1,  name:"Standard Single Room",  price:1000, img:"images/room_photo2.jpg", desc:"Cozy single room with stylish décor, AC, and all basic amenities for a comfortable stay.",          features:["AC","WiFi","TV"],               badge:"Single Bed"},
-  {id:2,  name:"Standard Double Room",  price:1500, img:"images/room_photo5.jpg", desc:"Spacious double room with modern interiors, perfect for couples or solo travellers.",                features:["AC","WiFi","TV","Parking"],     badge:"Double Bed"},
-  {id:3,  name:"Deluxe Single Room",    price:1800, img:"images/room_photo2.jpg", desc:"Upgraded single room with premium bed, elegant panel wall and soft lighting.",                        features:["AC","WiFi","TV","Mini-fridge"], badge:"Deluxe"},
-  {id:4,  name:"Deluxe Double Room",    price:2000, img:"images/room_photo1.jpg", desc:"Our most popular room — two plush beds, designer headboard wall and warm ambiance.",                  features:["AC","WiFi","TV","Balcony"],    badge:"Best Value"},
-  {id:5,  name:"Executive Room",        price:2500, img:"images/room_photo5.jpg", desc:"Designed for business travellers — king bed, work desk, LED TV and premium AC.",                      features:["AC","WiFi","TV","Work Desk"],  badge:"Executive"},
-  {id:6,  name:"Family Room",           price:3000, img:"images/room_photo3.jpg", desc:"Extra-large room with two double beds, ample space for families travelling with kids.",                features:["AC","WiFi","TV","Extra Beds"], badge:"Family"},
+  {id:1, name:"Standard Single Room", price:1000, img:"images/room_photo2.jpg", desc:"Cozy single room with stylish décor, AC, and all basic amenities for a comfortable stay. Perfect for solo travellers.",      badge:"Budget",     amenities:[{icon:"❄️",name:"AC"},{icon:"📶",name:"Free WiFi"},{icon:"📺",name:"LED TV"},{icon:"🚿",name:"Hot Water"}]},
+  {id:2, name:"Standard Double Room", price:1500, img:"images/room_photo5.jpg", desc:"Spacious double room with modern interiors, perfect for couples or solo travellers who want extra space.",                     badge:"Popular",    amenities:[{icon:"❄️",name:"AC"},{icon:"📶",name:"Free WiFi"},{icon:"📺",name:"LED TV"},{icon:"🅿️",name:"Free Parking"}]},
+  {id:3, name:"Deluxe Single Room",   price:1800, img:"images/room_photo2.jpg", desc:"Upgraded single room with premium bed, elegant panel wall and soft lighting. Ideal for business travellers.",                  badge:"Deluxe",     amenities:[{icon:"❄️",name:"AC"},{icon:"📶",name:"Free WiFi"},{icon:"🧊",name:"Mini Fridge"},{icon:"☕",name:"Tea/Coffee"}]},
+  {id:4, name:"Deluxe Double Room",   price:2000, img:"images/room_photo1.jpg", desc:"Our most popular room — two plush beds, designer headboard wall and warm ambiance. Perfect for couples or friends.",           badge:"Best Value", amenities:[{icon:"❄️",name:"AC"},{icon:"📶",name:"Free WiFi"},{icon:"🌿",name:"Balcony"},{icon:"☕",name:"Tea/Coffee"}]},
+  {id:5, name:"Executive Room",       price:2500, img:"images/room_photo5.jpg", desc:"Designed for business travellers — king bed, work desk, LED TV and premium AC. High-speed WiFi included.",                    badge:"Executive",  amenities:[{icon:"❄️",name:"AC"},{icon:"📶",name:"Free WiFi"},{icon:"💼",name:"Work Desk"},{icon:"☕",name:"Tea/Coffee"}]},
+  {id:6, name:"Family Room",          price:3000, img:"images/room_photo3.jpg", desc:"Extra-large room with two double beds, ample space for families travelling with kids. All premium amenities included.",        badge:"Family",     amenities:[{icon:"❄️",name:"AC"},{icon:"📶",name:"Free WiFi"},{icon:"🛏️",name:"Extra Beds"},{icon:"📺",name:"LED TV"}]},
 ];
 
 
@@ -112,8 +112,8 @@ function formatDate(str){ return new Date(str).toLocaleDateString("en-IN",{day:"
 
 // ===== ROOMS =====
 const roomGuests = { 1:1, 2:2, 3:1, 4:2, 5:2, 6:4 };
-const roomStars  = { Budget:"⭐⭐⭐", Popular:"⭐⭐⭐⭐", Deluxe:"⭐⭐⭐⭐", "Best Value":"⭐⭐⭐⭐", Executive:"⭐⭐⭐⭐⭐", Suite:"⭐⭐⭐⭐⭐" };
-const badgeClass = { Popular:"popular", "Best Value":"best", Suite:"best" };
+const roomStars  = { Budget:"⭐⭐⭐", Popular:"⭐⭐⭐⭐", Deluxe:"⭐⭐⭐⭐", "Best Value":"⭐⭐⭐⭐", Executive:"⭐⭐⭐⭐⭐", Family:"⭐⭐⭐⭐", Suite:"⭐⭐⭐⭐⭐" };
+const badgeClass = { Popular:"popular", "Best Value":"best", Family:"best" };
 
 function renderRooms(maxPrice=9999){
   const grid     = document.getElementById("roomsGrid");
@@ -121,16 +121,20 @@ function renderRooms(maxPrice=9999){
   const cnt = document.getElementById("roomCount");
   if (cnt) cnt.textContent = `${filtered.length} room${filtered.length!==1?"s":""} available`;
 
+  if(!filtered.length){
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:rgba(255,255,255,.4)"><p style="font-size:2rem">🏨</p><p>No rooms in this price range</p></div>`;
+    return;
+  }
+
   grid.innerHTML = filtered.map(r => {
-    const topAmenities = r.amenities.slice(0,4);
     const stars  = roomStars[r.badge]  || "⭐⭐⭐";
     const guests = roomGuests[r.id]    || 2;
     const bClass = badgeClass[r.badge] || "";
-    const imgSrc = r.images ? r.images[0].src : (r.img || "images/room_photo2.jpg");
+    const ams    = r.amenities || [];
     return `
     <div class="room-card fade-in" onclick="window.location.href='room.html?id=${r.id}'">
       <div class="room-card-img">
-        <img src="${imgSrc}" alt="${r.name}" loading="lazy"/>
+        <img src="${r.img}" alt="${r.name}" loading="lazy"/>
         <div class="room-img-overlay"></div>
         <div class="room-badge-wrap">
           <span class="room-badge ${bClass}">${r.badge}</span>
@@ -145,11 +149,11 @@ function renderRooms(maxPrice=9999){
         <h3>${r.name}</h3>
         <p>${r.desc}</p>
         <div class="room-amenities">
-          ${topAmenities.map(a=>`<span class="room-amenity">${a.icon} ${a.name}</span>`).join("")}
+          ${ams.slice(0,4).map(a=>`<span class="room-amenity">${a.icon} ${a.name}</span>`).join("")}
         </div>
         <div class="room-footer">
           <div class="room-price">₹${r.price.toLocaleString("en-IN")}<span>per night</span></div>
-          <a class="btn-book-room" href="room.html?id=${r.id}">View &amp; Book →</a>
+          <a class="btn-book-room" href="room.html?id=${r.id}" onclick="event.stopPropagation()">View &amp; Book →</a>
         </div>
       </div>
     </div>`;
