@@ -1,16 +1,18 @@
-const ADMIN_PASSWORD = "sahilpalace2025";
+const ADMIN_EMAIL    = "palakarora955@gmail.com";
+const ADMIN_PASSWORD = "SahilHotel@#1718";
 let authed = false;
 
 // ===== LOGIN =====
 function doLogin() {
-  const pwd = document.getElementById("loginPassword").value;
-  if (pwd === ADMIN_PASSWORD) {
+  const email = document.getElementById("loginEmail").value.trim();
+  const pwd   = document.getElementById("loginPassword").value;
+  if (email === ADMIN_EMAIL && pwd === ADMIN_PASSWORD) {
     authed = true;
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("adminWrap").style.display   = "flex";
     loadAll();
   } else {
-    document.getElementById("loginError").textContent = "❌ Incorrect password. Try again.";
+    document.getElementById("loginError").textContent = "❌ Incorrect email or password. Try again.";
   }
 }
 
@@ -18,6 +20,7 @@ function logout() {
   authed = false;
   document.getElementById("loginScreen").style.display = "flex";
   document.getElementById("adminWrap").style.display   = "none";
+  document.getElementById("loginEmail").value    = "";
   document.getElementById("loginPassword").value = "";
 }
 
@@ -43,7 +46,10 @@ function switchTab(name, el) {
 // ===== API CALLS =====
 async function apiFetch(path) {
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: { "x-admin-password": ADMIN_PASSWORD }
+    headers: {
+      "x-admin-email":    ADMIN_EMAIL,
+      "x-admin-password": ADMIN_PASSWORD
+    }
   });
   return res.json();
 }
@@ -190,8 +196,12 @@ async function updateStatus(id, status) {
   try {
     await fetch(`${API_BASE}/api/admin/bookings/${id}`, {
       method:  "PATCH",
-      headers: { "Content-Type":"application/json", "x-admin-password": ADMIN_PASSWORD },
-      body:    JSON.stringify({ status })
+      headers: {
+        "Content-Type":     "application/json",
+        "x-admin-email":    ADMIN_EMAIL,
+        "x-admin-password": ADMIN_PASSWORD
+      },
+      body: JSON.stringify({ status })
     });
     showToast(`✅ Booking #${id} marked as ${status}`, "green");
   } catch(e) { showToast("Failed to update status", "red"); }
