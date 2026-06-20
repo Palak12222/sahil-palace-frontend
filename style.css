@@ -311,3 +311,24 @@ ul{list-style:none}
 .star-btn{font-size:2rem;color:#ddd;cursor:pointer;transition:color .15s ease;line-height:1;user-select:none}
 .star-btn.active,.star-btn:hover{color:var(--gold)}
 .review-form-card .btn-primary{width:100%;margin-top:8px;text-align:center;justify-content:center}
+
+/* ===== EVENTS BANNER (Homepage) ===== */
+.events-banner-section{background:var(--dark2);padding:70px 0}
+.events-banner{display:grid;grid-template-columns:1.3fr 1fr;gap:50px;align-items:center;background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.03));border:1px solid rgba(201,168,76,.2);border-radius:var(--radius-lg);padding:48px}
+.eb-tag{font-size:.82rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold);font-weight:600;margin-bottom:12px}
+.eb-content h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.4rem);color:var(--white);margin-bottom:14px;line-height:1.2}
+.eb-content>p{color:rgba(255,255,255,.6);font-size:.9rem;line-height:1.7;margin-bottom:24px}
+.eb-highlights{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.eb-highlights span{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.25);color:var(--gold-light);padding:6px 14px;border-radius:50px;font-size:.8rem}
+.btn-events{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);padding:14px 32px;border-radius:50px;font-size:.95rem;font-weight:700;transition:var(--transition);box-shadow:var(--shadow-gold)}
+.btn-events:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(201,168,76,.5)}
+.eb-venues{display:flex;flex-direction:column;gap:16px}
+.eb-venue-card{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:var(--radius);padding:18px 22px;display:flex;align-items:center;gap:16px;transition:var(--transition)}
+.eb-venue-card:hover{border-color:var(--gold);background:rgba(201,168,76,.08);transform:translateX(6px)}
+.eb-venue-card span{font-size:2rem}
+.eb-venue-card strong{display:block;color:var(--white);font-size:.95rem}
+.eb-venue-card small{display:block;color:rgba(255,255,255,.5);font-size:.78rem}
+@media(max-width:900px){
+  .events-banner{grid-template-columns:1fr;gap:30px;padding:32px 24px}
+}
+
