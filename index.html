@@ -110,22 +110,31 @@
   <div class="container">
     <div class="section-header">
       <p class="section-label">Our Accommodation</p>
-      <h2 class="section-title">Choose Your Room</h2>
-      <p class="section-desc">6 carefully designed rooms for a comfortable and memorable stay</p>
+      <h2 class="section-title">Choose Your Perfect Room</h2>
+      <p class="section-desc">6 beautifully designed rooms — AC, free WiFi, hot water &amp; 24/7 room service included</p>
     </div>
-    <!-- Price Filter -->
-    <div class="room-filters">
-      <span>Filter by price:</span>
-      <button class="filter-btn active" data-max="9999">All Rooms</button>
-      <button class="filter-btn" data-max="1500">Under ₹1500</button>
-      <button class="filter-btn" data-max="2000">Under ₹2000</button>
-      <button class="filter-btn" data-max="3000">Under ₹3000</button>
+
+    <!-- Filter Bar -->
+    <div class="room-filter-bar">
+      <div class="rfb-left">
+        <span class="rfb-icon">🏷️</span>
+        <span class="rfb-label">Filter by budget:</span>
+      </div>
+      <div class="rfb-btns">
+        <button class="filter-btn active" data-max="9999">✨ All Rooms</button>
+        <button class="filter-btn" data-max="1500">Under ₹1500</button>
+        <button class="filter-btn" data-max="2000">Under ₹2000</button>
+        <button class="filter-btn" data-max="3000">Under ₹3000</button>
+      </div>
+      <div class="rfb-count" id="roomCount">6 rooms available</div>
     </div>
+
     <div class="rooms-grid" id="roomsGrid">
       <!-- Rooms injected by JS -->
     </div>
   </div>
 </section>
+
 
 <!-- ===== EVENTS BANNER ===== -->
 <section class="events-banner-section">

@@ -111,29 +111,51 @@ document.getElementById("quickBookForm").addEventListener("submit", e => {
 function formatDate(str){ return new Date(str).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}); }
 
 // ===== ROOMS =====
+const roomGuests = { 1:1, 2:2, 3:1, 4:2, 5:2, 6:4 };
+const roomStars  = { Budget:"⭐⭐⭐", Popular:"⭐⭐⭐⭐", Deluxe:"⭐⭐⭐⭐", "Best Value":"⭐⭐⭐⭐", Executive:"⭐⭐⭐⭐⭐", Suite:"⭐⭐⭐⭐⭐" };
+const badgeClass = { Popular:"popular", "Best Value":"best", Suite:"best" };
+
 function renderRooms(maxPrice=9999){
-  const grid = document.getElementById("roomsGrid");
+  const grid     = document.getElementById("roomsGrid");
   const filtered = rooms.filter(r => r.price <= maxPrice);
-  grid.innerHTML = filtered.map(r => `
-    <div class="room-card fade-in" data-price="${r.price}" onclick="window.location.href='room.html?id=${r.id}'" style="cursor:pointer">
-      <div style="overflow:hidden">
-        <img src="${r.img}" alt="${r.name}" loading="lazy"/>
+  const cnt = document.getElementById("roomCount");
+  if (cnt) cnt.textContent = `${filtered.length} room${filtered.length!==1?"s":""} available`;
+
+  grid.innerHTML = filtered.map(r => {
+    const topAmenities = r.amenities.slice(0,4);
+    const stars  = roomStars[r.badge]  || "⭐⭐⭐";
+    const guests = roomGuests[r.id]    || 2;
+    const bClass = badgeClass[r.badge] || "";
+    const imgSrc = r.images ? r.images[0].src : (r.img || "images/room_photo2.jpg");
+    return `
+    <div class="room-card fade-in" onclick="window.location.href='room.html?id=${r.id}'">
+      <div class="room-card-img">
+        <img src="${imgSrc}" alt="${r.name}" loading="lazy"/>
+        <div class="room-img-overlay"></div>
+        <div class="room-badge-wrap">
+          <span class="room-badge ${bClass}">${r.badge}</span>
+        </div>
+        <div class="room-price-chip">₹${r.price.toLocaleString("en-IN")}<span>/night</span></div>
       </div>
       <div class="room-card-body">
-        <span class="room-badge">${r.badge}</span>
+        <div class="room-meta">
+          <span class="room-stars">${stars}</span>
+          <span class="room-capacity">👤 Up to ${guests} guest${guests>1?"s":""}</span>
+        </div>
         <h3>${r.name}</h3>
         <p>${r.desc}</p>
-        <div class="room-features">${r.features.map(f=>`<span>${f}</span>`).join("")}</div>
+        <div class="room-amenities">
+          ${topAmenities.map(a=>`<span class="room-amenity">${a.icon} ${a.name}</span>`).join("")}
+        </div>
         <div class="room-footer">
-          <div class="room-price">₹${r.price.toLocaleString("en-IN")}<span>/night</span></div>
-          <a class="btn-book-room" href="room.html?id=${r.id}">View & Book →</a>
+          <div class="room-price">₹${r.price.toLocaleString("en-IN")}<span>per night</span></div>
+          <a class="btn-book-room" href="room.html?id=${r.id}">View &amp; Book →</a>
         </div>
       </div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
   observeFadeIns();
 }
-
-
 
 document.querySelectorAll(".filter-btn").forEach(btn => {
   btn.addEventListener("click", function(){
@@ -142,6 +164,7 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
     renderRooms(Number(this.dataset.max));
   });
 });
+
 
 // ===== BOOKING MODAL =====
 function openBookingModal(roomId){
