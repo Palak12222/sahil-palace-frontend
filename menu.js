@@ -289,30 +289,60 @@ function renderMenu() {
   }
 
 function getDishImage(item) {
-  if (item.img && item.img !== "images/food_veg.png" && item.img !== "images/food_nonveg.png") {
-    return item.img;
+  const name = (item.name || "").toLowerCase();
+  const cat  = (item.cat  || "").toLowerCase();
+
+  // 1. Shakes & Beverages & Teas
+  if (name.includes("shake") || name.includes("lassi") || name.includes("coffee") || name.includes("tea") || name.includes("chai") || name.includes("drink") || name.includes("soda") || cat === "beverages") {
+    return "images/food_shake.png";
   }
-  const name = item.name.toLowerCase();
-  
-  if (name.includes("biryani") || name.includes("pulao") || name.includes("rice")) {
+
+  // 2. Soups
+  if (name.includes("soup") || cat === "soups") {
+    return "images/food_soup.png";
+  }
+
+  // 3. Biryani, Pulao & Rice Dishes
+  if (name.includes("biryani") || name.includes("pulao") || name.includes("rice") || name.includes("chawal") || cat === "rice") {
     return "images/food_biryani.png";
   }
-  if (name.includes("makhani") || name.includes("dal") || name.includes("dall")) {
+
+  // 4. Dal, Lentils & Rajma/Chole Gravies
+  if (name.includes("makhani") || name.includes("dal") || name.includes("dall") || name.includes("chole") || name.includes("rajma") || name.includes("tadka") || cat === "dal") {
     return "images/food_dal_makhani.png";
   }
-  if (name.includes("paneer") || name.includes("shahi") || name.includes("kadai") || name.includes("pasanda") || name.includes("bhurji") || name.includes("cheese")) {
+
+  // 5. Paneer & Cheese Dishes
+  if (name.includes("paneer") || name.includes("shahi") || name.includes("kadai") || name.includes("pasanda") || name.includes("bhurji") || name.includes("bhujiya") || name.includes("cheese")) {
     return "images/food_paneer_tikka.png";
   }
-  if (name.includes("chaap") || name.includes("tikka") || name.includes("seekh") || name.includes("kabab")) {
+
+  // 6. Chaap, Tikka, Seekh & Kebabs
+  if (name.includes("chaap") || name.includes("tikka") || name.includes("seekh") || name.includes("kabab") || name.includes("kebab") || cat === "tandoori") {
     return "images/food_chaap.png";
   }
-  if (name.includes("parantha") || name.includes("prantha") || name.includes("naan") || name.includes("roti") || name.includes("bread")) {
+
+  // 7. Parantha, Naan, Roti & Indian Breads
+  if (name.includes("parantha") || name.includes("prantha") || name.includes("naan") || name.includes("roti") || name.includes("bread") || name.includes("puri") || name.includes("missi") || cat === "bread") {
     return "images/food_paratha.png";
   }
-  if (item.type === "nonveg" && (name.includes("chicken") || name.includes("curry") || name.includes("mutton") || name.includes("fish") || name.includes("kfc") || name.includes("leg"))) {
+
+  // 8. Non-Veg Chicken, Mutton, Fish, Meat
+  if (item.type === "nonveg" || name.includes("chicken") || name.includes("mutton") || name.includes("fish") || name.includes("kfc") || name.includes("meat") || name.includes("egg") || name.includes("omlate") || name.includes("omelette") || cat === "nonveg") {
     return "images/food_butter_chicken.png";
   }
-  
+
+  // 9. Chinese, Noodles, Pasta, Manchurian, Fries
+  if (name.includes("maggi") || name.includes("pasta") || name.includes("manchurian") || name.includes("fries") || name.includes("noodle") || name.includes("chilly") || name.includes("chilli") || cat === "chinese" || cat === "maggi") {
+    return "images/food_chinese.png";
+  }
+
+  // 10. Salad & Raita & Papad
+  if (name.includes("salad") || name.includes("raita") || name.includes("curd") || name.includes("papad") || name.includes("dahi") || cat === "raita") {
+    return "images/food_salad.png";
+  }
+
+  // 11. Default fallback by Veg / Non-Veg
   return item.type === "nonveg" ? "images/food_nonveg.png" : "images/food_veg.png";
 }
 
