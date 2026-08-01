@@ -292,7 +292,27 @@ function getDishImage(item) {
   const name = (item.name || "").toLowerCase();
   const cat  = (item.cat  || "").toLowerCase();
 
-  // 1. Specific Pastas
+  // 1. Mushroom Duplex
+  if (name.includes("mushroom duplex") || name.includes("duplex")) {
+    return "images/food_mushroom_duplex.png";
+  }
+
+  // 2. Sweet Corn & Crispy Corn
+  if (name.includes("corn") || name.includes("sweetcorn")) {
+    return "images/food_crispy_corn.png";
+  }
+
+  // 3. Cutlets & Potato Finger
+  if (name.includes("cutlet") || name.includes("potato finger")) {
+    return "images/food_veg_cutlet.png";
+  }
+
+  // 4. Chaats & Peanut Masala
+  if (name.includes("chaat") || name.includes("chat") || name.includes("pataka") || name.includes("peanut")) {
+    return "images/food_chana_chaat.png";
+  }
+
+  // 5. Specific Pastas
   if (name.includes("red sauce") || name.includes("red pasta")) {
     return "images/food_red_pasta.png";
   }
@@ -300,23 +320,23 @@ function getDishImage(item) {
     return "images/food_white_pasta.png";
   }
 
-  // 2. Sandwiches
+  // 6. Sandwiches
   if (name.includes("sandwich")) {
     return "images/food_sandwich.png";
   }
 
-  // 3. Crispy Paneer Fry / KFC / Paneer Pakora / Cheese Finger
+  // 7. Crispy Paneer Fry / KFC / Paneer Pakora / Cheese Finger
   if (name.includes("paneer kfc") || name.includes("paneer fry") || name.includes("paneer pakora") || name.includes("cheese finger")) {
     return "images/food_paneer_fry.png";
   }
 
-  // 4. Pakoras & Fritters
-  if (name.includes("pakora") || name.includes("cutlet")) {
+  // 8. Pakoras & Fritters
+  if (name.includes("pakora")) {
     return "images/food_pakora.png";
   }
 
-  // 5. Chana Chilly & Chana Snacks
-  if (name.includes("chana chilly") || name.includes("chana chat") || name.includes("chana pataka")) {
+  // 9. Chana Chilly & Chana Snacks
+  if (name.includes("chana chilly")) {
     return "images/food_chana_chilly.png";
   }
 
