@@ -381,8 +381,14 @@ function getDishImage(item) {
     return "images/food_mix_veg.png";
   }
 
+  // 2.5 ALL PARANTHAS & FLATBREADS
+  if (name.includes("prantha") || name.includes("parantha")) {
+    if (name.includes("paneer")) return "images/food_paneer_paratha.png";
+    return "images/food_paratha.png";
+  }
+
   // 3. TANDOORI SNACKS (Dry Charcoal Skewers & Kebabs)
-  if (cat === "tandoori" || name.includes("tandoori")) {
+  if (cat === "tandoori" || (name.includes("tandoori") && !name.includes("prantha") && !name.includes("parantha"))) {
     if (name.includes("paneer tikka")) return "images/food_paneer_tikka.png";
     if (name.includes("aloo")) return "images/food_potato_finger_real.jpg";
     if (name.includes("mushroom")) return "images/food_mushroom_duplex_real.jpg";
@@ -398,7 +404,6 @@ function getDishImage(item) {
   if (name === "hot milk") return "images/food_hot_milk.png";
   if (name.includes("lassi")) return "images/food_lassi.png";
   if (name.includes("poha")) return "images/food_poha.png";
-  if (name.includes("paneer prantha") || name.includes("paneer parantha")) return "images/food_paneer_paratha.png";
   if (name.includes("parantha") || name.includes("prantha") || name.includes("naan") || name.includes("roti") || (name.includes("bread") && !name.includes("omelette") && !name.includes("sandwich")) || name.includes("puri") || name.includes("missi") || cat === "bread") return "images/food_paratha.png";
   if (name.includes("bread omelette") || name.includes("bread omellete")) return "images/food_bread_omelette.png";
   if (name.includes("bhurji")) return "images/food_egg_bhurji.png";
@@ -450,7 +455,7 @@ function getDishImage(item) {
     const inCartSingle = cart[singleKey] > 0;
 
     const dishImgSrc = getDishImage(item);
-    const imgMarkup  = `<img src="${dishImgSrc}?v=6" alt="${item.name}" loading="lazy"/>`;
+    const imgMarkup  = `<img src="${dishImgSrc}?v=7" alt="${item.name}" loading="lazy"/>`;
 
     let actionButtons = "";
     if (item.halfPrice) {
