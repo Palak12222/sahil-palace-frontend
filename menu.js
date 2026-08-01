@@ -452,7 +452,7 @@ function getDishImage(item) {
     const inCartSingle = cart[singleKey] > 0;
 
     const dishImgSrc = getDishImage(item);
-    const imgMarkup  = `<img src="${dishImgSrc}" alt="${item.name}" loading="lazy"/>`;
+    const imgMarkup  = `<img src="${dishImgSrc}?v=2" alt="${item.name}" loading="lazy"/>`;
 
     let actionButtons = "";
     if (item.halfPrice) {
