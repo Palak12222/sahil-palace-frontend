@@ -428,13 +428,18 @@ function getDishImage(item) {
     return "images/food_chinese.png";
   }
 
-  // 20. Salad & Raita & Papad
+  // 20. Vegetable Curries & Mix Veg
+  if (name.includes("mix veg") || name.includes("aloo") || name.includes("gobhi") || name.includes("kaju") || name.includes("sev") || name.includes("dum") || name.includes("curry") || name.includes("gravy") || name.includes("kofta") || cat === "mainveg") {
+    return "images/food_mix_veg.png";
+  }
+
+  // 21. Salad & Raita & Papad
   if (name.includes("salad") || name.includes("raita") || name.includes("curd") || name.includes("papad") || name.includes("dahi") || cat === "raita") {
     return "images/food_salad.png";
   }
 
-  // 21. Default fallback by Veg / Non-Veg
-  return item.type === "nonveg" ? "images/food_nonveg.png" : "images/food_veg.png";
+  // 22. Default fallback by Veg / Non-Veg
+  return item.type === "nonveg" ? "images/food_nonveg.png" : "images/food_mix_veg.png";
 }
 
   grid.innerHTML = items.map(item => {
