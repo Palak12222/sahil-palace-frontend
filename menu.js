@@ -292,24 +292,39 @@ function getDishImage(item) {
   const name = (item.name || "").toLowerCase();
   const cat  = (item.cat  || "").toLowerCase();
 
-  // 1. Mushroom Duplex
+  // 1. User Uploaded Snack Photos (Exact Match)
   if (name.includes("mushroom duplex") || name.includes("duplex")) {
-    return "images/food_mushroom_duplex.png";
+    return "images/food_mushroom_duplex_real.jpg";
   }
-
-  // 2. Sweet Corn & Crispy Corn
-  if (name.includes("corn") || name.includes("sweetcorn")) {
-    return "images/food_crispy_corn.png";
+  if (name.includes("cutlet")) {
+    return "images/food_veg_cutlet_real.jpg";
   }
-
-  // 3. Cutlets & Potato Finger
-  if (name.includes("cutlet") || name.includes("potato finger")) {
-    return "images/food_veg_cutlet.png";
+  if (name.includes("potato finger")) {
+    return "images/food_potato_finger_real.jpg";
   }
-
-  // 4. Chaats & Peanut Masala
-  if (name.includes("chaat") || name.includes("chat") || name.includes("pataka") || name.includes("peanut")) {
-    return "images/food_chana_chaat.png";
+  if (name.includes("chana chat & sweetcorn") || name.includes("chana chat and sweetcorn") || name.includes("channa chaat & sweetcorn")) {
+    return "images/food_chana_sweetcorn_real.jpg";
+  }
+  if (name.includes("chana chaat") || name.includes("channa chaat")) {
+    return "images/food_chana_chaat_real.jpg";
+  }
+  if (name.includes("hot chaat") || name.includes("hot channa")) {
+    return "images/food_hot_chana_real.jpg";
+  }
+  if (name.includes("peanut masala")) {
+    return "images/food_peanut_masala_real.jpg";
+  }
+  if (name.includes("chana pataka")) {
+    return "images/food_hot_chana_real.jpg";
+  }
+  if (name.includes("sweetcorn plain")) {
+    return "images/food_sweetcorn_plain_real.jpg";
+  }
+  if (name.includes("sweet corn chat") || name.includes("sweetcorn chaat")) {
+    return "images/food_sweetcorn_chaat_real.jpg";
+  }
+  if (name.includes("crispy corn")) {
+    return "images/food_crispy_corn_real.jpg";
   }
 
   // 5. Specific Pastas
