@@ -1,14 +1,14 @@
 /* ===== BASE ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dark:#9a7a2e;
-  --dark:#0d0d0d;--dark2:#1a1a1a;--dark3:#242424;
-  --cream:#fdf8f0;--cream2:#f5ede0;
-  --text:#2c2c2c;--text-light:#666;
-  --white:#fff;--red:#c0392b;--green:#27ae60;
+  --gold:#D4AF37;--gold-light:#F4E2A9;--gold-dark:#B68C1F;
+  --dark:#0F172A;--dark2:#111827;--dark3:#1F2937;
+  --cream:#F8F9FA;--cream2:#F1F3F5;
+  --text:#1F2937;--text-light:#64748B;
+  --white:#FFFFFF;--red:#c0392b;--green:#27ae60;
   --radius:12px;--radius-lg:20px;
-  --shadow:0 8px 32px rgba(0,0,0,.12);
-  --shadow-gold:0 4px 20px rgba(201,168,76,.3);
+  --shadow:0 8px 32px rgba(15,23,42,.08);
+  --shadow-gold:0 4px 20px rgba(212,175,55,.25);
   --transition:.3s ease;
 }
 html{scroll-behavior:smooth}
@@ -29,7 +29,7 @@ a{text-decoration:none;color:inherit}
 .hamburger span{display:block;width:24px;height:2px;background:var(--white)}
 
 /* ===== HERO ===== */
-.menu-hero{position:relative;background:linear-gradient(135deg,#0d0d0d,#2d1500);padding:70px 20px;text-align:center}
+.menu-hero{position:relative;background:linear-gradient(135deg,#1f2323,#4b5456);padding:70px 20px;text-align:center}
 .menu-hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,.1) 0%,transparent 70%)}
 .menu-hero-content{position:relative;z-index:1;color:var(--white)}
 .hero-tag{font-size:.85rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:14px}

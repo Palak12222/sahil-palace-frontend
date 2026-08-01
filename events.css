@@ -1,14 +1,14 @@
 /* ===== RESET & BASE ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dark:#9a7a2e;
-  --dark:#0d0d0d;--dark2:#1a1a1a;--dark3:#242424;
-  --cream:#fdf8f0;--cream2:#f5ede0;
-  --text:#2c2c2c;--text-light:#666;
-  --white:#fff;--red:#c0392b;--green:#27ae60;
+  --gold:#D4AF37;--gold-light:#F4E2A9;--gold-dark:#B68C1F;
+  --dark:#0F172A;--dark2:#111827;--dark3:#1F2937;
+  --cream:#F8F9FA;--cream2:#F1F3F5;
+  --text:#1F2937;--text-light:#64748B;
+  --white:#FFFFFF;--red:#c0392b;--green:#27ae60;
   --radius:12px;--radius-lg:20px;
-  --shadow:0 8px 32px rgba(0,0,0,.12);
-  --shadow-gold:0 4px 20px rgba(201,168,76,.3);
+  --shadow:0 8px 32px rgba(15,23,42,.08);
+  --shadow-gold:0 4px 20px rgba(212,175,55,.25);
   --transition:.3s ease;
 }
 html{scroll-behavior:smooth}
@@ -32,7 +32,7 @@ ul{list-style:none}
 .hamburger span{display:block;width:24px;height:2px;background:var(--white)}
 
 /* ===== HERO ===== */
-.events-hero{position:relative;min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:linear-gradient(135deg,#0d0d0d 0%,#1a0a00 40%,#2d1500 70%,#0d0d0d 100%)}
+.events-hero{position:relative;min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:linear-gradient(135deg,#1f2323 0%,#4b5456 40%,#7f8c8d 70%,#1f2323 100%)}
 .events-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,.15) 0%,transparent 70%)}
 .hero-overlay{position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
 .hero-content{position:relative;z-index:2;color:var(--white);padding:0 20px}

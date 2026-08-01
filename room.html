@@ -16,21 +16,32 @@
   <div class="nav-container">
     <a class="nav-brand" href="index.html">🏨 Sahil Palace</a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html#home">Home</a>
-      <a href="index.html#rooms">Rooms</a>
-      <a href="index.html#food">Food</a>
+      <a href="index.html">Home</a>
+      <a href="room.html" class="active">Rooms</a>
+      <a href="menu.html">Menu</a>
+      <a href="events.html">Events</a>
       <a href="index.html#contact">Contact</a>
     </div>
     <button class="hamburger" id="hamburger">☰</button>
   </div>
 </nav>
 
+<!-- ROOMS LIST -->
+<section class="rooms-list-section" id="roomsListSection" style="display:none">
+  <div class="section-header">
+    <p class="section-label">Our Accommodation</p>
+    <h2 class="section-title">Choose Your Perfect Room</h2>
+    <p class="section-desc">Browse all available rooms and select the one that fits your stay.</p>
+  </div>
+  <div class="rooms-list-grid" id="roomsListGrid"></div>
+</section>
+
 <!-- ROOM DETAIL -->
-<main class="room-detail">
+<main class="room-detail" id="roomDetailMain">
 
   <!-- BREADCRUMB -->
   <div class="breadcrumb">
-    <a href="index.html">Home</a> › <a href="index.html#rooms">Rooms</a> › <span id="breadRoom">Room</span>
+    <a href="index.html">Home</a> › <a href="room.html">Rooms</a> › <span id="breadRoom">Room</span>
   </div>
 
   <!-- SLIDESHOW -->

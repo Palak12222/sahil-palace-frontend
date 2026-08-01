@@ -111,7 +111,6 @@ function renderRooms(maxPrice=9999){
 
   grid.innerHTML = filtered.map(r => {
     const stars  = roomStars[r.badge]  || "⭐⭐⭐";
-    const guests = roomGuests[r.id]    || 2;
     const bClass = badgeClass[r.badge] || "";
     const ams    = r.amenities || [];
     return `
@@ -127,7 +126,6 @@ function renderRooms(maxPrice=9999){
       <div class="room-card-body">
         <div class="room-meta">
           <span class="room-stars">${stars}</span>
-          <span class="room-capacity">👤 Up to ${guests} guest${guests>1?"s":""}</span>
         </div>
         <h3>${r.name}</h3>
         <p>${r.desc}</p>
