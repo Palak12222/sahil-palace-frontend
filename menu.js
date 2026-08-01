@@ -292,18 +292,59 @@ function getDishImage(item) {
   const name = (item.name || "").toLowerCase();
   const cat  = (item.cat  || "").toLowerCase();
 
-  // 1. User Uploaded Snack Photos (Exact Match)
-  if (name.includes("mushroom duplex") || name.includes("duplex")) return "images/food_mushroom_duplex_real.jpg";
-  if (name.includes("cutlet")) return "images/food_veg_cutlet_real.jpg";
-  if (name.includes("potato finger")) return "images/food_potato_finger_real.jpg";
-  if (name.includes("chana chat & sweetcorn") || name.includes("chana chat and sweetcorn") || name.includes("channa chaat & sweetcorn")) return "images/food_chana_sweetcorn_real.jpg";
-  if (name.includes("chana chaat") || name.includes("channa chaat")) return "images/food_chana_chaat_real.jpg";
-  if (name.includes("hot chaat") || name.includes("hot channa")) return "images/food_hot_chana_real.jpg";
-  if (name.includes("peanut masala")) return "images/food_peanut_masala_real.jpg";
-  if (name.includes("chana pataka")) return "images/food_hot_chana_real.jpg";
-  if (name.includes("sweetcorn plain")) return "images/food_sweetcorn_plain_real.jpg";
-  if (name.includes("sweet corn chat") || name.includes("sweetcorn chaat")) return "images/food_sweetcorn_chaat_real.jpg";
-  if (name.includes("crispy corn")) return "images/food_crispy_corn_real.jpg";
+  // 0. EXACT REAL DISH PHOTOS UPLOADED BY USER (54 Dishes)
+  if (name.includes("chef special paneer")) return "images/dish_chef_special_paneer.jpg";
+  if (name.includes("cheese tomato")) return "images/dish_cheese_tomato.jpg";
+  if (name.includes("shahi paneer")) return "images/dish_shahi_paneer.jpg";
+  if (name.includes("kadai paneer")) return "images/dish_kadai_paneer.jpg";
+  if (name.includes("paneer butter masala")) return "images/dish_paneer_butter_masala.jpg";
+  if (name.includes("paneer do pyaza")) return "images/dish_paneer_do_pyaza.jpg";
+  if (name.includes("paneer methi malai")) return "images/dish_paneer_methi_malai.jpg";
+  if (name.includes("palak paneer")) return "images/dish_palak_paneer.jpg";
+  if (name.includes("matar paneer")) return "images/dish_matar_paneer.jpg";
+  if (name.includes("paneer bhurji")) return "images/dish_paneer_bhurji.jpg";
+  if (name.includes("veg. gravy") || name.includes("veg gravy")) return "images/dish_veg_gravy.jpg";
+  if (name.includes("paneer pasanda")) return "images/dish_paneer_pasanda.jpg";
+  if (name.includes("chaap masala gravy")) return "images/dish_chaap_masala_gravy.jpg";
+  if (name.includes("chaap roganjosh")) return "images/dish_chaap_roganjosh.jpg";
+  if (name.includes("tawa chaap masala")) return "images/dish_tawa_chaap_masala.jpg";
+  if (name.includes("tawa tikka masala")) return "images/dish_tawa_paneer_masala.jpg";
+  if (name.includes("malai kofta")) return "images/dish_malai_kofta.jpg";
+  if (name.includes("palak kofta")) return "images/dish_palak_kofta.jpg";
+  if (name.includes("veg kofta") || name.includes("veg. kofta")) return "images/dish_veg_kofta.jpg";
+  if (name.includes("palak corn")) return "images/dish_palak_corn.jpg";
+  if (name.includes("mix veg")) return "images/dish_mix_veg_recipe.jpg";
+  if (name.includes("mutter mushroom") || name.includes("matar mushroom")) return "images/dish_matar_mushroom.jpg";
+  if (name.includes("mushroom masala")) return "images/dish_mushroom_masala.jpg";
+  if (name.includes("mushroom do pyaza")) return "images/dish_mushroom_do_pyaza.jpg";
+  if (name.includes("mushroom corn")) return "images/dish_mushroom_corn.jpg";
+  if (name.includes("palak mushroom")) return "images/dish_palak_mushroom.jpg";
+  if (name.includes("mushroom palak corn")) return "images/dish_mushroom_palak_corn.jpg";
+  if (name.includes("mushroom curry")) return "images/dish_mushroom_curry.jpg";
+  if (name.includes("jeera aloo")) return "images/dish_jeera_aloo.jpg";
+  if (name.includes("chana masala")) return "images/dish_chana_masala.jpg";
+  if (name.includes("kadahi chana") || name.includes("kadai chana")) return "images/dish_kadai_channa.jpg";
+  if (name.includes("mutter methi malai") || name.includes("matar methi malai")) return "images/dish_matar_methi_malai.jpg";
+  if (name.includes("aloo gobhi")) return "images/dish_aloo_gobhi.jpg";
+  if (name.includes("masala gobhi")) return "images/dish_masala_gobhi.jpg";
+  if (name.includes("keema gobhi")) return "images/dish_keema_gobhi.jpg";
+  if (name.includes("paneer bhujiya")) return "images/dish_paneer_bhujiya.jpg";
+  if (name.includes("paneer tikka butter masala")) return "images/dish_paneer_tikka_butter_masala.jpg";
+  if (name.includes("dum aloo")) return "images/dish_dum_aloo.jpg";
+  if (name.includes("aloo matar")) return "images/dish_aloo_matar.jpg";
+  if (name.includes("kaju kari")) return "images/dish_kaju_kari.jpg";
+  if (name.includes("sev bhaji")) return "images/dish_sev_bhaji.jpg";
+  if (name.includes("sev tomato")) return "images/dish_sev_tomato.jpg";
+  if (name.includes("potato finger")) return "images/dish_potato_finger_masala.jpg";
+  if (name.includes("veg cutlet") || name.includes("veg. cutlet")) return "images/dish_veg_cutlet.jpg";
+  if (name.includes("channa chaat & sweetcorn") || name.includes("chana chat & sweetcorn")) return "images/dish_channa_chaat_sweetcorn.jpg";
+  if (name.includes("channa chaat") || name.includes("chana chaat")) return "images/dish_channa_chaat.jpg";
+  if (name.includes("hot channa") || name.includes("hot chaat")) return "images/dish_hot_channa.jpg";
+  if (name.includes("peanut masala")) return "images/dish_peanut_masala.jpg";
+  if (name.includes("crispy corn")) return "images/dish_crispy_corn.jpg";
+  if (name.includes("sweetcorn plain")) return "images/dish_sweetcorn_plain.jpg";
+  if (name.includes("sweetcorn chaat") || name.includes("sweet corn chat")) return "images/dish_sweetcorn_chaat.jpg";
+  if (name.includes("mushroom duplex") || name.includes("duplex")) return "images/dish_mushroom_duplex.jpg";
 
   // 2. MAIN COURSE VEG CURRIES (Gravy Dishes)
   if (cat === "mainveg" || name.includes("gravy") || name.includes("roganjosh")) {
@@ -386,7 +427,7 @@ function getDishImage(item) {
     const inCartSingle = cart[singleKey] > 0;
 
     const dishImgSrc = getDishImage(item);
-    const imgMarkup  = `<img src="${dishImgSrc}?v=4" alt="${item.name}" loading="lazy"/>`;
+    const imgMarkup  = `<img src="${dishImgSrc}?v=5" alt="${item.name}" loading="lazy"/>`;
 
     let actionButtons = "";
     if (item.halfPrice) {
