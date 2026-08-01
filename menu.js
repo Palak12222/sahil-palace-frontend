@@ -435,12 +435,30 @@ function getDishImage(item) {
     return "images/food_dal_makhani.png";
   }
 
-  // 16. Paneer & Cheese Dishes
-  if (name.includes("paneer") || name.includes("shahi") || name.includes("kadai") || name.includes("pasanda") || name.includes("cheese")) {
-    return "images/food_paneer_tikka.png";
+  // 16. Specific Main Course Veg Gravy Curries
+  if (name.includes("palak paneer")) {
+    return "images/food_palak_paneer.png";
+  }
+  if (name.includes("matar paneer")) {
+    return "images/food_matar_paneer.png";
+  }
+  if (name.includes("cheese tomato")) {
+    return "images/food_cheese_tomato.png";
+  }
+  if (name.includes("shahi paneer") || name.includes("chef special") || name.includes("pasanda")) {
+    return "images/food_shahi_paneer.png";
+  }
+  if (name.includes("kadai paneer") || name.includes("butter masala") || name.includes("do pyaza") || name.includes("methi malai") || name.includes("tawa tikka")) {
+    return "images/food_kadai_paneer.png";
+  }
+  if (name.includes("chaap") && (name.includes("gravy") || name.includes("roganjosh") || name.includes("masala") || cat === "mainveg")) {
+    return "images/food_chaap_gravy.png";
+  }
+  if (name.includes("paneer")) {
+    return "images/food_kadai_paneer.png";
   }
 
-  // 17. Chaap, Tikka, Seekh & Kebabs
+  // 17. Tandoori Chaap, Tikka, Seekh & Kebabs (Dry Snacks)
   if (name.includes("chaap") || name.includes("tikka") || name.includes("seekh") || name.includes("kabab") || name.includes("kebab") || cat === "tandoori") {
     return "images/food_chaap.png";
   }
@@ -479,7 +497,7 @@ function getDishImage(item) {
     const inCartSingle = cart[singleKey] > 0;
 
     const dishImgSrc = getDishImage(item);
-    const imgMarkup  = `<img src="${dishImgSrc}?v=2" alt="${item.name}" loading="lazy"/>`;
+    const imgMarkup  = `<img src="${dishImgSrc}?v=3" alt="${item.name}" loading="lazy"/>`;
 
     let actionButtons = "";
     if (item.halfPrice) {
