@@ -4,10 +4,17 @@ const rooms = [
     id: 1, name: "Standard Single Room", price: 1000, badge: "Budget",
     desc: "Cozy single room with stylish décor, AC, and all basic amenities for a comfortable stay. Perfect for solo travellers looking for affordability without compromising comfort.",
     images: [
-      { src: "images/room_photo2.jpg", label: "Cozy Bedroom" },
-      { src: "images/room_standard.png", label: "Room Layout" },
-      { src: "images/room_tv_desk.png", label: "LED TV & Desk" },
-      { src: "images/room_washroom.png", label: "Attached Bathroom" }
+      { src: "images/1.jpg",  label: "Room View 1" },
+      { src: "images/2.jpg",  label: "Room View 2" },
+      { src: "images/3.jpg",  label: "Room View 3" },
+      { src: "images/4.jpg",  label: "Room View 4" },
+      { src: "images/5.jpg",  label: "Room View 5" },
+      { src: "images/6.jpg",  label: "Room View 6" },
+      { src: "images/7.jpg",  label: "Room View 7" },
+      { src: "images/8.jpg",  label: "Room View 8" },
+      { src: "images/9.jpg",  label: "Room View 9" },
+      { src: "images/10.jpg", label: "Room View 10" },
+      { src: "images/11.jpg", label: "Room View 11" }
     ],
     amenities: [
       { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
@@ -20,10 +27,17 @@ const rooms = [
     id: 2, name: "Standard Double Room", price: 1500, badge: "Popular",
     desc: "Spacious double room with modern interiors, perfect for couples or solo travellers who want extra space. Comes with a large comfortable bed and premium amenities.",
     images: [
-      { src: "images/room_photo5.jpg", label: "Double Bed View" },
-      { src: "images/room_angle2.png", label: "Modern Ambiance" },
-      { src: "images/room_tv_desk.png", label: "TV & Seating" },
-      { src: "images/room_washroom.png", label: "Attached Washroom" }
+      { src: "images/1.jpg",  label: "Room View 1" },
+      { src: "images/2.jpg",  label: "Room View 2" },
+      { src: "images/3.jpg",  label: "Room View 3" },
+      { src: "images/4.jpg",  label: "Room View 4" },
+      { src: "images/5.jpg",  label: "Room View 5" },
+      { src: "images/6.jpg",  label: "Room View 6" },
+      { src: "images/7.jpg",  label: "Room View 7" },
+      { src: "images/8.jpg",  label: "Room View 8" },
+      { src: "images/9.jpg",  label: "Room View 9" },
+      { src: "images/10.jpg", label: "Room View 10" },
+      { src: "images/11.jpg", label: "Room View 11" }
     ],
     amenities: [
       { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
