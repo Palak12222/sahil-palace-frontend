@@ -292,7 +292,30 @@ function getDishImage(item) {
   const name = (item.name || "").toLowerCase();
   const cat  = (item.cat  || "").toLowerCase();
 
-  // 0. EXACT REAL DISH PHOTOS UPLOADED BY USER (54 Dishes)
+  // 0. EXACT REAL DISH PHOTOS UPLOADED BY USER (75 Dishes Total)
+  if (name.includes("boneless chicken biryani")) return "images/dish_boneless_chicken_biryani_with_gravy.jpg";
+  if (name.includes("chicken biryani") || name.includes("chicken briyani")) return "images/dish_chicken_biryani.jpg";
+  if (name.includes("egg biryani")) return "images/dish_egg_biryani.jpg";
+  if (name.includes("veg biryani") || name.includes("veg. biryani")) return "images/dish_veg_biryani.jpg";
+  if (name.includes("peas pulao") || name.includes("matar pulao")) return "images/dish_peas_pulao.jpg";
+  if (name.includes("veg pulao") || name.includes("veg. pulao")) return "images/dish_veg_pulao.jpg";
+  if (name.includes("steamed rice") || name.includes("plain rice")) return "images/dish_steamed_rice.jpg";
+  if (name.includes("jeera rice")) return "images/dish_jeera_rice.jpg";
+  if (name.includes("fried rice")) return "images/dish_fried_rice.jpg";
+
+  if (name.includes("butter roti")) return "images/dish_butter_roti.jpg";
+  if (name.includes("tandoori roti")) return "images/dish_tandoori_roti.jpg";
+  if (name.includes("missi roti")) return "images/dish_missi_roti.jpg";
+  if (name.includes("garlic naan")) return "images/dish_garlic_naan.jpg";
+  if (name.includes("stuff naan") || name.includes("stuffed naan")) return "images/dish_stuff_naan.jpg";
+  if (name.includes("butter naan")) return "images/dish_butter_naan.jpg";
+  if (name.includes("plain naan")) return "images/dish_plain_naan.jpg";
+
+  if (name.includes("dal makhani") || name.includes("dall makhani")) return "images/dish_dal_makhani.jpg";
+  if (name.includes("dal fry") || name.includes("dall fry")) return "images/dish_dal_fry.jpg";
+  if (name.includes("dal maharani") || name.includes("dall maharani")) return "images/dish_dal_maharani.jpg";
+  if (name.includes("dal tadka") || name.includes("dall tadka") || name.includes("yellow dal")) return "images/dish_yellow_dal_tadka.jpg";
+
   if (name.includes("chef special paneer")) return "images/dish_chef_special_paneer.jpg";
   if (name.includes("cheese tomato")) return "images/dish_cheese_tomato.jpg";
   if (name.includes("shahi paneer")) return "images/dish_shahi_paneer.jpg";
@@ -427,7 +450,7 @@ function getDishImage(item) {
     const inCartSingle = cart[singleKey] > 0;
 
     const dishImgSrc = getDishImage(item);
-    const imgMarkup  = `<img src="${dishImgSrc}?v=5" alt="${item.name}" loading="lazy"/>`;
+    const imgMarkup  = `<img src="${dishImgSrc}?v=6" alt="${item.name}" loading="lazy"/>`;
 
     let actionButtons = "";
     if (item.halfPrice) {
