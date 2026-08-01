@@ -288,6 +288,34 @@ function renderMenu() {
     return;
   }
 
+function getDishImage(item) {
+  if (item.img && item.img !== "images/food_veg.png" && item.img !== "images/food_nonveg.png") {
+    return item.img;
+  }
+  const name = item.name.toLowerCase();
+  
+  if (name.includes("biryani") || name.includes("pulao") || name.includes("rice")) {
+    return "images/food_biryani.png";
+  }
+  if (name.includes("makhani") || name.includes("dal") || name.includes("dall")) {
+    return "images/food_dal_makhani.png";
+  }
+  if (name.includes("paneer") || name.includes("shahi") || name.includes("kadai") || name.includes("pasanda") || name.includes("bhurji") || name.includes("cheese")) {
+    return "images/food_paneer_tikka.png";
+  }
+  if (name.includes("chaap") || name.includes("tikka") || name.includes("seekh") || name.includes("kabab")) {
+    return "images/food_chaap.png";
+  }
+  if (name.includes("parantha") || name.includes("prantha") || name.includes("naan") || name.includes("roti") || name.includes("bread")) {
+    return "images/food_paratha.png";
+  }
+  if (item.type === "nonveg" && (name.includes("chicken") || name.includes("curry") || name.includes("mutton") || name.includes("fish") || name.includes("kfc") || name.includes("leg"))) {
+    return "images/food_butter_chicken.png";
+  }
+  
+  return item.type === "nonveg" ? "images/food_nonveg.png" : "images/food_veg.png";
+}
+
   grid.innerHTML = items.map(item => {
     const fullKey = `${item.cat}__${item.name}__Full`;
     const halfKey = `${item.cat}__${item.name}__Half`;
@@ -297,9 +325,8 @@ function renderMenu() {
     const inCartHalf = cart[halfKey] > 0;
     const inCartSingle = cart[singleKey] > 0;
 
-    const imgMarkup = item.img 
-      ? `<img src="${item.img}" alt="${item.name}" loading="lazy"/>`
-      : `<span style="font-size:3.5rem">${item.type === 'veg' ? '🥗' : '🍗'}</span>`;
+    const dishImgSrc = getDishImage(item);
+    const imgMarkup  = `<img src="${dishImgSrc}" alt="${item.name}" loading="lazy"/>`;
 
     let actionButtons = "";
     if (item.halfPrice) {
