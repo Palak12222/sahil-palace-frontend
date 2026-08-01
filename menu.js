@@ -303,32 +303,35 @@ function getDishImage(item) {
     return "images/food_hot_milk.png";
   }
 
-  // 2. Paranthas & Stuffed Breads
-  if (name.includes("paneer prantha") || name.includes("paneer parantha")) {
-    return "images/food_paneer_paratha.png";
-  }
-  if (name.includes("parantha") || name.includes("prantha") || name.includes("naan") || name.includes("roti") || name.includes("bread") || name.includes("puri") || name.includes("missi") || cat === "bread") {
-    return "images/food_paratha.png";
-  }
-
-  // 3. Lassi & Shakes & Drinks
+  // 2. Lassi
   if (name.includes("lassi")) {
     return "images/food_lassi.png";
   }
-  if (name.includes("shake") || name.includes("coffee") || name.includes("drink") || name.includes("soda") || cat === "beverages") {
-    return "images/food_shake.png";
-  }
 
-  // 4. Poha
+  // 3. Poha
   if (name.includes("poha")) {
     return "images/food_poha.png";
   }
 
-  // 5. Egg Items & Omelettes
+  // 4. Paranthas & Stuffed Breads
+  if (name.includes("paneer prantha") || name.includes("paneer parantha")) {
+    return "images/food_paneer_paratha.png";
+  }
+  if (name.includes("parantha") || name.includes("prantha") || name.includes("naan") || name.includes("roti") || name.includes("bread") && !name.includes("omelette") || name.includes("puri") || name.includes("missi") || cat === "bread") {
+    return "images/food_paratha.png";
+  }
+
+  // 5. Egg Dishes
   if (name.includes("bread omelette") || name.includes("bread omellete")) {
     return "images/food_bread_omelette.png";
   }
-  if (name.includes("omlate") || name.includes("omelette") || name.includes("bhurji") || name.includes("half fry") || name.includes("egg")) {
+  if (name.includes("bhurji")) {
+    return "images/food_egg_bhurji.png";
+  }
+  if (name.includes("half fry")) {
+    return "images/food_egg_half_fry.png";
+  }
+  if (name.includes("omlate") || name.includes("omelette") || name.includes("egg")) {
     return "images/food_omelette.png";
   }
 
@@ -337,9 +340,9 @@ function getDishImage(item) {
     return "images/food_maggi.png";
   }
 
-  // 7. Soups
-  if (name.includes("soup") || cat === "soups") {
-    return "images/food_soup.png";
+  // 7. Shakes & Beverages
+  if (name.includes("shake") || name.includes("coffee") || name.includes("drink") || name.includes("soda") || cat === "beverages") {
+    return "images/food_shake.png";
   }
 
   // 8. Biryani, Pulao & Rice Dishes
