@@ -326,6 +326,18 @@ function getDishImage(item) {
   if (name.includes("crispy corn")) {
     return "images/food_crispy_corn_real.jpg";
   }
+  if (name.includes("tandoori aloo")) {
+    return "images/food_potato_finger_real.jpg";
+  }
+  if (name.includes("mushroom tikka")) {
+    return "images/food_mushroom_duplex_real.jpg";
+  }
+  if (name.includes("cheese seekh")) {
+    return "images/food_paneer_fry.png";
+  }
+  if (name.includes("hara bhara") || name.includes("veg. seekh")) {
+    return "images/food_pakora.png";
+  }
 
   // 5. Specific Pastas
   if (name.includes("red sauce") || name.includes("red pasta")) {
