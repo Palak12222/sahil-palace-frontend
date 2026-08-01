@@ -292,7 +292,35 @@ function getDishImage(item) {
   const name = (item.name || "").toLowerCase();
   const cat  = (item.cat  || "").toLowerCase();
 
-  // 1. Item-specific Tea & Milk Drinks
+  // 1. Specific Pastas
+  if (name.includes("red sauce") || name.includes("red pasta")) {
+    return "images/food_red_pasta.png";
+  }
+  if (name.includes("white sauce") || name.includes("white pasta")) {
+    return "images/food_white_pasta.png";
+  }
+
+  // 2. Sandwiches
+  if (name.includes("sandwich")) {
+    return "images/food_sandwich.png";
+  }
+
+  // 3. Crispy Paneer Fry / KFC / Paneer Pakora / Cheese Finger
+  if (name.includes("paneer kfc") || name.includes("paneer fry") || name.includes("paneer pakora") || name.includes("cheese finger")) {
+    return "images/food_paneer_fry.png";
+  }
+
+  // 4. Pakoras & Fritters
+  if (name.includes("pakora") || name.includes("cutlet")) {
+    return "images/food_pakora.png";
+  }
+
+  // 5. Chana Chilly & Chana Snacks
+  if (name.includes("chana chilly") || name.includes("chana chat") || name.includes("chana pataka")) {
+    return "images/food_chana_chilly.png";
+  }
+
+  // 6. Item-specific Tea & Milk Drinks
   if (name === "tea" || name === "masala chai") {
     return "images/food_tea.png";
   }
@@ -303,25 +331,25 @@ function getDishImage(item) {
     return "images/food_hot_milk.png";
   }
 
-  // 2. Lassi
+  // 7. Lassi
   if (name.includes("lassi")) {
     return "images/food_lassi.png";
   }
 
-  // 3. Poha
+  // 8. Poha
   if (name.includes("poha")) {
     return "images/food_poha.png";
   }
 
-  // 4. Paranthas & Stuffed Breads
+  // 9. Paranthas & Stuffed Breads
   if (name.includes("paneer prantha") || name.includes("paneer parantha")) {
     return "images/food_paneer_paratha.png";
   }
-  if (name.includes("parantha") || name.includes("prantha") || name.includes("naan") || name.includes("roti") || name.includes("bread") && !name.includes("omelette") || name.includes("puri") || name.includes("missi") || cat === "bread") {
+  if (name.includes("parantha") || name.includes("prantha") || name.includes("naan") || name.includes("roti") || (name.includes("bread") && !name.includes("omelette") && !name.includes("sandwich")) || name.includes("puri") || name.includes("missi") || cat === "bread") {
     return "images/food_paratha.png";
   }
 
-  // 5. Egg Dishes
+  // 10. Egg Dishes
   if (name.includes("bread omelette") || name.includes("bread omellete")) {
     return "images/food_bread_omelette.png";
   }
@@ -335,52 +363,57 @@ function getDishImage(item) {
     return "images/food_omelette.png";
   }
 
-  // 6. Maggi & Noodles
+  // 11. Maggi & Noodles
   if (name.includes("maggi") || name.includes("meggie") || name.includes("noodle")) {
     return "images/food_maggi.png";
   }
 
-  // 7. Shakes & Beverages
+  // 12. Shakes & Beverages
   if (name.includes("shake") || name.includes("coffee") || name.includes("drink") || name.includes("soda") || cat === "beverages") {
     return "images/food_shake.png";
   }
 
-  // 8. Biryani, Pulao & Rice Dishes
+  // 13. Soups
+  if (name.includes("soup") || cat === "soups") {
+    return "images/food_soup.png";
+  }
+
+  // 14. Biryani, Pulao & Rice Dishes
   if (name.includes("biryani") || name.includes("pulao") || name.includes("rice") || name.includes("chawal") || cat === "rice") {
     return "images/food_biryani.png";
   }
 
-  // 9. Dal, Lentils & Rajma/Chole Gravies
+  // 15. Dal, Lentils & Rajma/Chole Gravies
   if (name.includes("makhani") || name.includes("dal") || name.includes("dall") || name.includes("chole") || name.includes("rajma") || name.includes("tadka") || cat === "dal") {
     return "images/food_dal_makhani.png";
   }
 
-  // 10. Paneer & Cheese Dishes
+  // 16. Paneer & Cheese Dishes
   if (name.includes("paneer") || name.includes("shahi") || name.includes("kadai") || name.includes("pasanda") || name.includes("cheese")) {
     return "images/food_paneer_tikka.png";
   }
 
-  // 11. Chaap, Tikka, Seekh & Kebabs
+  // 17. Chaap, Tikka, Seekh & Kebabs
   if (name.includes("chaap") || name.includes("tikka") || name.includes("seekh") || name.includes("kabab") || name.includes("kebab") || cat === "tandoori") {
     return "images/food_chaap.png";
   }
 
-  // 12. Non-Veg Chicken, Mutton, Fish, Meat
+  // 18. Non-Veg Chicken, Mutton, Fish, Meat
   if (item.type === "nonveg" || name.includes("chicken") || name.includes("mutton") || name.includes("fish") || name.includes("kfc") || name.includes("meat") || cat === "nonveg") {
     return "images/food_butter_chicken.png";
   }
 
-  // 13. Chinese, Pasta, Manchurian, Fries
+  // 19. Chinese, Pasta, Manchurian, Fries
   if (name.includes("pasta") || name.includes("manchurian") || name.includes("fries") || name.includes("chilly") || name.includes("chilli") || cat === "chinese" || cat === "maggi") {
     return "images/food_chinese.png";
   }
 
-  // 14. Salad & Raita & Papad
+  // 20. Salad & Raita & Papad
   if (name.includes("salad") || name.includes("raita") || name.includes("curd") || name.includes("papad") || name.includes("dahi") || cat === "raita") {
     return "images/food_salad.png";
   }
 
-  // 15. Default fallback by Veg / Non-Veg
+  // 21. Default fallback by Veg / Non-Veg
   return item.type === "nonveg" ? "images/food_nonveg.png" : "images/food_veg.png";
 }
 
