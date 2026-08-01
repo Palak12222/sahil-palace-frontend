@@ -4,17 +4,17 @@ const rooms = [
     id: 1, name: "Standard Single Room", price: 1000, badge: "Budget",
     desc: "Cozy single room with stylish décor, AC, and all basic amenities for a comfortable stay. Perfect for solo travellers looking for affordability without compromising comfort.",
     images: [
-      { src: "../images/1.jpg", label: "Room View 1" },
-      { src: "../images/2.jpg", label: "Room View 2" },
-      { src: "../images/3.jpg", label: "Room View 3" },
-      { src: "../images/4.jpg", label: "Room View 4" },
-      { src: "../images/5.jpg", label: "Room View 5" },
-      { src: "../images/6.jpg", label: "Room View 6" },
-      { src: "../images/7.jpg", label: "Room View 7" },
-      { src: "../images/8.jpg", label: "Room View 8" },
-      { src: "../images/9.jpg", label: "Room View 9" },
-      { src: "../images/10.jpg", label: "Room View 10" },
-      { src: "../images/11.jpg", label: "Room View 11" }
+      { src: "images/1.jpg", label: "Room View 1" },
+      { src: "images/2.jpg", label: "Room View 2" },
+      { src: "images/3.jpg", label: "Room View 3" },
+      { src: "images/4.jpg", label: "Room View 4" },
+      { src: "images/5.jpg", label: "Room View 5" },
+      { src: "images/6.jpg", label: "Room View 6" },
+      { src: "images/7.jpg", label: "Room View 7" },
+      { src: "images/8.jpg", label: "Room View 8" },
+      { src: "images/9.jpg", label: "Room View 9" },
+      { src: "images/10.jpg", label: "Room View 10" },
+      { src: "images/11.jpg", label: "Room View 11" }
     ],
     amenities: [
       { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
@@ -27,17 +27,17 @@ const rooms = [
     id: 2, name: "Standard Double Room", price: 1500, badge: "Popular",
     desc: "Spacious double room with modern interiors, perfect for couples or solo travellers who want extra space. Comes with a large comfortable bed and premium amenities.",
     images: [
-      { src: "../images/1.jpg", label: "Room View 1" },
-      { src: "../images/2.jpg", label: "Room View 2" },
-      { src: "../images/3.jpg", label: "Room View 3" },
-      { src: "../images/4.jpg", label: "Room View 4" },
-      { src: "../images/5.jpg", label: "Room View 5" },
-      { src: "../images/6.jpg", label: "Room View 6" },
-      { src: "../images/7.jpg", label: "Room View 7" },
-      { src: "../images/8.jpg", label: "Room View 8" },
-      { src: "../images/9.jpg", label: "Room View 9" },
-      { src: "../images/10.jpg", label: "Room View 10" },
-      { src: "../images/11.jpg", label: "Room View 11" }
+      { src: "images/1.jpg", label: "Room View 1" },
+      { src: "images/2.jpg", label: "Room View 2" },
+      { src: "images/3.jpg", label: "Room View 3" },
+      { src: "images/4.jpg", label: "Room View 4" },
+      { src: "images/5.jpg", label: "Room View 5" },
+      { src: "images/6.jpg", label: "Room View 6" },
+      { src: "images/7.jpg", label: "Room View 7" },
+      { src: "images/8.jpg", label: "Room View 8" },
+      { src: "images/9.jpg", label: "Room View 9" },
+      { src: "images/10.jpg", label: "Room View 10" },
+      { src: "images/11.jpg", label: "Room View 11" }
     ],
     amenities: [
       { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
@@ -50,17 +50,17 @@ const rooms = [
     id: 3, name: "Deluxe Single Room", price: 1800, badge: "Deluxe",
     desc: "Upgraded single room with premium bed, elegant panel wall and soft lighting. Ideal for business travellers and solo explorers wanting a step up in comfort.",
     images: [
-      { src: "../images/delux 1800/IMG_6134.jpg", label: "Room View 1" },
-      { src: "../images/delux 1800/IMG_6135.jpg", label: "Room View 2" },
-      { src: "../images/delux 1800/IMG_6136.jpg", label: "Room View 3" },
-      { src: "../images/delux 1800/IMG_6137.jpg", label: "Room View 4" },
-      { src: "../images/delux 1800/IMG_6138.jpg", label: "Room View 5" },
-      { src: "../images/delux 1800/IMG_6139.jpg", label: "Room View 6" },
-      { src: "../images/delux 1800/IMG_6140.jpg", label: "Room View 7" },
-      { src: "../images/delux 1800/IMG_6141.jpg", label: "Room View 8" },
-      { src: "../images/delux 1800/IMG_6142.jpg", label: "Room View 9" },
-      { src: "../images/delux 1800/IMG_6143.jpg", label: "Room View 10" },
-      { src: "../images/delux 1800/IMG_6144.jpg", label: "Room View 11" }
+      { src: "images/delux 1800/IMG_6134.jpg", label: "Room View 1" },
+      { src: "images/delux 1800/IMG_6135.jpg", label: "Room View 2" },
+      { src: "images/delux 1800/IMG_6136.jpg", label: "Room View 3" },
+      { src: "images/delux 1800/IMG_6137.jpg", label: "Room View 4" },
+      { src: "images/delux 1800/IMG_6138.jpg", label: "Room View 5" },
+      { src: "images/delux 1800/IMG_6139.jpg", label: "Room View 6" },
+      { src: "images/delux 1800/IMG_6140.jpg", label: "Room View 7" },
+      { src: "images/delux 1800/IMG_6141.jpg", label: "Room View 8" },
+      { src: "images/delux 1800/IMG_6142.jpg", label: "Room View 9" },
+      { src: "images/delux 1800/IMG_6143.jpg", label: "Room View 10" },
+      { src: "images/delux 1800/IMG_6144.jpg", label: "Room View 11" }
     ],
     amenities: [
       { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
@@ -73,18 +73,18 @@ const rooms = [
     id: 4, name: "Deluxe Double Room", price: 2000, badge: "Best Value",
     desc: "Our most popular room — two plush beds, designer headboard wall and warm ambiance. The perfect choice for couples or friends travelling together.",
     images: [
-      { src: "../images/delux 2000/IMG_6160.jpg", label: "Room View 1" },
-      { src: "../images/delux 2000/IMG_6161.jpg", label: "Room View 2" },
-      { src: "../images/delux 2000/IMG_6162.jpg", label: "Room View 3" },
-      { src: "../images/delux 2000/IMG_6163.jpg", label: "Room View 4" },
-      { src: "../images/delux 2000/IMG_6164.jpg", label: "Room View 5" },
-      { src: "../images/delux 2000/IMG_6165.jpg", label: "Room View 6" },
-      { src: "../images/delux 2000/IMG_6166.jpg", label: "Room View 7" },
-      { src: "../images/delux 2000/IMG_6167.jpg", label: "Room View 8" },
-      { src: "../images/delux 2000/IMG_6168.jpg", label: "Room View 9" },
-      { src: "../images/delux 2000/IMG_6169.jpg", label: "Room View 10" },
-      { src: "../images/delux 2000/IMG_6170.jpg", label: "Room View 11" },
-      { src: "../images/delux 2000/IMG_6171.jpg", label: "Room View 12" }
+      { src: "images/delux 2000/IMG_6160.jpg", label: "Room View 1" },
+      { src: "images/delux 2000/IMG_6161.jpg", label: "Room View 2" },
+      { src: "images/delux 2000/IMG_6162.jpg", label: "Room View 3" },
+      { src: "images/delux 2000/IMG_6163.jpg", label: "Room View 4" },
+      { src: "images/delux 2000/IMG_6164.jpg", label: "Room View 5" },
+      { src: "images/delux 2000/IMG_6165.jpg", label: "Room View 6" },
+      { src: "images/delux 2000/IMG_6166.jpg", label: "Room View 7" },
+      { src: "images/delux 2000/IMG_6167.jpg", label: "Room View 8" },
+      { src: "images/delux 2000/IMG_6168.jpg", label: "Room View 9" },
+      { src: "images/delux 2000/IMG_6169.jpg", label: "Room View 10" },
+      { src: "images/delux 2000/IMG_6170.jpg", label: "Room View 11" },
+      { src: "images/delux 2000/IMG_6171.jpg", label: "Room View 12" }
     ],
     amenities: [
       { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
@@ -97,18 +97,18 @@ const rooms = [
     id: 5, name: "Executive Room", price: 2500, badge: "Executive",
     desc: "Designed for business travellers — king bed, work desk, LED TV and premium AC. Stay productive and comfortable with high-speed WiFi and a fully equipped workspace.",
     images: [
-      { src: "../images/executive 2500/IMG_6147.jpg", label: "Room View 1" },
-      { src: "../images/executive 2500/IMG_6148.jpg", label: "Room View 2" },
-      { src: "../images/executive 2500/IMG_6149.jpg", label: "Room View 3" },
-      { src: "../images/executive 2500/IMG_6150.jpg", label: "Room View 4" },
-      { src: "../images/executive 2500/IMG_6151.jpg", label: "Room View 5" },
-      { src: "../images/executive 2500/IMG_6152.jpg", label: "Room View 6" },
-      { src: "../images/executive 2500/IMG_6153.jpg", label: "Room View 7" },
-      { src: "../images/executive 2500/IMG_6154.jpg", label: "Room View 8" },
-      { src: "../images/executive 2500/IMG_6155.jpg", label: "Room View 9" },
-      { src: "../images/executive 2500/IMG_6156.jpg", label: "Room View 10" },
-      { src: "../images/executive 2500/IMG_6157.jpg", label: "Room View 11" },
-      { src: "../images/executive 2500/IMG_6158.jpg", label: "Room View 12" }
+      { src: "images/executive 2500/IMG_6147.jpg", label: "Room View 1" },
+      { src: "images/executive 2500/IMG_6148.jpg", label: "Room View 2" },
+      { src: "images/executive 2500/IMG_6149.jpg", label: "Room View 3" },
+      { src: "images/executive 2500/IMG_6150.jpg", label: "Room View 4" },
+      { src: "images/executive 2500/IMG_6151.jpg", label: "Room View 5" },
+      { src: "images/executive 2500/IMG_6152.jpg", label: "Room View 6" },
+      { src: "images/executive 2500/IMG_6153.jpg", label: "Room View 7" },
+      { src: "images/executive 2500/IMG_6154.jpg", label: "Room View 8" },
+      { src: "images/executive 2500/IMG_6155.jpg", label: "Room View 9" },
+      { src: "images/executive 2500/IMG_6156.jpg", label: "Room View 10" },
+      { src: "images/executive 2500/IMG_6157.jpg", label: "Room View 11" },
+      { src: "images/executive 2500/IMG_6158.jpg", label: "Room View 12" }
     ],
     amenities: [
       { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
@@ -121,27 +121,27 @@ const rooms = [
     id: 6, name: "Family Room", price: 3000, badge: "Family",
     desc: "Extra-large room with two double beds, ample space for families travelling with kids. Enjoy a comfortable and relaxed stay with everything your family needs.",
     images: [
-      { src: "../images/Family 3000/IMG_6173.jpg", label: "Room View 1" },
-      { src: "../images/Family 3000/IMG_6174.jpg", label: "Room View 2" },
-      { src: "../images/Family 3000/IMG_6175.jpg", label: "Room View 3" },
-      { src: "../images/Family 3000/IMG_6176.jpg", label: "Room View 4" },
-      { src: "../images/Family 3000/IMG_6177.jpg", label: "Room View 5" },
-      { src: "../images/Family 3000/IMG_6178.jpg", label: "Room View 6" },
-      { src: "../images/Family 3000/IMG_6179.jpg", label: "Room View 7" },
-      { src: "../images/Family 3000/IMG_6180.jpg", label: "Room View 8" },
-      { src: "../images/Family 3000/IMG_6181.jpg", label: "Room View 9" },
-      { src: "../images/Family 3000/IMG_6182.jpg", label: "Room View 10" },
-      { src: "../images/Family 3000/IMG_6183.jpg", label: "Room View 11" },
-      { src: "../images/Family 3000/IMG_6184.jpg", label: "Room View 12" },
-      { src: "../images/Family 3000/IMG_6185.jpg", label: "Room View 13" },
-      { src: "../images/Family 3000/IMG_6186.jpg", label: "Room View 14" },
-      { src: "../images/Family 3000/IMG_6187.jpg", label: "Room View 15" },
-      { src: "../images/Family 3000/IMG_6188.jpg", label: "Room View 16" },
-      { src: "../images/Family 3000/IMG_6189.jpg", label: "Room View 17" },
-      { src: "../images/Family 3000/IMG_6190.jpg", label: "Room View 18" },
-      { src: "../images/Family 3000/IMG_6191.jpg", label: "Room View 19" },
-      { src: "../images/Family 3000/IMG_6192.jpg", label: "Room View 20" },
-      { src: "../images/Family 3000/IMG_6193.jpg", label: "Room View 21" }
+      { src: "images/Family 3000/IMG_6173.jpg", label: "Room View 1" },
+      { src: "images/Family 3000/IMG_6174.jpg", label: "Room View 2" },
+      { src: "images/Family 3000/IMG_6175.jpg", label: "Room View 3" },
+      { src: "images/Family 3000/IMG_6176.jpg", label: "Room View 4" },
+      { src: "images/Family 3000/IMG_6177.jpg", label: "Room View 5" },
+      { src: "images/Family 3000/IMG_6178.jpg", label: "Room View 6" },
+      { src: "images/Family 3000/IMG_6179.jpg", label: "Room View 7" },
+      { src: "images/Family 3000/IMG_6180.jpg", label: "Room View 8" },
+      { src: "images/Family 3000/IMG_6181.jpg", label: "Room View 9" },
+      { src: "images/Family 3000/IMG_6182.jpg", label: "Room View 10" },
+      { src: "images/Family 3000/IMG_6183.jpg", label: "Room View 11" },
+      { src: "images/Family 3000/IMG_6184.jpg", label: "Room View 12" },
+      { src: "images/Family 3000/IMG_6185.jpg", label: "Room View 13" },
+      { src: "images/Family 3000/IMG_6186.jpg", label: "Room View 14" },
+      { src: "images/Family 3000/IMG_6187.jpg", label: "Room View 15" },
+      { src: "images/Family 3000/IMG_6188.jpg", label: "Room View 16" },
+      { src: "images/Family 3000/IMG_6189.jpg", label: "Room View 17" },
+      { src: "images/Family 3000/IMG_6190.jpg", label: "Room View 18" },
+      { src: "images/Family 3000/IMG_6191.jpg", label: "Room View 19" },
+      { src: "images/Family 3000/IMG_6192.jpg", label: "Room View 20" },
+      { src: "images/Family 3000/IMG_6193.jpg", label: "Room View 21" }
     ],
     amenities: [
       { icon: "❄️", name: "Air Conditioning" }, { icon: "📶", name: "Free WiFi" },
@@ -167,8 +167,8 @@ function renderRoomsListPage() {
   if (!listGrid) return;
 
   listGrid.innerHTML = rooms.map(room => `
-    <article class="room-list-card">
-      <img src="${room.images[0].src}" alt="${room.name}" loading="lazy" />
+    <article class="room-list-card" onclick="window.location.href='room.html?id=${room.id}'" style="cursor:pointer">
+      <img src="${room.images[0].src}" alt="${room.name}" loading="lazy" onerror="this.src='images/room_photo1.jpg'" />
       <div class="room-list-body">
         <span class="room-list-badge">${room.badge}</span>
         <h3>${room.name}</h3>
@@ -178,8 +178,8 @@ function renderRoomsListPage() {
           <span>🛏️ ${room.amenities.length} amenities</span>
         </div>
         <div class="room-list-actions">
-          <a href="room.html?id=${room.id}" class="btn-room-view">View Details</a>
-          <a href="tel:8742026903" class="btn-room-call">Call Now</a>
+          <a href="room.html?id=${room.id}" class="btn-room-view" onclick="event.stopPropagation()">View Details &amp; Book →</a>
+          <a href="tel:8742026903" class="btn-room-call" onclick="event.stopPropagation()">Call Now</a>
         </div>
       </div>
     </article>
@@ -211,7 +211,7 @@ function renderRoomDetailPage(room) {
   room.images.forEach((img, i) => {
     const div = document.createElement("div");
     div.className = `slide${i === 0 ? " active" : ""}`;
-    div.innerHTML = `<img src="${img.src}" alt="${img.label}" loading="${i===0?'eager':'lazy'}"/>
+    div.innerHTML = `<img src="${img.src}" alt="${img.label}" loading="${i===0?'eager':'lazy'}" onerror="this.src='images/room_photo1.jpg'"/>
       <div class="slide-label">${img.label}</div>`;
     slideshow.appendChild(div);
 
@@ -278,6 +278,7 @@ function updateSummary(room) {
 }
 
 async function submitBooking(room) {
+  const targetRoom = room || selectedRoom || rooms[0];
   const ci = document.getElementById("rCheckIn").value;
   const co = document.getElementById("rCheckOut").value;
   const g = document.getElementById("rGuests").value;
@@ -290,18 +291,18 @@ async function submitBooking(room) {
   if (!ph || ph.length < 10) { showToast("Please enter a valid phone number", "error"); return; }
 
   const nights = Math.ceil((new Date(co) - new Date(ci)) / (1000 * 60 * 60 * 24));
-  const total = nights * room.price;
+  const total = nights * targetRoom.price;
 
-  pendingBookingData = { room_name: room.name, room_price: room.price, checkin: ci, checkout: co, nights, guests: parseInt(g), guest_name: nm, phone: ph, total, payment_method: "upi" };
+  pendingBookingData = { room_name: targetRoom.name, room_price: targetRoom.price, checkin: ci, checkout: co, nights, guests: parseInt(g), guest_name: nm, phone: ph, total, payment_method: "upi" };
 
-  openPaymentModal(`Room: ${room.name}`, [
+  openPaymentModal(`Room: ${targetRoom.name}`, [
     `📅 Check-in: ${fmt(ci)}`,
     `📅 Check-out: ${fmt(co)}`,
     `👤 Name: ${nm}`,
     `📞 Phone: ${ph}`,
     `👥 Guests: ${g}`,
     `🌙 Nights: ${nights}`,
-    `💰 Rate: ₹${room.price.toLocaleString("en-IN")}/night`
+    `💰 Rate: ₹${targetRoom.price.toLocaleString("en-IN")}/night`
   ], total);
 }
 
@@ -350,6 +351,7 @@ function copyUPI() {
 }
 
 async function confirmPayment(room) {
+  const targetRoom = room || selectedRoom || rooms[0];
   const method = document.querySelector('input[name="payMethod"]:checked').value;
   const labels = { upi: "UPI / GPay / PhonePe", cash: "Cash on Arrival", card: "Debit / Credit Card" };
 
@@ -367,7 +369,7 @@ async function confirmPayment(room) {
   closeModal("paymentModal");
 
   if (method === "upi") {
-    const msg = `Hi, I have booked ${room.name} at Sahil Palace. Total: ₹${pendingPaymentTotal}. Payment via UPI. Please confirm.`;
+    const msg = `Hi, I have booked ${targetRoom.name} at Sahil Palace. Total: ₹${pendingPaymentTotal}. Payment via UPI. Please confirm.`;
     window.open(`https://wa.me/918742026903?text=${encodeURIComponent(msg)}`, "_blank");
   } else {
     showToast(`✅ Booking confirmed! Total ₹${pendingPaymentTotal.toLocaleString("en-IN")} — ${labels[method]}. We'll call you shortly!`, "success");
