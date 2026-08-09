@@ -288,161 +288,225 @@ function renderMenu() {
     return;
   }
 
+const dishImageMap = {
+  "Tea": "images/food_tea.png",
+  "Special Milk Tea": "images/food_milk_tea.png",
+  "Hot Milk": "images/food_hot_milk.png",
+  "Tandoori Aloo Prantha": "images/food/jeera aloo.jpg",
+  "Tandoori Gobhi Prantha": "images/food/aloo gobhi.jpg",
+  "Tandoori Onion Prantha": "images/food/Onion plain.jpg",
+  "Tandoori Mix Prantha": "images/food/Mix Veg Recipe.jpg",
+  "Tandoori Paneer Prantha": "images/food/paneer Methi Malai.jpg",
+  "Lassi (Sweet / Salty)": "images/food_lassi.png",
+  "Poha": "images/food_poha.png",
+  "Bread Omelette": "images/food_bread_omelette.png",
+  "Omlate (2 Egg)": "images/food_omelette.png",
+  "Bhurji (2 Egg)": "images/food_egg_bhurji.png",
+  "Half Fry (2 Egg)": "images/food_egg_half_fry.png",
+  "Plain Maggi": "images/food_maggi.png",
+  "Veg. Maggi": "images/food_maggi.png",
+  "Red Sauce Pasta": "images/food_red_pasta.png",
+  "White Sauce Pasta": "images/food_white_pasta.png",
+  "Veg. Sandwich": "images/food_sandwich.png",
+  "Veg. Sandwich Grilled": "images/food_sandwich.png",
+  "Cheese Sandwich": "images/food_sandwich.png",
+  "Paneer KFC": "images/food/paneer manchurian.jpg",
+  "Paneer Fry": "images/food/paneer bhujiya.jpg",
+  "Onion Pakora": "images/food/hara bhara kabab.jpg",
+  "Chana Chilly": "images/food/hot channa.jpg",
+  "Paneer Pakora (4 Pcs)": "images/food/paneer bhujiya.jpg",
+  "Veg. Pakora": "images/food/hara bhara kabab.jpg",
+  "Cheese Finger": "images/food/Potato Finger masala.jpg",
+  "Mushroom Duplex": "images/food/mushroom duplex.jpg",
+  "Veg. Cutlet (4 Pcs)": "images/food/Veg Cutlet.jpg",
+  "Gobhi Pakora (Seasonal)": "images/food/masala gobhi.jpg",
+  "Potato Finger Masala": "images/food/Potato Finger masala.jpg",
+  "Chana Chaat (Black & White)": "images/food/CHANNA CHAAT.jpg",
+  "Hot Chaat (Chana + Aloo)": "images/food/hot channa.jpg",
+  "Peanut Masala": "images/food/peanut masala.jpg",
+  "Chana Pataka": "images/food/aloo channa.jpg",
+  "Sweetcorn Plain": "images/food/sweetcorn plain.jpg",
+  "Crispy Corn": "images/food/Crispy corn.jpg",
+  "Sweet Corn Chat": "images/food/sweetcorn chaat.jpg",
+  "Chana Chat & Sweetcorn": "images/food/channa chaat & sweetcorn.jpg",
+  "Fresh Paneer": "images/food/paneer bhujiya.jpg",
+  "Tandoori Aloo (8 Pcs)": "images/food/jeera aloo.jpg",
+  "Haryali Chaap (8 Pcs)": "images/food/lemon chaap gravy.jpg",
+  "Achari Chaap (8 Pcs)": "images/food/chaap masala gravy.jpg",
+  "Paneer Tikka (8 Pcs)": "images/food/Paneer Tikka butter Masala.jpg",
+  "Achari Paneer Tikka (8 Pcs)": "images/food/Paneer Tikka butter Masala.jpg",
+  "Mushroom Tikka (8 Pcs)": "images/food/Mushroom Masala.jpg",
+  "Cheese Seekh Tikka (8 Pcs)": "images/food/cheese chilli dry.jpg",
+  "Veg. Seekh Kabab (8 Pcs)": "images/food/hara bhara kabab.jpg",
+  "Hara Bhara Tikka (8 Pcs)": "images/food/hara bhara kabab.jpg",
+  "Malai Chaap (8 Pcs)": "images/food/lemon chaap gravy.jpg",
+  "Afgani Chaap": "images/food/lemon chaap gravy.jpg",
+  "Chef Special Paneer": "images/food/chef special paneer.jpg",
+  "Cheese Tomato": "images/food/cheese tomato.jpg",
+  "Shahi Paneer": "images/food/Shahi paneer.jpg",
+  "Kadai Paneer": "images/food/Kadai Paneer.jpg",
+  "Paneer Butter Masala": "images/food/Paneer Butter Masala.jpg",
+  "Paneer Do Pyaza": "images/food/Paneer Do Pyaza.jpg",
+  "Paneer Methi Malai": "images/food/paneer Methi Malai.jpg",
+  "Palak Paneer": "images/food/Palak Paneer.jpg",
+  "Matar Paneer": "images/food/Matar Paneer.jpg",
+  "Paneer Bhurji": "images/food/Paneer Bhurji.jpg",
+  "Veg. Gravy": "images/food/veg gravy.jpg",
+  "Paneer Pasanda": "images/food/Paneer Pasanda.jpg",
+  "Chaap Masala Gravy": "images/food/chaap masala gravy.jpg",
+  "Chaap Roganjosh": "images/food/Chaap RoganJosh.jpg",
+  "Tawa Chaap Masala": "images/food/Tawa Chaap Masala.jpg",
+  "Tawa Tikka Masala": "images/food/Tawa Paneer masala.jpg",
+  "Malai Kofta": "images/food/Malai Kofta.jpg",
+  "Palak Kofta": "images/food/Palak Kofta.jpg",
+  "Veg Kofta": "images/food/veg kofta.jpg",
+  "Palak Corn": "images/food/Palak Corn.jpg",
+  "Mix Veg.": "images/food/Mix Veg Recipe.jpg",
+  "Mushroom Curry": "images/food/Mushroom Curry.jpg",
+  "Mutter Mushroom": "images/food/matar mushroom.jpg",
+  "Mushroom Masala": "images/food/Mushroom Masala.jpg",
+  "Mushroom Do Pyaza": "images/food/Mushroom Do Pyaza.jpg",
+  "Mushroom Corn": "images/food/Mushroom corn.jpg",
+  "Palak Mushroom": "images/food/Palak Mushroom.jpg",
+  "Mushroom Palak Corn": "images/food/mushroom palak corn.jpg",
+  "Jeera Aloo": "images/food/jeera aloo.jpg",
+  "Chana Masala": "images/food/Chana Masala.jpg",
+  "Kadahi Chana": "images/food/kadai channa.jpg",
+  "Mutter Methi Malai": "images/food/matar methi malai.jpg",
+  "Aloo Gobhi": "images/food/aloo gobhi.jpg",
+  "Masala Gobhi": "images/food/masala gobhi.jpg",
+  "Keema Gobhi": "images/food/keema gobhi.jpg",
+  "Paneer Bhujiya": "images/food/paneer bhujiya.jpg",
+  "Paneer Tikka Butter Masala": "images/food/Paneer Tikka butter Masala.jpg",
+  "Kaju Kari": "images/food/kaju kari.jpg",
+  "Sev Bhaji": "images/food/sev bhaji.jpg",
+  "Sev Tomato": "images/food/sev tomato.jpg",
+  "Aloo Chana": "images/food/aloo channa.jpg",
+  "Dum Aloo": "images/food/Dum aloo.jpg",
+  "Aloo Mutter": "images/food/Aloo Matar.jpg",
+  "Chana Paneer": "images/food/channa paneer.jpg",
+  "Dal Maharani": "images/food/Dal Maharani.jpg",
+  "Dal Makhani": "images/food/Dal Makhani.jpg",
+  "Yellow Dal Tadka": "images/food/yellow Dal Tadka.jpg",
+  "Dal Fry": "images/food/Dal Fry.jpg",
+  "Steamed Rice": "images/food/steamed rice.jpg",
+  "Jeera Rice": "images/food/Jeera Rice.jpg",
+  "Veg. Pulao": "images/food/Veg Pulao.jpg",
+  "Peas Pulao": "images/food/Peas pulao.jpg",
+  "Fried Rice": "images/food/Fried Rice.jpg",
+  "Veg. Biryani": "images/food/Veg Biryani.jpg",
+  "Egg Biryani": "images/food/Egg Biryani.jpg",
+  "Chicken Biryani": "images/food/Chicken Biryani.jpg",
+  "Chicken Biryani with Gravy": "images/food/Chicken Briyani with Gravy!.jpg",
+  "Boneless Chicken Biryani (with Gravy)": "images/food/Boneless Chicken Biryani with gravy.jpg",
+  "Tandoori Roti (Plain)": "images/food/Tandoori Roti.jpg",
+  "Butter Roti": "images/food/Butter Roti.jpg",
+  "Missi Roti": "images/food/Missi Roti.jpg",
+  "Plain Naan": "images/food/plain naan.jpg",
+  "Butter Naan": "images/food/butter naan.jpg",
+  "Stuff Naan": "images/food/Stuff naan.jpg",
+  "Garlic Naan": "images/food/Garlic naan.jpg",
+  "Lachha Parantha": "images/food/lachha prantha.jpg",
+  "Onion Missi": "images/food/Onion missi.jpg",
+  "Onion Plain": "images/food/Onion plain.jpg",
+  "Churchur Naan": "images/food/churchur naan.jpg",
+  "Amritsari Naan": "images/food/Amritsari naan.jpg",
+  "Garlic Roti": "images/food/Garlic Roti.jpg",
+  "Gur Roti": "images/food/gur roti.jpg",
+  "French Fries": "images/food/French fries.jpg",
+  "Honey Chilli Potato": "images/food/Honey Chilli Potato.jpg",
+  "Honey Chilli Cauliflower (Seasonal)": "images/food/Honey chilli cauliflower (seasonal).jpg",
+  "Cheese Chilli Dry": "images/food/cheese chilli dry.jpg",
+  "Cheese Chilli Gravy": "images/food/cheese chilli gravy.jpg",
+  "Veg. Manchurian Dry": "images/food/veg manchurian dry.jpg",
+  "Veg. Manchurian Gravy": "images/food/Veg Manchurian  gravy.jpg",
+  "Soya Manchurian Gravy": "images/food/soya manchurian gravy.jpg",
+  "Mushroom Chilly Dry/Gravy": "images/food/Mushroom chilli dry gravy.jpg",
+  "Lemon Chaap Gravy": "images/food/lemon chaap gravy.jpg",
+  "Hara Bhara Kabab": "images/food/hara bhara kabab.jpg",
+  "Paneer Manchurian": "images/food/paneer manchurian.jpg",
+  "Veg. Raita": "images/food/veg raita.jpg",
+  "Boondi Raita": "images/food/Boondi Raita.jpg",
+  "Aloo Onion Raita": "images/food/aloo onion raita.jpg",
+  "Plain Curd": "images/food/plain curd.jpg",
+  "Onion Salad": "images/food/onion salad.jpg",
+  "Green Salad": "images/food/green salad.jpg",
+  "Cream Salad": "images/food/Cream salad.jpg",
+  "Kachumber Salad": "images/food/Kachumber salad.jpg",
+  "Dry Papad": "images/food/dry papad.jpg",
+  "Fry Papad": "images/food/fry papad.jpg",
+  "Masala Papad": "images/food/masala papad.jpg",
+  "Dahi Fry": "images/food/Dahi fry.jpg",
+  "Vanila Shake": "images/food/Vanila shake.jpg",
+  "Chocolate Shake": "images/food/chocolate shake.jpg",
+  "Strawberry Shake": "images/food/Strawberry shake.jpg",
+  "Milk Shake": "images/food/Milk shake.jpg",
+  "Cold Coffee": "images/food/Cold coffee.jpg",
+  "Butterscotch Shake": "images/food/Butterscotch shake.jpg",
+  "Pineapple Shake": "images/food/Pineapple shake.jpg",
+  "Oreo Shake": "images/food/oreo shake.jpg",
+  "Cold Drink": "images/food/Cold drink.jpg",
+  "Soda": "images/food/soda.jpg",
+  "Mineral Water": "images/food/Mineral water.jpg",
+  "Ice Cube": "images/food/ice cube.jpg",
+  "Veg. Tomato Soup": "images/food/Veg. Tomato Soup.jpg",
+  "Hot & Sour Soup": "images/food/Hot & Sour soup.jpg",
+  "Sweet Corn Soup": "images/food/Sweet Corn Soup.jpg",
+  "Veg. Soup": "images/food/veg soup.jpg",
+  "Chicken Pakora": "images/food/Chicken Pakora.jpg",
+  "Chicken KFC": "images/food/chicken KFC.jpg",
+  "Chicken Boneless K.F.C.": "images/food/chicken boneless KFC.jpg",
+  "Chicken Tikka Boneless": "images/food/Chicken Tikka boneless.jpg",
+  "Bonless Chicken Chilly": "images/food/chicken boneless chilly.jpg",
+  "Bonless Chicken Manchurian": "images/food/boneless chicken manchurian.jpg",
+  "Chicken Gravy": "images/food/Chicken gravy.jpg",
+  "Chilly Chicken": "images/food/Chilly chicken.jpg",
+  "Tawa Chicken": "images/food/Tawa Chicken.jpg",
+  "Masala Chicken": "images/food/masala chicken.jpg",
+  "Boneless Chicken Pakora": "images/food/boneless Chicken Pakora.jpg",
+  "Boneless Rara Chicken": "images/food/boneless rara chicken.jpg",
+  "Kadhai Chicken": "images/food/Kadhai Chicken.jpg",
+  "Kadhai Chicken Boneless": "images/food/Kadhai chicken Boneless.jpg",
+  "Tangdi Kabab (Per Piece)": "images/food/tangdi kabab (per piece).jpg",
+  "Chicken Malai Tikka": "images/food/chicken malai tikka.jpg",
+  "Butter Chicken": "images/food/Butter chicken.jpg",
+  "Jeera Chicken": "images/food/Jeera Chicken.jpg",
+  "Jeera Chicken Boneless": "images/food/jeera chicken boneless.jpg",
+  "Lemon Chicken": "images/food/lemon chicken.jpg",
+  "Lemon Chicken Boneless": "images/food/lemon chicken boneless.jpg",
+  "Home Made Chicken": "images/food/Homemade chicken.jpg",
+  "Afgaani Chicken": "images/food/afghani chicken.jpg",
+  "Chicken Kalimirch": "images/food/chicken kalimirch.jpg",
+  "Chicken Fry": "images/food/Chicken fry.jpg",
+  "Boneless Butter Chicken": "images/food/boneless butter chicken.jpg",
+  "Boneless Lemon Chicken": "images/food/Boneless lemon chicken.jpg",
+  "Punjabi Chicken": "images/food/Punjabi chicken.jpg",
+  "Handi Chicken": "images/food/Handi chicken.jpg",
+  "Tandoori Chicken": "images/food/Tandoori chicken.jpg",
+  "Tandoori Butter Chicken": "images/food/Tandoori butter chicken.jpg",
+  "Chicken Leg (Extra)": "images/food/chicken leg extra.jpg",
+  "Fish Lemon Gravy": "images/food/Fish lemon gravy.jpg",
+  "Fish Pakora": "images/food/Fish pakora.jpg",
+  "Chicken Curry": "images/food/Chicken Curry.jpg",
+  "Fish Chilly": "images/food/Fish chilly.jpg",
+  "Fish Manchurian": "images/food/Fish Manchurian.jpg",
+  "Fish KFC": "images/food/Fish KFC.jpg",
+  "Fish Tikka": "images/food/Fish Tikka.jpg",
+  "Meat Labour": "images/food/Chicken Curry.jpg",
+  "Chicken Popcorn": "images/food/Chicken popcorn.jpg"
+};
+
 function getDishImage(item) {
-  const name = (item.name || "").toLowerCase();
-  const cat  = (item.cat  || "").toLowerCase();
-
-  // 0. EXACT REAL DISH PHOTOS UPLOADED BY USER (75 Dishes Total)
-  if (name.includes("boneless chicken biryani")) return "images/dish_boneless_chicken_biryani_with_gravy.jpg";
-  if (name.includes("chicken biryani") || name.includes("chicken briyani")) return "images/dish_chicken_biryani.jpg";
-  if (name.includes("egg biryani")) return "images/dish_egg_biryani.jpg";
-  if (name.includes("veg biryani") || name.includes("veg. biryani")) return "images/dish_veg_biryani.jpg";
-  if (name.includes("peas pulao") || name.includes("matar pulao")) return "images/dish_peas_pulao.jpg";
-  if (name.includes("veg pulao") || name.includes("veg. pulao")) return "images/dish_veg_pulao.jpg";
-  if (name.includes("steamed rice") || name.includes("plain rice")) return "images/dish_steamed_rice.jpg";
-  if (name.includes("jeera rice")) return "images/dish_jeera_rice.jpg";
-  if (name.includes("fried rice")) return "images/dish_fried_rice.jpg";
-
-  if (name.includes("butter roti")) return "images/dish_butter_roti.jpg";
-  if (name.includes("tandoori roti")) return "images/dish_tandoori_roti.jpg";
-  if (name.includes("missi roti")) return "images/dish_missi_roti.jpg";
-  if (name.includes("garlic naan")) return "images/dish_garlic_naan.jpg";
-  if (name.includes("stuff naan") || name.includes("stuffed naan")) return "images/dish_stuff_naan.jpg";
-  if (name.includes("butter naan")) return "images/dish_butter_naan.jpg";
-  if (name.includes("plain naan")) return "images/dish_plain_naan.jpg";
-
-  if (name.includes("dal makhani") || name.includes("dall makhani")) return "images/dish_dal_makhani.jpg";
-  if (name.includes("dal fry") || name.includes("dall fry")) return "images/dish_dal_fry.jpg";
-  if (name.includes("dal maharani") || name.includes("dall maharani")) return "images/dish_dal_maharani.jpg";
-  if (name.includes("dal tadka") || name.includes("dall tadka") || name.includes("yellow dal")) return "images/dish_yellow_dal_tadka.jpg";
-
-  if (name.includes("chef special paneer")) return "images/dish_chef_special_paneer.jpg";
-  if (name.includes("cheese tomato")) return "images/dish_cheese_tomato.jpg";
-  if (name.includes("shahi paneer")) return "images/dish_shahi_paneer.jpg";
-  if (name.includes("kadai paneer")) return "images/dish_kadai_paneer.jpg";
-  if (name.includes("paneer butter masala")) return "images/dish_paneer_butter_masala.jpg";
-  if (name.includes("paneer do pyaza")) return "images/dish_paneer_do_pyaza.jpg";
-  if (name.includes("paneer methi malai")) return "images/dish_paneer_methi_malai.jpg";
-  if (name.includes("palak paneer")) return "images/dish_palak_paneer.jpg";
-  if (name.includes("matar paneer")) return "images/dish_matar_paneer.jpg";
-  if (name.includes("paneer bhurji")) return "images/dish_paneer_bhurji.jpg";
-  if (name.includes("veg. gravy") || name.includes("veg gravy")) return "images/dish_veg_gravy.jpg";
-  if (name.includes("paneer pasanda")) return "images/dish_paneer_pasanda.jpg";
-  if (name.includes("chaap masala gravy")) return "images/dish_chaap_masala_gravy.jpg";
-  if (name.includes("chaap roganjosh")) return "images/dish_chaap_roganjosh.jpg";
-  if (name.includes("tawa chaap masala")) return "images/dish_tawa_chaap_masala.jpg";
-  if (name.includes("tawa tikka masala")) return "images/dish_tawa_paneer_masala.jpg";
-  if (name.includes("malai kofta")) return "images/dish_malai_kofta.jpg";
-  if (name.includes("palak kofta")) return "images/dish_palak_kofta.jpg";
-  if (name.includes("veg kofta") || name.includes("veg. kofta")) return "images/dish_veg_kofta.jpg";
-  if (name.includes("palak corn")) return "images/dish_palak_corn.jpg";
-  if (name.includes("mix veg")) return "images/dish_mix_veg_recipe.jpg";
-  if (name.includes("mutter mushroom") || name.includes("matar mushroom")) return "images/dish_matar_mushroom.jpg";
-  if (name.includes("mushroom masala")) return "images/dish_mushroom_masala.jpg";
-  if (name.includes("mushroom do pyaza")) return "images/dish_mushroom_do_pyaza.jpg";
-  if (name.includes("mushroom corn")) return "images/dish_mushroom_corn.jpg";
-  if (name.includes("palak mushroom")) return "images/dish_palak_mushroom.jpg";
-  if (name.includes("mushroom palak corn")) return "images/dish_mushroom_palak_corn.jpg";
-  if (name.includes("mushroom curry")) return "images/dish_mushroom_curry.jpg";
-  if (name.includes("jeera aloo")) return "images/dish_jeera_aloo.jpg";
-  if (name.includes("chana masala")) return "images/dish_chana_masala.jpg";
-  if (name.includes("kadahi chana") || name.includes("kadai chana")) return "images/dish_kadai_channa.jpg";
-  if (name.includes("mutter methi malai") || name.includes("matar methi malai")) return "images/dish_matar_methi_malai.jpg";
-  if (name.includes("aloo gobhi")) return "images/dish_aloo_gobhi.jpg";
-  if (name.includes("masala gobhi")) return "images/dish_masala_gobhi.jpg";
-  if (name.includes("keema gobhi")) return "images/dish_keema_gobhi.jpg";
-  if (name.includes("paneer bhujiya")) return "images/dish_paneer_bhujiya.jpg";
-  if (name.includes("paneer tikka butter masala")) return "images/dish_paneer_tikka_butter_masala.jpg";
-  if (name.includes("dum aloo")) return "images/dish_dum_aloo.jpg";
-  if (name.includes("aloo matar")) return "images/dish_aloo_matar.jpg";
-  if (name.includes("kaju kari")) return "images/dish_kaju_kari.jpg";
-  if (name.includes("sev bhaji")) return "images/dish_sev_bhaji.jpg";
-  if (name.includes("sev tomato")) return "images/dish_sev_tomato.jpg";
-  if (name.includes("potato finger")) return "images/dish_potato_finger_masala.jpg";
-  if (name.includes("veg cutlet") || name.includes("veg. cutlet")) return "images/dish_veg_cutlet.jpg";
-  if (name.includes("channa chaat & sweetcorn") || name.includes("chana chat & sweetcorn")) return "images/dish_channa_chaat_sweetcorn.jpg";
-  if (name.includes("channa chaat") || name.includes("chana chaat")) return "images/dish_channa_chaat.jpg";
-  if (name.includes("hot channa") || name.includes("hot chaat")) return "images/dish_hot_channa.jpg";
-  if (name.includes("peanut masala")) return "images/dish_peanut_masala.jpg";
-  if (name.includes("crispy corn")) return "images/dish_crispy_corn.jpg";
-  if (name.includes("sweetcorn plain")) return "images/dish_sweetcorn_plain.jpg";
-  if (name.includes("sweetcorn chaat") || name.includes("sweet corn chat")) return "images/dish_sweetcorn_chaat.jpg";
-  if (name.includes("mushroom duplex") || name.includes("duplex")) return "images/dish_mushroom_duplex.jpg";
-
-  // 2. MAIN COURSE VEG CURRIES (Gravy Dishes)
-  if (cat === "mainveg" || name.includes("gravy") || name.includes("roganjosh")) {
-    if (name.includes("palak paneer")) return "images/food_palak_paneer.png";
-    if (name.includes("matar paneer")) return "images/food_matar_paneer.png";
-    if (name.includes("cheese tomato")) return "images/food_cheese_tomato.png";
-    if (name.includes("shahi paneer") || name.includes("chef special") || name.includes("pasanda")) return "images/food_shahi_paneer.png";
-    if (name.includes("kadai paneer") || name.includes("butter masala") || name.includes("do pyaza") || name.includes("methi malai") || name.includes("tawa tikka")) return "images/food_kadai_paneer.png";
-    if (name.includes("chaap")) return "images/food_chaap_gravy.png";
-    if (name.includes("paneer")) return "images/food_kadai_paneer.png";
-    return "images/food_mix_veg.png";
+  if (!item || !item.name) return "images/food/Mix Veg Recipe.jpg";
+  if (dishImageMap[item.name]) return dishImageMap[item.name];
+  const name = (item.name || "").toLowerCase().trim();
+  const cleaned = name.replace(/\([^)]*\)/g, "").trim();
+  for (const [key, val] of Object.entries(dishImageMap)) {
+    if (key.toLowerCase() === cleaned || key.toLowerCase().includes(cleaned) || cleaned.includes(key.toLowerCase())) {
+      return val;
+    }
   }
-
-  // 2.5 ALL PARANTHAS & FLATBREADS
-  if (name.includes("prantha") || name.includes("parantha")) {
-    if (name.includes("paneer")) return "images/food_paneer_paratha.png";
-    return "images/food_paratha.png";
-  }
-
-  // 3. TANDOORI SNACKS (Dry Charcoal Skewers & Kebabs)
-  if (cat === "tandoori" || (name.includes("tandoori") && !name.includes("prantha") && !name.includes("parantha"))) {
-    if (name.includes("paneer tikka")) return "images/food_paneer_tikka.png";
-    if (name.includes("aloo")) return "images/food_potato_finger_real.jpg";
-    if (name.includes("mushroom")) return "images/food_mushroom_duplex_real.jpg";
-    if (name.includes("cheese seekh")) return "images/food_paneer_fry.png";
-    if (name.includes("hara bhara") || name.includes("seekh")) return "images/food_pakora.png";
-    if (name.includes("chaap")) return "images/food_chaap.png";
-    return "images/food_paneer_tikka.png";
-  }
-
-  // 4. BREAKFAST & EGGS
-  if (name === "tea" || name === "masala chai") return "images/food_tea.png";
-  if (name.includes("special milk tea") || name.includes("milk tea")) return "images/food_milk_tea.png";
-  if (name === "hot milk") return "images/food_hot_milk.png";
-  if (name.includes("lassi")) return "images/food_lassi.png";
-  if (name.includes("poha")) return "images/food_poha.png";
-  if (name.includes("parantha") || name.includes("prantha") || name.includes("naan") || name.includes("roti") || (name.includes("bread") && !name.includes("omelette") && !name.includes("sandwich")) || name.includes("puri") || name.includes("missi") || cat === "bread") return "images/food_paratha.png";
-  if (name.includes("bread omelette") || name.includes("bread omellete")) return "images/food_bread_omelette.png";
-  if (name.includes("bhurji")) return "images/food_egg_bhurji.png";
-  if (name.includes("half fry")) return "images/food_egg_half_fry.png";
-  if (name.includes("omlate") || name.includes("omelette") || name.includes("egg")) return "images/food_omelette.png";
-
-  // 5. MAGGI & PASTA & SANDWICHES
-  if (name.includes("red sauce") || name.includes("red pasta")) return "images/food_red_pasta.png";
-  if (name.includes("white sauce") || name.includes("white pasta")) return "images/food_white_pasta.png";
-  if (name.includes("sandwich")) return "images/food_sandwich.png";
-  if (name.includes("maggi") || name.includes("meggie") || name.includes("noodle")) return "images/food_maggi.png";
-
-  // 6. COUNTRY SNACKS
-  if (name.includes("paneer kfc") || name.includes("paneer fry") || name.includes("paneer pakora") || name.includes("cheese finger")) return "images/food_paneer_fry.png";
-  if (name.includes("pakora")) return "images/food_pakora.png";
-  if (name.includes("chana chilly")) return "images/food_chana_chilly.png";
-
-  // 7. RICE & BIRYANI
-  if (name.includes("biryani") || name.includes("pulao") || name.includes("rice") || name.includes("chawal") || cat === "rice") return "images/food_biryani.png";
-
-  // 8. DAL
-  if (name.includes("makhani") || name.includes("dal") || name.includes("dall") || name.includes("chole") || name.includes("rajma") || name.includes("tadka") || cat === "dal") return "images/food_dal_makhani.png";
-
-  // 9. NON-VEG CORNER
-  if (item.type === "nonveg" || name.includes("chicken") || name.includes("mutton") || name.includes("fish") || name.includes("kfc") || name.includes("meat") || cat === "nonveg") return "images/food_butter_chicken.png";
-
-  // 10. CHINESE
-  if (name.includes("pasta") || name.includes("manchurian") || name.includes("fries") || name.includes("chilly") || name.includes("chilli") || cat === "chinese" || cat === "maggi") return "images/food_chinese.png";
-
-  // 11. BEVERAGES & SHAKES
-  if (name.includes("shake") || name.includes("coffee") || name.includes("drink") || name.includes("soda") || cat === "beverages") return "images/food_shake.png";
-
-  // 12. SOUPS
-  if (name.includes("soup") || cat === "soups") return "images/food_soup.png";
-
-  // 13. SALAD & RAITA
-  if (name.includes("salad") || name.includes("raita") || name.includes("curd") || name.includes("papad") || name.includes("dahi") || cat === "raita") return "images/food_salad.png";
-
-  return item.type === "nonveg" ? "images/food_butter_chicken.png" : "images/food_mix_veg.png";
+  return item.type === "nonveg" ? "images/food/Chicken Curry.jpg" : "images/food/Mix Veg Recipe.jpg";
 }
 
   grid.innerHTML = items.map(item => {

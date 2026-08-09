@@ -13,50 +13,50 @@ const rooms = [
 const menuData = {
   breakfast:{
     veg:[
-      {name:"Special Milk Tea",price:40,desc:"Rich cardamom & ginger milk tea",img:"images/food_veg.png"},
-      {name:"Tandoori Paneer Prantha",price:110,desc:"Fresh cottage cheese stuffed tandoori parantha",img:"images/food_paneer_tikka.png"},
-      {name:"Tandoori Aloo Prantha",price:70,desc:"Spiced potato stuffed tandoori parantha",img:"images/food_veg.png"},
-      {name:"Lassi (Sweet / Salty)",price:50,desc:"Traditional thick chilled yogurt drink",img:"images/food_veg.png"},
-      {name:"Poha",price:100,desc:"Flattened rice cooked with spices & peanuts",img:"images/food_veg.png"},
-      {name:"Masala Chai",price:15,desc:"Spiced Indian tea",img:"images/food_veg.png"}
+      {name:"Special Milk Tea",price:40,desc:"Rich cardamom & ginger milk tea",img:"images/food_milk_tea.png"},
+      {name:"Tandoori Paneer Prantha",price:110,desc:"Fresh cottage cheese stuffed tandoori parantha",img:"images/food/paneer Methi Malai.jpg"},
+      {name:"Tandoori Aloo Prantha",price:70,desc:"Spiced potato stuffed tandoori parantha",img:"images/food/jeera aloo.jpg"},
+      {name:"Lassi (Sweet / Salty)",price:50,desc:"Traditional thick chilled yogurt drink",img:"images/food_lassi.png"},
+      {name:"Poha",price:100,desc:"Flattened rice cooked with spices & peanuts",img:"images/food_poha.png"},
+      {name:"Masala Chai",price:15,desc:"Spiced Indian tea",img:"images/food_tea.png"}
     ],
     nonveg:[
-      {name:"Bread Omelette",price:100,desc:"Fluffy 2-egg omelette served with toasted bread",img:"images/food_nonveg.png"},
-      {name:"Egg Omelette",price:80,desc:"2-egg Indian style masala omelette",img:"images/food_nonveg.png"},
-      {name:"Egg Bhurji",price:80,desc:"Scrambled spiced eggs with onion-tomato",img:"images/food_nonveg.png"}
+      {name:"Bread Omelette",price:100,desc:"Fluffy 2-egg omelette served with toasted bread",img:"images/food_bread_omelette.png"},
+      {name:"Egg Omelette",price:80,desc:"2-egg Indian style masala omelette",img:"images/food_omelette.png"},
+      {name:"Egg Bhurji",price:80,desc:"Scrambled spiced eggs with onion-tomato",img:"images/food_egg_bhurji.png"}
     ]
   },
   lunch:{
     veg:[
-      {name:"Dal Makhani",price:200,desc:"Creamy black lentil curry slow-cooked overnight",img:"images/food_dal_makhani.png"},
-      {name:"Paneer Butter Masala",price:300,desc:"Cottage cheese in rich tomato-cream gravy",img:"images/food_paneer_tikka.png"},
-      {name:"Shahi Paneer",price:280,desc:"Royal cottage cheese in sweet cashew cream gravy",img:"images/food_paneer_tikka.png"},
-      {name:"Veg Biryani",price:160,desc:"Aromatic basmati rice with mixed vegetables",img:"images/food_biryani.png"},
-      {name:"Butter Naan",price:40,desc:"Rich fluffy naan topped with melted butter",img:"images/food_veg.png"},
-      {name:"Steamed Rice",price:90,desc:"Plain fluffy basmati rice",img:"images/food_veg.png"}
+      {name:"Dal Makhani",price:200,desc:"Creamy black lentil curry slow-cooked overnight",img:"images/food/Dal Makhani.jpg"},
+      {name:"Paneer Butter Masala",price:300,desc:"Cottage cheese in rich tomato-cream gravy",img:"images/food/Paneer Butter Masala.jpg"},
+      {name:"Shahi Paneer",price:280,desc:"Royal cottage cheese in sweet cashew cream gravy",img:"images/food/Shahi paneer.jpg"},
+      {name:"Veg Biryani",price:160,desc:"Aromatic basmati rice with mixed vegetables",img:"images/food/Veg Biryani.jpg"},
+      {name:"Butter Naan",price:40,desc:"Rich fluffy naan topped with melted butter",img:"images/food/butter naan.jpg"},
+      {name:"Steamed Rice",price:90,desc:"Plain fluffy basmati rice",img:"images/food/steamed rice.jpg"}
     ],
     nonveg:[
-      {name:"Chicken Biryani",price:250,desc:"Tender chicken layered with saffron basmati rice",img:"images/food_biryani.png"},
-      {name:"Butter Chicken",price:550,desc:"Classic tandoori chicken in creamy tomato gravy",img:"images/food_butter_chicken.png"},
-      {name:"Chicken Curry",price:550,desc:"Classic Indian chicken curry with rich gravy",img:"images/food_nonveg.png"},
-      {name:"Kadhai Chicken",price:600,desc:"Chicken cooked with capsicum & kadai spices",img:"images/food_nonveg.png"},
-      {name:"Chicken Pakora",price:500,desc:"Crispy spiced fried chicken fritters",img:"images/food_nonveg.png"}
+      {name:"Chicken Biryani",price:250,desc:"Tender chicken layered with saffron basmati rice",img:"images/food/Chicken Biryani.jpg"},
+      {name:"Butter Chicken",price:550,desc:"Classic tandoori chicken in creamy tomato gravy",img:"images/food/Butter chicken.jpg"},
+      {name:"Chicken Curry",price:550,desc:"Classic Indian chicken curry with rich gravy",img:"images/food/Chicken Curry.jpg"},
+      {name:"Kadhai Chicken",price:600,desc:"Chicken cooked with capsicum & kadai spices",img:"images/food/Kadhai Chicken.jpg"},
+      {name:"Chicken Pakora",price:500,desc:"Crispy spiced fried chicken fritters",img:"images/food/Chicken Pakora.jpg"}
     ]
   },
   dinner:{
     veg:[
-      {name:"Paneer Tikka (8 Pcs)",price:280,desc:"Grilled cottage cheese with tandoor spices",img:"images/food_paneer_tikka.png"},
-      {name:"Yellow Dal Tadka",price:160,desc:"Yellow lentils tempered with ghee & cumin",img:"images/food_dal_makhani.png"},
-      {name:"Kadai Paneer",price:340,desc:"Paneer cooked in bell peppers & kadai masala",img:"images/food_paneer_tikka.png"},
-      {name:"Jeera Rice",price:120,desc:"Basmati rice tempered with cumin seeds & ghee",img:"images/food_veg.png"},
-      {name:"Veg. Raita",price:80,desc:"Chilled yogurt with cucumber & cumin",img:"images/food_veg.png"},
-      {name:"Malai Kofta",price:320,desc:"Fried paneer balls in velvet cream gravy",img:"images/food_veg.png"}
+      {name:"Paneer Tikka (8 Pcs)",price:280,desc:"Grilled cottage cheese with tandoor spices",img:"images/food/Paneer Tikka butter Masala.jpg"},
+      {name:"Yellow Dal Tadka",price:160,desc:"Yellow lentils tempered with ghee & cumin",img:"images/food/yellow Dal Tadka.jpg"},
+      {name:"Kadai Paneer",price:340,desc:"Paneer cooked in bell peppers & kadai masala",img:"images/food/Kadai Paneer.jpg"},
+      {name:"Jeera Rice",price:120,desc:"Basmati rice tempered with cumin seeds & ghee",img:"images/food/Jeera Rice.jpg"},
+      {name:"Veg. Raita",price:80,desc:"Chilled yogurt with cucumber & cumin",img:"images/food/veg raita.jpg"},
+      {name:"Malai Kofta",price:320,desc:"Fried paneer balls in velvet cream gravy",img:"images/food/Malai Kofta.jpg"}
     ],
     nonveg:[
-      {name:"Tandoori Chicken",price:550,desc:"Whole chicken marinated & cooked in clay oven",img:"images/food_nonveg.png"},
-      {name:"Boneless Butter Chicken",price:600,desc:"Boneless chicken in signature makhani gravy",img:"images/food_butter_chicken.png"},
-      {name:"Chicken Malai Tikka",price:600,desc:"Melt in mouth creamy cashew marinated chicken tikka",img:"images/food_nonveg.png"},
-      {name:"Chicken Tikka Boneless",price:550,desc:"Boneless chicken pieces marinated in spices",img:"images/food_nonveg.png"}
+      {name:"Tandoori Chicken",price:550,desc:"Whole chicken marinated & cooked in clay oven",img:"images/food/Tandoori chicken.jpg"},
+      {name:"Boneless Butter Chicken",price:600,desc:"Boneless chicken in signature makhani gravy",img:"images/food/boneless butter chicken.jpg"},
+      {name:"Chicken Malai Tikka",price:600,desc:"Melt in mouth creamy cashew marinated chicken tikka",img:"images/food/chicken malai tikka.jpg"},
+      {name:"Chicken Tikka Boneless",price:550,desc:"Boneless chicken pieces marinated in spices",img:"images/food/Chicken Tikka boneless.jpg"}
     ]
   }
 };
