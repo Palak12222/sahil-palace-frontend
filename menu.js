@@ -563,12 +563,39 @@ function getDishImage(item) {
   }).join("");
 }
 
+// ===== CART DRAWER CONTROLS =====
+function toggleCartDrawer() {
+  const drawer = document.getElementById("cartDrawer");
+  const overlay = document.getElementById("cartDrawerOverlay");
+  if (drawer && overlay) {
+    drawer.classList.toggle("open");
+    overlay.classList.toggle("open");
+  }
+}
+function openCartDrawer() {
+  const drawer = document.getElementById("cartDrawer");
+  const overlay = document.getElementById("cartDrawerOverlay");
+  if (drawer && overlay) {
+    drawer.classList.add("open");
+    overlay.classList.add("open");
+  }
+}
+function closeCartDrawer() {
+  const drawer = document.getElementById("cartDrawer");
+  const overlay = document.getElementById("cartDrawerOverlay");
+  if (drawer && overlay) {
+    drawer.classList.remove("open");
+    overlay.classList.remove("open");
+  }
+}
+
 // ===== CART LOGIC =====
 function addToCart(key, displayName, price) {
   cart[key] = (cart[key] || 0) + 1;
   showToast(`🛒 ${displayName} added to cart!`);
   updateCart();
   renderMenu();
+  openCartDrawer();
 }
 
 function changeQty(key, delta) {
@@ -616,31 +643,45 @@ function updateCart() {
   const badge = document.getElementById("cartBadge");
   if (badge) badge.textContent = count;
 
+  const navBadge = document.getElementById("navCartBadge");
+  if (navBadge) navBadge.textContent = count;
+
+  const subElem = document.getElementById("cartDrawerSub");
+  if (subElem) subElem.textContent = `${count} item${count !== 1 ? 's' : ''} selected`;
+
+  const emptyElem = document.getElementById("cartEmpty");
+  const listElem  = document.getElementById("cartItemsList");
+  const footElem  = document.getElementById("cartFooter");
+
   if (!keys.length) {
-    document.getElementById("cartEmpty").style.display     = "block";
-    document.getElementById("cartItemsList").style.display = "none";
-    document.getElementById("cartFooter").style.display    = "none";
+    if (emptyElem) emptyElem.style.display = "block";
+    if (listElem)  listElem.style.display  = "none";
+    if (footElem)  footElem.style.display  = "none";
     return;
   }
 
-  document.getElementById("cartEmpty").style.display     = "none";
-  document.getElementById("cartItemsList").style.display = "block";
-  document.getElementById("cartFooter").style.display    = "block";
-  document.getElementById("cartTotal").textContent       = `₹${total.toLocaleString("en-IN")}`;
+  if (emptyElem) emptyElem.style.display = "none";
+  if (listElem)  listElem.style.display  = "block";
+  if (footElem)  footElem.style.display  = "block";
 
-  document.getElementById("cartItemsList").innerHTML = keys.map(k => {
-    const info = getCartItemInfo(k);
-    const itemTotal = info.price * cart[k];
-    return `<div class="cart-item-row">
-      <div class="ci-name">${info.name}</div>
-      <div class="ci-qty">
-        <button onclick="changeQty('${k}',-1)">−</button>
-        <span>${cart[k]}</span>
-        <button onclick="changeQty('${k}',1)">+</button>
-      </div>
-      <div class="ci-price">₹${itemTotal.toLocaleString("en-IN")}</div>
-    </div>`;
-  }).join("");
+  const totalElem = document.getElementById("cartTotal");
+  if (totalElem) totalElem.textContent = `₹${total.toLocaleString("en-IN")}`;
+
+  if (listElem) {
+    listElem.innerHTML = keys.map(k => {
+      const info = getCartItemInfo(k);
+      const itemTotal = info.price * cart[k];
+      return `<div class="cart-item-row">
+        <div class="ci-name">${info.name}</div>
+        <div class="ci-qty">
+          <button onclick="changeQty('${k}',-1)">−</button>
+          <span>${cart[k]}</span>
+          <button onclick="changeQty('${k}',1)">+</button>
+        </div>
+        <div class="ci-price">₹${itemTotal.toLocaleString("en-IN")}</div>
+      </div>`;
+    }).join("");
+  }
 }
 
 // ===== CHECKOUT MODAL =====

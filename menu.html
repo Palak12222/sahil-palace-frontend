@@ -28,8 +28,14 @@
       <li><a href="events.html">Events</a></li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
-    <a href="tel:8742026903" class="nav-phone">📞 8742026903</a>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <div class="nav-actions">
+      <button class="nav-cart-btn" id="navCartBtn" onclick="toggleCartDrawer()">
+        🛒 <span class="nav-cart-text">Cart</span>
+        <span class="nav-cart-badge" id="navCartBadge">0</span>
+      </button>
+      <a href="tel:8742026903" class="nav-phone">📞 8742026903</a>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </nav>
 
@@ -138,26 +144,6 @@
         </div>
       </div>
 
-      <!-- Cart -->
-      <div class="cart-card" id="cartCard">
-        <div class="cart-top">
-          <h4>🛒 Your Cart</h4>
-          <span class="cart-count-badge" id="cartBadge">0</span>
-        </div>
-        <div class="cart-empty" id="cartEmpty">
-          <div>🍽️</div>
-          <p>Your cart is empty</p>
-          <small>Add items to order</small>
-        </div>
-        <div class="cart-items-list" id="cartItemsList" style="display:none"></div>
-        <div class="cart-footer" id="cartFooter" style="display:none">
-          <div class="cart-total-row">
-            <span>Total</span>
-            <strong id="cartTotal">₹0</strong>
-          </div>
-          <button class="btn-checkout" onclick="checkout()">📞 Place Order</button>
-          <button class="btn-clear" onclick="clearCart()">🗑️ Clear Cart</button>
-        </div>
       </div>
 
     </aside>
@@ -181,6 +167,39 @@
 
   </div>
 </main>
+
+<!-- CART DRAWER (SLIDE OVER) -->
+<div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <div class="cart-dh-title">
+      <span class="cdh-icon">🛒</span>
+      <div>
+        <h3>Your Food Cart</h3>
+        <small id="cartDrawerSub">Selected items</small>
+      </div>
+    </div>
+    <button class="cart-drawer-close" onclick="closeCartDrawer()">✕</button>
+  </div>
+
+  <div class="cart-drawer-body">
+    <div class="cart-empty" id="cartEmpty">
+      <div class="ce-icon">🍽️</div>
+      <h4>Your cart is empty</h4>
+      <p>Add delicious dishes from our menu to place your order.</p>
+    </div>
+    <div class="cart-items-list" id="cartItemsList" style="display:none"></div>
+  </div>
+
+  <div class="cart-drawer-footer" id="cartFooter" style="display:none">
+    <div class="cart-total-row">
+      <span>Total Amount</span>
+      <strong id="cartTotal">₹0</strong>
+    </div>
+    <button class="btn-checkout" onclick="checkout()">📞 Place Order Now</button>
+    <button class="btn-clear" onclick="clearCart()">🗑️ Clear Cart</button>
+  </div>
+</div>
 
 <!-- CHECKOUT MODAL -->
 <div class="checkout-overlay" id="checkoutModal">
