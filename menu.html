@@ -115,64 +115,59 @@
 
 <!-- MENU CONTENT -->
 <main class="menu-main">
-  <div class="menu-layout">
 
-    <!-- LEFT: Filters & Cart -->
-    <aside class="menu-sidebar">
+  <!-- TOP HORIZONTAL FILTERS BAR -->
+  <div class="horizontal-filter-section">
 
-      <!-- Meal Category -->
-      <div class="filter-card">
-        <h4>🍴 Categories</h4>
-        <div class="filter-list">
-          <button class="filter-btn active" data-cat="all">🍴 All Items</button>
-          <button class="filter-btn" data-cat="breakfast">🌅 Breakfast</button>
-          <button class="filter-btn" data-cat="maggi">🍝 Maggi & Pasta</button>
-          <button class="filter-btn" data-cat="snacks">🧅 Country Snacks</button>
-          <button class="filter-btn" data-cat="tandoori">🔥 Tandoori Snacks</button>
-          <button class="filter-btn" data-cat="mainveg">🥘 Main Course (Veg)</button>
-          <button class="filter-btn" data-cat="dal">🥣 Dall</button>
-          <button class="filter-btn" data-cat="rice">🍚 Rice & Biryani</button>
-          <button class="filter-btn" data-cat="bread">🫓 Indian Breads</button>
-          <button class="filter-btn" data-cat="chinese">🥢 Chinese Specials</button>
-          <button class="filter-btn" data-cat="raita">🥗 Raita & Salad</button>
-          <button class="filter-btn" data-cat="beverages">🥤 Drinks & Shakes</button>
-          <button class="filter-btn" data-cat="soups">🥣 Soups</button>
-          <button class="filter-btn" data-cat="nonveg">🍗 Non-Veg Corner</button>
-        </div>
-      </div>
-
-      <!-- Type -->
-      <div class="filter-card">
-        <h4>🟢 Food Type</h4>
-        <div class="filter-list">
+    <!-- FOOD TYPE & SEARCH ROW -->
+    <div class="horiz-type-bar">
+      <div class="horiz-type-group">
+        <span class="horiz-label">🟢 Food Type:</span>
+        <div class="horiz-type-list">
           <button class="type-btn active" data-type="all">All</button>
           <button class="type-btn" data-type="veg">🟢 Veg Only</button>
           <button class="type-btn" data-type="nonveg">🔴 Non-Veg Only</button>
         </div>
       </div>
 
-      </div>
-
-    </aside>
-
-    <!-- RIGHT: Menu Grid -->
-    <div class="menu-right">
-      <!-- Search -->
-      <div class="search-bar">
+      <!-- Search Input -->
+      <div class="search-bar-inline">
         <input type="text" id="menuSearch" placeholder="🔍 Search dishes..." oninput="renderMenu()"/>
       </div>
+    </div>
 
-      <!-- Results count -->
-      <div class="results-bar">
-        <span id="resultsCount">Showing all items</span>
-        <span class="tag-veg-info">🟢 = Veg &nbsp; 🔴 = Non-Veg</span>
+    <!-- CATEGORIES HORIZONTAL SCROLL STRIP -->
+    <div class="horiz-cat-bar">
+      <span class="horiz-label">🍴 Categories:</span>
+      <div class="horiz-cat-scroll">
+        <button class="filter-btn active" data-cat="all">🍴 All Items</button>
+        <button class="filter-btn" data-cat="breakfast">🌅 Breakfast</button>
+        <button class="filter-btn" data-cat="maggi">🍝 Maggi &amp; Pasta</button>
+        <button class="filter-btn" data-cat="snacks">🧅 Country Snacks</button>
+        <button class="filter-btn" data-cat="tandoori">🔥 Tandoori Snacks</button>
+        <button class="filter-btn" data-cat="mainveg">🥘 Main Course (Veg)</button>
+        <button class="filter-btn" data-cat="dal">🥣 Dall</button>
+        <button class="filter-btn" data-cat="rice">🍚 Rice &amp; Biryani</button>
+        <button class="filter-btn" data-cat="bread">🫓 Indian Breads</button>
+        <button class="filter-btn" data-cat="chinese">🥢 Chinese Specials</button>
+        <button class="filter-btn" data-cat="raita">🥗 Raita &amp; Salad</button>
+        <button class="filter-btn" data-cat="beverages">🥤 Drinks &amp; Shakes</button>
+        <button class="filter-btn" data-cat="soups">🥣 Soups</button>
+        <button class="filter-btn" data-cat="nonveg">🍗 Non-Veg Corner</button>
       </div>
-
-      <!-- Grid -->
-      <div class="menu-grid" id="menuGrid"></div>
     </div>
 
   </div>
+
+  <!-- Results count -->
+  <div class="results-bar">
+    <span id="resultsCount">Showing all items</span>
+    <span class="tag-veg-info">🟢 = Veg &nbsp; 🔴 = Non-Veg</span>
+  </div>
+
+  <!-- Grid -->
+  <div class="menu-grid" id="menuGrid"></div>
+
 </main>
 
 <!-- CART DRAWER (SLIDE OVER) -->
