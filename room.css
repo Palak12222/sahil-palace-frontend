@@ -73,6 +73,18 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   font-size: 1.6rem;
   text-decoration: none;
 }
+.brand-logo-img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 1.5px solid rgba(201,168,76,.6);
+  box-shadow: 0 0 12px rgba(212,175,55,.3);
+  transition: transform 0.3s ease;
+}
+.nav-brand:hover .brand-logo-img, .nav-logo:hover .brand-logo-img {
+  transform: scale(1.08);
+}
 .brand-name, .logo-name {
   display: block;
   font-family: 'Playfair Display', serif;

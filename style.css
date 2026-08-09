@@ -35,10 +35,11 @@ ul{list-style:none}
 .navbar{position:sticky;top:0;z-index:1000;background:rgba(13,13,13,.96);backdrop-filter:blur(12px);border-bottom:1.5px solid rgba(201,168,76,.3);transition:var(--transition)}
 .navbar.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.5)}
 .nav-container{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:84px;max-width:1400px;margin:0 auto}
-.nav-logo{display:flex;align-items:center;gap:12px;color:var(--white)}
-.logo-icon{font-size:2.2rem}
-.logo-name{display:block;font-family:'Playfair Display',serif;font-size:1.28rem;font-weight:700;color:var(--gold);line-height:1.15}
-.logo-sub{display:block;font-size:.78rem;color:rgba(255,255,255,.65);letter-spacing:1px}
+.nav-logo, .nav-brand{display:flex;align-items:center;gap:12px;color:var(--white);text-decoration:none}
+.brand-logo-img{width:46px;height:46px;object-fit:contain;border-radius:50%;border:1.5px solid rgba(201,168,76,.6);box-shadow:0 0 12px rgba(212,175,55,.3);transition:transform 0.3s ease}
+.nav-logo:hover .brand-logo-img, .nav-brand:hover .brand-logo-img{transform:scale(1.08)}
+.logo-name, .brand-name{display:block;font-family:'Playfair Display',serif;font-size:1.28rem;font-weight:700;color:var(--gold);line-height:1.15}
+.logo-sub, .brand-sub{display:block;font-size:.78rem;color:rgba(255,255,255,.65);letter-spacing:1px}
 .nav-links{display:flex;gap:30px}
 .nav-links a{color:rgba(255,255,255,.88);font-size:.98rem;font-weight:600;transition:var(--transition);position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2.5px;background:var(--gold);transition:var(--transition)}
