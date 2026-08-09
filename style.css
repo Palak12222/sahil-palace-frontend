@@ -170,19 +170,21 @@ ul{list-style:none}
 .nonveg-link:hover{background:var(--red);color:var(--white)}
 
 /* Food preview cards (homepage teaser) */
-.food-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-bottom:36px}
+.food-preview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;margin-bottom:36px}
 .fp-card{background:var(--cream);border-radius:var(--radius-lg);overflow:hidden;border:1px solid #e8ddd0;transition:var(--transition);display:flex;flex-direction:column}
 .fp-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
-.fp-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:3.5rem}
-.fp-veg{background:linear-gradient(135deg,#e8f8ef,#d4f0e0)}
-.fp-nonveg{background:linear-gradient(135deg,#fdecea,#f8d5d2)}
-.fp-body{padding:16px;flex:1}
-.fp-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-bottom:8px}
+.fp-img-wrap{height:180px;width:100%;overflow:hidden;position:relative}
+.fp-dish-img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease}
+.fp-card:hover .fp-dish-img{transform:scale(1.08)}
+.fp-body{padding:18px;flex:1}
+.fp-type-wrap{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.fp-dot{display:inline-block;width:10px;height:10px;border-radius:50%}
 .fp-dot.veg{background:var(--green)}
 .fp-dot.nonveg{background:var(--red)}
-.fp-body h4{font-size:.97rem;font-weight:600;margin-bottom:4px;color:var(--dark)}
-.fp-body p{font-size:.8rem;color:var(--text-light);margin-bottom:10px;line-height:1.5}
-.fp-price{font-weight:700;color:var(--gold-dark);font-size:1.05rem}
+.fp-type-name{font-size:.75rem;font-weight:600;color:var(--text-light);text-transform:uppercase}
+.fp-body h4{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:6px;color:var(--dark)}
+.fp-body p{font-size:.83rem;color:var(--text-light);margin-bottom:12px;line-height:1.5}
+.fp-price{font-weight:700;color:var(--gold-dark);font-size:1.15rem}
 .food-cta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;background:var(--dark2);border-radius:var(--radius-lg);padding:24px 32px}
 .food-cta-info{display:flex;gap:20px;flex-wrap:wrap}
 .food-cta-info span{color:rgba(255,255,255,.7);font-size:.88rem;font-weight:500}
