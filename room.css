@@ -64,6 +64,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   height: 84px;
   max-width: 1400px;
   margin: 0 auto;
+  gap: 12px;
 }
 .nav-brand, .nav-logo {
   display: flex;
@@ -72,6 +73,8 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   color: var(--white, #fff);
   font-size: 1.6rem;
   text-decoration: none;
+  flex-shrink: 1;
+  min-width: 0;
 }
 .brand-logo-img {
   width: 46px;
@@ -81,6 +84,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   border: 1.5px solid rgba(201,168,76,.6);
   box-shadow: 0 0 12px rgba(212,175,55,.3);
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 .nav-brand:hover .brand-logo-img, .nav-logo:hover .brand-logo-img {
   transform: scale(1.08);
@@ -92,12 +96,14 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   color: var(--gold, #d4af37);
   line-height: 1.15;
   font-weight: 700;
+  white-space: nowrap;
 }
 .brand-sub, .logo-sub {
   display: block;
   font-size: 0.78rem;
   color: rgba(255, 255, 255, 0.65);
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 .nav-links {
   display: flex;
@@ -133,7 +139,8 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
+  flex-shrink: 0;
 }
 .nav-phone {
   color: var(--gold-light, #f5d061);
@@ -158,6 +165,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .btn-nav:hover {
   transform: translateY(-2px);
@@ -171,6 +179,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   border: none;
   cursor: pointer;
   padding: 6px;
+  flex-shrink: 0;
 }
 .hamburger span {
   display: block;
@@ -180,22 +189,41 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   border-radius: 2px;
   transition: all 0.3s ease;
 }
+.mobile-only-contact { display: none !important; }
 @media (max-width: 992px) {
+  .mobile-only-contact { display: block !important; margin-top: 4px; }
+  .nav-container { height: 66px; padding: 0 14px; gap: 8px; }
+  .brand-logo-img { width: 38px; height: 38px; }
+  .brand-name, .logo-name { font-size: 1.05rem; }
+  .brand-sub, .logo-sub { font-size: 0.68rem; letter-spacing: 0.5px; }
+  .nav-actions { gap: 8px; }
+  .nav-phone { display: none; }
+  .btn-nav { padding: 6px 14px; font-size: 0.78rem; }
   .hamburger { display: flex; }
   .nav-links {
     position: fixed;
-    top: 84px;
+    top: 66px;
     left: 0;
     right: 0;
     background: rgba(13, 17, 23, 0.98);
     backdrop-filter: blur(16px);
     flex-direction: column;
-    padding: 30px 24px;
-    gap: 20px;
+    padding: 20px 20px 28px;
+    gap: 14px;
     border-bottom: 2px solid var(--gold, #d4af37);
-    transform: translateY(-150%);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(0,0,0,.6);
+    transform: translateY(-160%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 999;
+    overflow-y: auto;
+    max-height: calc(100vh - 66px);
+    display: flex;
+  }
+  .nav-links a {
+    font-size: 1rem;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: block;
   }
   .nav-links.open, .nav-links.active {
     transform: translateY(0);

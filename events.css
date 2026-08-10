@@ -67,6 +67,7 @@ ul{list-style:none}
   height: 84px;
   max-width: 1400px;
   margin: 0 auto;
+  gap: 12px;
 }
 .nav-brand, .nav-logo {
   display: flex;
@@ -75,6 +76,8 @@ ul{list-style:none}
   color: var(--white, #fff);
   font-size: 1.6rem;
   text-decoration: none;
+  flex-shrink: 1;
+  min-width: 0;
 }
 .brand-logo-img {
   width: 46px;
@@ -84,6 +87,7 @@ ul{list-style:none}
   border: 1.5px solid rgba(201,168,76,.6);
   box-shadow: 0 0 12px rgba(212,175,55,.3);
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 .nav-brand:hover .brand-logo-img, .nav-logo:hover .brand-logo-img {
   transform: scale(1.08);
@@ -95,12 +99,14 @@ ul{list-style:none}
   color: var(--gold, #d4af37);
   line-height: 1.15;
   font-weight: 700;
+  white-space: nowrap;
 }
 .brand-sub, .logo-sub {
   display: block;
   font-size: 0.78rem;
   color: rgba(255, 255, 255, 0.65);
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 .nav-links {
   display: flex;
@@ -327,10 +333,22 @@ ul{list-style:none}
 @media(max-width:1024px){
   .enquiry-wrap{grid-template-columns:1fr;gap:36px}
 }
-@media(max-width:768px){
-  .nav-links{display:none}
-  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:rgba(13,13,13,.98);padding:20px;gap:16px}
+.mobile-only-contact{display:none!important}
+@media(max-width:992px){
+  .mobile-only-contact{display:block!important;margin-top:4px}
+  .nav-container{height:66px;padding:0 14px;gap:8px}
+  .brand-logo-img{width:38px;height:38px}
+  .brand-name, .logo-name{font-size:1.05rem}
+  .brand-sub, .logo-sub{font-size:.68rem;letter-spacing:.5px}
+  .nav-actions{gap:8px}
+  .nav-phone{display:none}
+  .btn-nav{padding:6px 14px;font-size:.78rem}
   .hamburger{display:flex}
+  .nav-links{position:fixed;top:66px;left:0;right:0;background:rgba(13,17,23,.98);backdrop-filter:blur(16px);flex-direction:column;padding:20px 20px 28px;gap:14px;border-bottom:2px solid var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.6);transform:translateY(-160%);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);z-index:999;overflow-y:auto;max-height:calc(100vh - 66px);display:flex}
+  .nav-links a{font-size:1rem;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.08);display:block}
+  .nav-links.open, .nav-links.active{transform:translateY(0)}
+}
+@media(max-width:768px){
   .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:160px}
   .gp-1,.gp-5{grid-row:span 1}
   .form-row{grid-template-columns:1fr}
