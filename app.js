@@ -497,6 +497,10 @@ function confirmPayment(){
 
   showToast(`📩 Booking Request Submitted! Hotel will check payment & confirm on WhatsApp.`, "success");
   cart = []; updateCart();
+  
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 1500);
 }
 
 // ===== TOAST NOTIFICATION =====

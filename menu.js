@@ -815,6 +815,10 @@ async function placeOrder(e) {
       updateCart();
       renderMenu();
       document.getElementById("checkoutForm").reset();
+      
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1500);
     } else {
       showToast(data.message || "Order failed. Please try again!", "red");
     }

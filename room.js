@@ -380,6 +380,10 @@ async function confirmPayment(room) {
   window.open(`https://wa.me/918742026903?text=${hotelWaMsg}`, "_blank");
 
   showToast(`📩 Booking Request Submitted! Hotel will verify payment & send confirmation on WhatsApp.`, "success");
+  
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 1500);
 }
 
 function showToast(message, type = "success") {
