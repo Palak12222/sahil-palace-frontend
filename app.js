@@ -487,10 +487,11 @@ function copyUPI(){
 function confirmPayment(){
   const method = document.querySelector('input[name="payMethod"]:checked')?.value || "upi";
   const labels = {upi:"UPI / GPay / PhonePe", card:"Debit / Credit Card"};
+  const utr = document.getElementById("upiUtrNo")?.value.trim() || "";
   closeModal("paymentModal");
 
   const hotelWaMsg = encodeURIComponent(
-    `🏨 *NEW BOOKING REQUEST (PENDING BANK CHECK)*\n\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n\n⚠️ *Note for Hotel:* Please check your GPay/PhonePe account for ₹${pendingPaymentTotal} payment before confirming booking on Admin Panel.`
+    `🏨 *NEW BOOKING REQUEST (PENDING BANK CHECK)*\n\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n🔢 *UPI UTR / Ref No:* ${utr || "Not Provided"}\n\n⚠️ *Note for Hotel:* Please check your GPay/PhonePe account for ₹${pendingPaymentTotal} payment before confirming booking on Admin Panel.`
   );
   window.open(`https://wa.me/918742026903?text=${hotelWaMsg}`, "_blank");
 

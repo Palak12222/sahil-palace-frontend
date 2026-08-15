@@ -179,6 +179,12 @@
         <span id="upiIdText">8742026903@ybl</span>
         <button class="btn-copy" onclick="copyUPI()">📋 Copy</button>
       </div>
+      <p class="upi-hint" style="margin-top: 10px; font-size: 0.9rem; color: #666; text-align: center;">Scan QR or tap Pay via UPI app:</p>
+      <div style="text-align: center; margin: 10px 0;">
+        <img id="upiQrCode" src="" alt="UPI QR Code" class="upi-qr" style="width: 150px; height: 150px; border: 1px solid #eee; padding: 4px; border-radius: 8px;"/>
+      </div>
+      <a id="upiDeepLink" href="#" class="btn-upi-pay" target="_blank" style="display: block; text-align: center; background: #27ae60; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 12px;">📲 Pay via UPI App</a>
+      
       <div class="utr-box" style="margin-top:12px;text-align:left;">
         <label style="font-size:0.85rem;font-weight:600;color:#444;display:block;margin-bottom:4px;">12-Digit UPI Transaction / UTR No. (after payment):</label>
         <input type="text" id="upiUtrNo" placeholder="e.g. 423456789012 (from PhonePe / GPay)" style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;" maxlength="16"/>
