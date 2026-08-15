@@ -485,15 +485,16 @@ function copyUPI(){
 }
 
 function confirmPayment(){
-  const method = document.querySelector('input[name="payMethod"]:checked').value;
-  const labels = {upi:"UPI / GPay / PhonePe", cash:"Cash on Arrival", card:"Debit / Credit Card"};
+  const method = document.querySelector('input[name="payMethod"]:checked')?.value || "upi";
+  const labels = {upi:"UPI / GPay / PhonePe", card:"Debit / Credit Card"};
   closeModal("paymentModal");
-  if(method==="upi"){
-    const msg = `Hi, I have completed payment at Sahil Palace & Restaurant. Total: ₹${pendingPaymentTotal}. Payment via UPI. Please confirm my booking.`;
-    window.open(`https://wa.me/918742026903?text=${encodeURIComponent(msg)}`,"_blank");
-  } else {
-    showToast(`✅ Booking confirmed! Total ₹${pendingPaymentTotal.toLocaleString("en-IN")} — ${labels[method]}. We'll call you shortly!`,"success");
-  }
+
+  const hotelWaMsg = encodeURIComponent(
+    `🏨 *NEW BOOKING / PAYMENT NOTIFICATION!*\n\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n\nPlease check Admin Panel for full details.\n\n_Sent from Sahil Palace Website_`
+  );
+  window.open(`https://wa.me/918742026903?text=${hotelWaMsg}`, "_blank");
+
+  showToast(`✅ Submitted! Total ₹${pendingPaymentTotal.toLocaleString("en-IN")} via ${labels[method] || method.toUpperCase()}. Hotel notified on WhatsApp!`, "success");
   cart = []; updateCart();
 }
 

@@ -229,19 +229,24 @@
           </div>
         </div>
         <div class="cf-group">
-          <label>Delivery Address / Room No.</label>
-          <textarea id="cfAddress" rows="2" placeholder="Room number, hotel floor, or delivery address..."></textarea>
+          <label>📍 Delivery Location Area (Sangaria &amp; Max 10km) *</label>
+          <select id="cfArea" required style="width:100%;padding:10px 12px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:0.95rem;background:#fdfdfd;margin-bottom:12px;">
+            <option value="">-- Select Delivery Location Area --</option>
+            <option value="Sangaria City (0-3 km)">Sangaria City / Main Market (0–3 km) — Free Delivery</option>
+            <option value="Sangaria Bypass / Station (3-5 km)">Sangaria Bypass / Railway Station (3–5 km)</option>
+            <option value="Sangaria Nearby Villages (5-10 km)">Nearby Area / Outer Sangaria Villages (5–10 km)</option>
+            <option value="out_of_range">Beyond 10 km (Out of Delivery Radius)</option>
+          </select>
+        </div>
+        <div class="cf-group">
+          <label>Full Delivery Address / Room No. *</label>
+          <textarea id="cfAddress" rows="2" placeholder="House/Room No., Street, Landmark in Sangaria..." required></textarea>
         </div>
         <div class="cf-group">
           <label>Payment Method *</label>
-          <div class="pay-method-grid">
-            <label class="pay-opt selected" data-pm="cash">
-              <input type="radio" name="payMethod" value="cash" checked/>
-              <span class="pay-opt-icon">💵</span>
-              <span>Cash on<br/>Delivery</span>
-            </label>
-            <label class="pay-opt" data-pm="upi">
-              <input type="radio" name="payMethod" value="upi"/>
+          <div class="pay-method-grid" style="grid-template-columns: 1fr 1fr;">
+            <label class="pay-opt selected" data-pm="upi">
+              <input type="radio" name="payMethod" value="upi" checked/>
               <span class="pay-opt-icon">📱</span>
               <span>UPI / GPay<br/>PhonePe</span>
             </label>

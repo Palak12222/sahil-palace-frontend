@@ -162,16 +162,11 @@
     <h2>💳 Payment</h2>
     <p class="modal-room-name" id="paymentTitle">Complete Your Payment</p>
     <div class="payment-summary" id="paymentSummary"></div>
-    <div class="pay-options">
+    <div class="pay-options" style="grid-template-columns: 1fr 1fr;">
       <label class="pay-option selected" data-method="upi">
         <input type="radio" name="payMethod" value="upi" checked/>
         <span class="pay-icon">📱</span>
         <span>UPI / GPay / PhonePe</span>
-      </label>
-      <label class="pay-option" data-method="cash">
-        <input type="radio" name="payMethod" value="cash"/>
-        <span class="pay-icon">💵</span>
-        <span>Cash on Arrival</span>
       </label>
       <label class="pay-option" data-method="card">
         <input type="radio" name="payMethod" value="card"/>

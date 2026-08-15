@@ -352,8 +352,8 @@ function copyUPI() {
 
 async function confirmPayment(room) {
   const targetRoom = room || selectedRoom || rooms[0];
-  const method = document.querySelector('input[name="payMethod"]:checked').value;
-  const labels = { upi: "UPI / GPay / PhonePe", cash: "Cash on Arrival", card: "Debit / Credit Card" };
+  const method = document.querySelector('input[name="payMethod"]:checked')?.value || "upi";
+  const labels = { upi: "UPI / GPay / PhonePe", card: "Debit / Credit Card" };
 
   if (pendingBookingData) {
     pendingBookingData.payment_method = method;
@@ -368,12 +368,17 @@ async function confirmPayment(room) {
 
   closeModal("paymentModal");
 
-  if (method === "upi") {
-    const msg = `Hi, I have booked ${targetRoom.name} at Sahil Palace. Total: ₹${pendingPaymentTotal}. Payment via UPI. Please confirm.`;
-    window.open(`https://wa.me/918742026903?text=${encodeURIComponent(msg)}`, "_blank");
-  } else {
-    showToast(`✅ Booking confirmed! Total ₹${pendingPaymentTotal.toLocaleString("en-IN")} — ${labels[method]}. We'll call you shortly!`, "success");
-  }
+  const guestName = pendingBookingData ? pendingBookingData.guest_name : "Guest";
+  const guestPhone = pendingBookingData ? pendingBookingData.phone : "";
+  const checkin = pendingBookingData ? pendingBookingData.checkin : "";
+  const checkout = pendingBookingData ? pendingBookingData.checkout : "";
+
+  const hotelWaMsg = encodeURIComponent(
+    `🏨 *NEW ROOM BOOKING RECEIVED!*\n\n🛏️ *Room:* ${targetRoom.name}\n👤 *Guest Name:* ${guestName}\n📞 *Phone:* ${guestPhone}\n📅 *Check-in:* ${checkin}\n📅 *Check-out:* ${checkout}\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n\n_Sent from Sahil Palace Website_`
+  );
+  window.open(`https://wa.me/918742026903?text=${hotelWaMsg}`, "_blank");
+
+  showToast(`✅ Room Booking submitted! Total ₹${pendingPaymentTotal.toLocaleString("en-IN")} via ${labels[method] || method.toUpperCase()}. Notification sent to Hotel!`, "success");
 }
 
 function showToast(message, type = "success") {

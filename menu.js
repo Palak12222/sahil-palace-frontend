@@ -752,10 +752,18 @@ async function placeOrder(e) {
   const name  = document.getElementById("cfName").value.trim();
   const phone = document.getElementById("cfPhone").value.trim();
   const addr  = document.getElementById("cfAddress").value.trim();
-  const pm    = document.querySelector('input[name="payMethod"]:checked')?.value || "cash";
+  const areaSelect = document.getElementById("cfArea");
+  const area  = areaSelect ? areaSelect.value : "";
+  const pm    = document.querySelector('input[name="payMethod"]:checked')?.value || "upi";
 
   if (!name || !phone || phone.length < 10) {
     showToast("Please fill in name and valid phone number", "red"); return;
+  }
+  if (!area) {
+    showToast("Please select your delivery area location within Sangaria (Max 10km)", "red"); return;
+  }
+  if (area === "out_of_range") {
+    showToast("⚠️ Delivery is available only within 10km of Sangaria! Call 8742026903 for special catering.", "red"); return;
   }
 
   const keys  = Object.keys(cart);
@@ -776,26 +784,33 @@ async function placeOrder(e) {
   });
 
   btn.textContent = "Placing Order..."; btn.disabled = true;
+  const fullAddress = `${area} | ${addr}`;
 
   try {
     const res  = await fetch(`${API_BASE}/api/orders`, {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ customer_name: name, phone, address: addr, items, total, payment_method: pm })
+      body:    JSON.stringify({ customer_name: name, phone, address: fullAddress, items, total, payment_method: pm })
     });
     const data = await res.json();
 
     if (data.success) {
       closeCheckout();
-      document.getElementById("successMsg").textContent =
-        pm === "cash"
-          ? "Your order has been received! Pay cash on delivery. We'll prepare it shortly."
-          : pm === "upi"
-          ? "Your order is confirmed! Please complete the UPI payment to the ID shown."
-          : "Your order is confirmed! Pay by card when delivered.";
+      const itemSummary = items.map(i => `${i.name} x${i.qty}`).join(", ");
+      const successMsgEl = document.getElementById("successMsg");
+      if (successMsgEl) {
+        successMsgEl.innerHTML = `Your order <strong>#${data.orderId}</strong> is confirmed!<br/>Payment Method: <strong>${pm.toUpperCase()}</strong>.<br/>We are preparing your delicious food.`;
+      }
       document.getElementById("successOrderId").textContent = `Order ID: #${data.orderId}`;
       document.getElementById("successModal").classList.add("open");
       document.body.style.overflow = "hidden";
+
+      // Trigger automatic WhatsApp notification to Hotel (+91 8742026903)
+      const hotelWaMsg = encodeURIComponent(
+        `🍽️ *NEW FOOD ORDER RECEIVED!* (#${data.orderId})\n\n👤 *Customer:* ${name}\n📞 *Phone:* ${phone}\n📍 *Delivery Area:* ${area}\n🏠 *Address:* ${addr}\n🛒 *Items:* ${itemSummary}\n💰 *Total:* ₹${total}\n💳 *Payment Method:* ${pm.toUpperCase()}\n\n_Sent from Sahil Palace Website_`
+      );
+      window.open(`https://wa.me/918742026903?text=${hotelWaMsg}`, "_blank");
+
       cart = {};
       updateCart();
       renderMenu();

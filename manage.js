@@ -4,10 +4,11 @@ let authed = false;
 
 // ===== LOGIN =====
 function doLogin() {
-  const email = document.getElementById("loginEmail").value.trim();
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
   const pwd   = document.getElementById("loginPassword").value;
-  if (email === ADMIN_EMAIL && pwd === ADMIN_PASSWORD) {
+  if (email === ADMIN_EMAIL.toLowerCase() && pwd === ADMIN_PASSWORD) {
     authed = true;
+    sessionStorage.setItem("adminAuthed", "true");
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("adminWrap").style.display   = "flex";
     loadAll();
@@ -18,11 +19,22 @@ function doLogin() {
 
 function logout() {
   authed = false;
+  sessionStorage.removeItem("adminAuthed");
   document.getElementById("loginScreen").style.display = "flex";
   document.getElementById("adminWrap").style.display   = "none";
   document.getElementById("loginEmail").value    = "";
   document.getElementById("loginPassword").value = "";
 }
+
+// Auto-check login on load
+window.addEventListener("DOMContentLoaded", () => {
+  if (sessionStorage.getItem("adminAuthed") === "true") {
+    authed = true;
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("adminWrap").style.display   = "flex";
+    loadAll();
+  }
+});
 
 // ===== TAB SWITCHING =====
 const tabTitles = {
@@ -393,15 +405,21 @@ async function confirmBooking(b) {
   sendWhatsApp(b);
 }
 
+function cleanPhone(p) {
+  if (!p) return "";
+  const digits = String(p).replace(/\D/g, "");
+  return digits.length >= 10 ? `91${digits.slice(-10)}` : "";
+}
+
 function sendWhatsApp(b) {
-  const phone = String(b.phone).replace(/\D/g, "");
-  const dialCode = phone.startsWith("91") ? phone : `91${phone}`;
+  const dialCode = cleanPhone(b.phone);
+  if (!dialCode) { showToast("No valid phone number for this booking", "red"); return; }
   const msg = encodeURIComponent(
 `🏨 *Sahil Palace Hotel*
 
 Namaste *${b.guest_name}* ji! 🙏
 
-Aapki booking *confirm* ho gayi hai! ✅
+Aapki room booking *confirm* ho gayi hai! ✅
 
 📋 *Booking Details:*
 🛏️ Room: ${b.room_name}
@@ -410,10 +428,10 @@ Aapki booking *confirm* ho gayi hai! ✅
 🌙 Nights: ${b.nights}
 👥 Guests: ${b.guests}
 💰 Total: ₹${Number(b.total).toLocaleString("en-IN")}
-💳 Payment: ${b.payment_method || "UPI"}
+💳 Payment: ${(b.payment_method || "UPI").toUpperCase()}
 
 Aapka Sahil Palace mein swagat hai! 🌟
-Kisi bhi query ke liye call karein.
+Kisi bhi query ke liye call karein: 📞 8742026903
 
 _Thank you for choosing Sahil Palace!_ 🏨`
   );
@@ -453,9 +471,29 @@ async function confirmOrder(o) {
 }
 
 function sendOrderWhatsApp(o) {
-  if (!o.phone) { showToast("No phone number for this order", "red"); return; }
-  const phone = String(o.phone).replace(/\D/g, "");
-  const dialCode = phone.startsWith("91") ? phone : `91${phone}`;
+  const custPhone = o._custPhone || o.phone;
+  const dialCode  = cleanPhone(custPhone);
+  if (!dialCode) { showToast("No valid phone number for this order", "red"); return; }
+  const custName  = o._custName || "Customer";
+  const msg = encodeURIComponent(
+`🍽️ *Sahil Palace Restaurant*
+
+Namaste *${custName}* ji! 🙏
+
+Aapka food order *confirm* ho gaya hai! ✅
+
+📋 *Order Details (#${o.id}):*
+🛒 Items: ${o.items}
+💰 Total: ₹${Number(o.total).toLocaleString("en-IN")}
+💳 Payment Method: ${(o.payment_method || "UPI").toUpperCase()}
+
+Aapka khana jald taiyar hokar deliver ho jayega! ⏰
+Restaurant Contact: 📞 8742026903
+
+_Thank you for ordering from Sahil Palace!_ 🏨`
+  );
+  window.open(`https://wa.me/${dialCode}?text=${msg}`, "_blank");
+}one.startsWith("91") ? phone : `91${phone}`;
   const msg = encodeURIComponent(
 `🍽️ *Sahil Palace Restaurant*
 
