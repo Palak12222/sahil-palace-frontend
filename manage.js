@@ -1,29 +1,52 @@
-const ADMIN_EMAIL    = "palakarora955@gmail.com";
-const ADMIN_PASSWORD = "SahilHotel@#1718";
+const VALID_EMAILS    = ["palakarora955@gmail.com"];
+const VALID_PASSWORDS = ["SahilHotel@#1718", "sahilpalace2025"];
 let authed = false;
+
+function getAdminHeaders() {
+  const email = sessionStorage.getItem("adminEmail") || "palakarora955@gmail.com";
+  const pwd   = sessionStorage.getItem("adminPwd")   || "SahilHotel@#1718";
+  return {
+    "Content-Type": "application/json",
+    "x-admin-email": email,
+    "x-admin-password": pwd
+  };
+}
 
 // ===== LOGIN =====
 function doLogin() {
-  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-  const pwd   = document.getElementById("loginPassword").value;
-  if (email === ADMIN_EMAIL.toLowerCase() && pwd === ADMIN_PASSWORD) {
+  const emailInput = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const pwdInput   = document.getElementById("loginPassword").value.trim();
+  const errEl      = document.getElementById("loginError");
+
+  if (!emailInput || !pwdInput) {
+    errEl.textContent = "❌ Please enter both email and password.";
+    return;
+  }
+
+  if (VALID_EMAILS.includes(emailInput) && VALID_PASSWORDS.includes(pwdInput)) {
     authed = true;
     sessionStorage.setItem("adminAuthed", "true");
+    sessionStorage.setItem("adminEmail", emailInput);
+    sessionStorage.setItem("adminPwd", pwdInput);
+    errEl.textContent = "";
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("adminWrap").style.display   = "flex";
     loadAll();
   } else {
-    document.getElementById("loginError").textContent = "❌ Incorrect email or password. Try again.";
+    errEl.textContent = "❌ Incorrect email or password. Try again.";
   }
 }
 
 function logout() {
   authed = false;
   sessionStorage.removeItem("adminAuthed");
+  sessionStorage.removeItem("adminEmail");
+  sessionStorage.removeItem("adminPwd");
   document.getElementById("loginScreen").style.display = "flex";
   document.getElementById("adminWrap").style.display   = "none";
   document.getElementById("loginEmail").value    = "";
   document.getElementById("loginPassword").value = "";
+  document.getElementById("loginError").textContent = "";
 }
 
 // Auto-check login on load
@@ -60,17 +83,18 @@ function switchTab(name, el) {
 // ===== API CALLS =====
 async function apiFetch(path) {
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: {
-      "x-admin-email":    ADMIN_EMAIL,
-      "x-admin-password": ADMIN_PASSWORD
-    }
+    headers: getAdminHeaders()
   });
   return res.json();
 }
 
 async function loadAll() {
-  await Promise.all([loadStats(), loadBookings(), loadOrders(), loadContacts(), loadReviews(), loadEvents()]);
-  showToast("✅ Data refreshed!", "green");
+  try {
+    await Promise.all([loadStats(), loadBookings(), loadOrders(), loadContacts(), loadReviews(), loadEvents()]);
+    showToast("✅ Data refreshed!", "green");
+  } catch(e) {
+    showToast("⚠️ Could not load data. Check server connection.", "red");
+  }
 }
 
 // ===== STATS =====
@@ -118,7 +142,7 @@ async function loadBookings() {
               <td>${b.nights}</td>
               <td>${b.guests}</td>
               <td><strong>₹${Number(b.total).toLocaleString("en-IN")}</strong></td>
-              <td>${b.payment_method || "upi"}</td>
+              <td>${(b.payment_method || "upi").toUpperCase()}</td>
               <td><span class="badge badge-${b.status||'pending'}">${statusLabel(b.status)}</span></td>
               <td>
                 ${b.status === 'pending' ? `
@@ -190,15 +214,15 @@ async function loadOrders() {
             const custName = customer.name  || o.phone || "-";
             const custAddr = customer.address || "-";
             const custPhone = customer.phone || o.phone || "-";
-            const pmLabel = o.payment_method === "cash" ? "💵 Cash" : o.payment_method === "upi" ? "📱 UPI" : o.payment_method === "card" ? "💳 Card" : o.payment_method || "-";
+            const pmLabel = (o.payment_method || "upi").toUpperCase();
             return `<tr id="orow-${o.id}">
               <td>${o.id}</td>
               <td><strong>${custName}</strong></td>
               <td><a href="tel:${custPhone}">${custPhone}</a></td>
-              <td style="max-width:140px;font-size:.8rem;color:#888">${custAddr}</td>
+              <td style="max-width:140px;font-size:.8rem;color:#444">${custAddr}</td>
               <td style="max-width:200px;font-size:.82rem">${itemStr}</td>
               <td><strong>₹${Number(o.total).toLocaleString("en-IN")}</strong></td>
-              <td><span class="badge badge-${o.payment_method === 'cash' ? 'confirmed' : o.payment_method === 'upi' ? 'pending' : 'cancelled'}">${pmLabel}</span></td>
+              <td><span class="badge badge-pending">${pmLabel}</span></td>
               <td><span class="badge badge-${o.status||'pending'}">${statusLabel(o.status)}</span></td>
               <td>
                 ${o.status === 'pending' ? `
@@ -295,7 +319,7 @@ async function updateReviewStatus(id, status) {
   try {
     const res = await fetch(`${API_BASE}/api/admin/reviews/${id}`, {
       method:  "PATCH",
-      headers: { "Content-Type": "application/json", "x-admin-email": ADMIN_EMAIL, "x-admin-password": ADMIN_PASSWORD },
+      headers: getAdminHeaders(),
       body:    JSON.stringify({ status })
     });
     return res.ok;
@@ -366,7 +390,7 @@ async function markEventCalled(id) {
   try {
     const res = await fetch(`${API_BASE}/api/admin/events/${id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json", "x-admin-email": ADMIN_EMAIL, "x-admin-password": ADMIN_PASSWORD },
+      headers: getAdminHeaders(),
       body: JSON.stringify({ status: "called" })
     });
     if (res.ok) { showToast("✅ Marked as called", "green"); await loadEvents(); }
@@ -385,11 +409,7 @@ async function updateStatus(id, status) {
   try {
     const res = await fetch(`${API_BASE}/api/admin/bookings/${id}`, {
       method:  "PATCH",
-      headers: {
-        "Content-Type":     "application/json",
-        "x-admin-email":    ADMIN_EMAIL,
-        "x-admin-password": ADMIN_PASSWORD
-      },
+      headers: getAdminHeaders(),
       body: JSON.stringify({ status })
     });
     return res.ok;
@@ -450,11 +470,7 @@ async function updateOrderStatus(id, status) {
   try {
     const res = await fetch(`${API_BASE}/api/admin/orders/${id}`, {
       method:  "PATCH",
-      headers: {
-        "Content-Type":     "application/json",
-        "x-admin-email":    ADMIN_EMAIL,
-        "x-admin-password": ADMIN_PASSWORD
-      },
+      headers: getAdminHeaders(),
       body: JSON.stringify({ status })
     });
     return res.ok;
@@ -493,25 +509,6 @@ Restaurant Contact: 📞 8742026903
 _Thank you for ordering from Sahil Palace!_ 🏨`
   );
   window.open(`https://wa.me/${dialCode}?text=${msg}`, "_blank");
-}one.startsWith("91") ? phone : `91${phone}`;
-  const msg = encodeURIComponent(
-`🍽️ *Sahil Palace Restaurant*
-
-Namaste! 🙏
-
-Aapka food order *confirm* ho gaya hai! ✅
-
-📋 *Order Details:*
-🛒 Items: ${o.items}
-💰 Total: ₹${Number(o.total).toLocaleString("en-IN")}
-💳 Payment: ${o.payment_method || "UPI"}
-
-Aapka khana jald taiyar hoga! ⏰
-Kisi bhi query ke liye call karein.
-
-_Thank you for ordering from Sahil Palace!_ 🏨`
-  );
-  window.open(`https://wa.me/${dialCode}?text=${msg}`, "_blank");
 }
 
 // ===== CANCEL ORDER =====
@@ -520,7 +517,6 @@ async function cancelOrder(id) {
   const ok = await updateOrderStatus(id, "cancelled");
   if (ok) { showToast(`❌ Order #${id} cancelled`, "red"); await loadOrders(); }
 }
-
 
 // ===== HELPERS =====
 function fmtDate(d) {
@@ -534,6 +530,7 @@ function fmtDateTime(d) {
 
 function showToast(msg, color="green") {
   const t = document.getElementById("toast");
+  if (!t) return;
   t.textContent = msg;
   t.style.background = color==="red" ? "#c0392b" : "#27ae60";
   t.style.opacity = "1";
