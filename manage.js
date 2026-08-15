@@ -2,6 +2,9 @@ const VALID_EMAILS    = ["palakarora955@gmail.com"];
 const VALID_PASSWORDS = ["SahilHotel@#1718", "sahilpalace2025"];
 let authed = false;
 
+let currentBookings = [];
+let currentOrders   = [];
+
 function getAdminHeaders() {
   const email = sessionStorage.getItem("adminEmail") || "palakarora955@gmail.com";
   const pwd   = sessionStorage.getItem("adminPwd")   || "SahilHotel@#1718";
@@ -74,7 +77,10 @@ function switchTab(name, el) {
   document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
   document.getElementById(`tab-${name}`).style.display = "block";
   if (el) el.classList.add("active");
-  else document.querySelector(`[data-tab="${name}"]`).classList.add("active");
+  else {
+    const navEl = document.querySelector(`[data-tab="${name}"]`);
+    if (navEl) navEl.classList.add("active");
+  }
   const [title, sub] = tabTitles[name];
   document.getElementById("pageTitle").textContent    = title;
   document.getElementById("pageSubtitle").textContent = sub;
@@ -103,15 +109,15 @@ async function loadStats() {
     const r = await apiFetch("/api/admin/stats");
     if (!r.success) return;
     const d = r.data;
-    document.getElementById("statBookings").textContent = d.bookings;
-    document.getElementById("statOrders").textContent   = d.orders;
-    document.getElementById("statContacts").textContent = d.contacts;
-    document.getElementById("statRevenue").textContent  = `₹${Number(d.revenue).toLocaleString("en-IN")}`;
-    document.getElementById("statTodayB").textContent   = d.todayBookings;
-    document.getElementById("statTodayO").textContent   = d.todayOrders;
-    document.getElementById("bookBadge").textContent    = d.bookings;
-    document.getElementById("orderBadge").textContent   = d.orders;
-    document.getElementById("contactBadge").textContent = d.contacts;
+    document.getElementById("statBookings").textContent = d.bookings || 0;
+    document.getElementById("statOrders").textContent   = d.orders || 0;
+    document.getElementById("statContacts").textContent = d.contacts || 0;
+    document.getElementById("statRevenue").textContent  = `₹${Number(d.revenue || 0).toLocaleString("en-IN")}`;
+    document.getElementById("statTodayB").textContent   = d.todayBookings || 0;
+    document.getElementById("statTodayO").textContent   = d.todayOrders || 0;
+    document.getElementById("bookBadge").textContent    = d.bookings || 0;
+    document.getElementById("orderBadge").textContent   = d.orders || 0;
+    document.getElementById("contactBadge").textContent = d.contacts || 0;
   } catch(e) { console.error("Stats load failed:", e); }
 }
 
@@ -119,8 +125,12 @@ async function loadStats() {
 async function loadBookings() {
   try {
     const r = await apiFetch("/api/admin/bookings");
-    if (!r.success) return;
-    const rows = r.data;
+    if (!r || !r.success) {
+      document.getElementById("bookingsTable").innerHTML = `<div class="empty-state"><p>❌ Failed to load bookings</p></div>`;
+      return;
+    }
+    const rows = r.data || [];
+    currentBookings = rows;
     document.getElementById("bookingsTotal").textContent = `${rows.length} total`;
 
     const html = rows.length === 0
@@ -134,9 +144,9 @@ async function loadBookings() {
           <tbody>${rows.map(b => `
             <tr id="row-${b.id}">
               <td>${b.id}</td>
-              <td><strong>${b.guest_name}</strong></td>
-              <td><a href="tel:${b.phone}">${b.phone}</a></td>
-              <td>${b.room_name}</td>
+              <td><strong>${escapeHtml(b.guest_name)}</strong></td>
+              <td><a href="tel:${b.phone}">${escapeHtml(b.phone)}</a></td>
+              <td>${escapeHtml(b.room_name)}</td>
               <td>${fmtDate(b.checkin)}</td>
               <td>${fmtDate(b.checkout)}</td>
               <td>${b.nights}</td>
@@ -147,12 +157,12 @@ async function loadBookings() {
               <td>
                 ${b.status === 'pending' ? `
                   <div class="action-btns">
-                    <button class="btn-confirm" onclick='confirmBooking(${JSON.stringify(b)})'>✅ Confirm</button>
+                    <button class="btn-confirm" onclick="confirmBooking(${b.id})">✅ Confirm</button>
                     <button class="btn-cancel"  onclick="cancelBooking(${b.id})">❌ Cancel</button>
                   </div>
                 ` : b.status === 'confirmed' ? `
                   <div class="action-btns">
-                    <button class="btn-whatsapp" onclick='sendWhatsApp(${JSON.stringify(b)})'>📲 WhatsApp</button>
+                    <button class="btn-whatsapp" onclick="sendWhatsApp(${b.id})">📲 WhatsApp</button>
                     <button class="btn-cancel" onclick="cancelBooking(${b.id})">❌ Cancel</button>
                   </div>
                 ` : `<span style="color:#999;font-size:.8rem">—</span>`}
@@ -170,16 +180,16 @@ async function loadBookings() {
           <tbody>${rows.slice(0,5).map(b=>`
             <tr>
               <td>${b.id}</td>
-              <td><strong>${b.guest_name}</strong><br/><small>${b.phone}</small></td>
-              <td>${b.room_name}</td>
+              <td><strong>${escapeHtml(b.guest_name)}</strong><br/><small>${escapeHtml(b.phone)}</small></td>
+              <td>${escapeHtml(b.room_name)}</td>
               <td>${fmtDate(b.checkin)}</td>
               <td><strong>₹${Number(b.total).toLocaleString("en-IN")}</strong></td>
               <td><span class="badge badge-${b.status||"pending"}">${statusLabel(b.status)}</span></td>
-              <td>${b.status === 'pending' ? `<button class="btn-confirm" onclick='confirmBooking(${JSON.stringify(b)})'>✅ Confirm</button>` : ''}</td>
+              <td>${b.status === 'pending' ? `<button class="btn-confirm" onclick="confirmBooking(${b.id})">✅ Confirm</button>` : ''}</td>
             </tr>`).join("")}
           </tbody>
         </table>`;
-  } catch(e) { document.getElementById("bookingsTable").innerHTML = `<div class="loading">Failed to load</div>`; }
+  } catch(e) { document.getElementById("bookingsTable").innerHTML = `<div class="loading">Failed to load bookings</div>`; }
 }
 
 
@@ -187,8 +197,12 @@ async function loadBookings() {
 async function loadOrders() {
   try {
     const r = await apiFetch("/api/admin/orders");
-    if (!r.success) return;
-    const rows = r.data;
+    if (!r || !r.success) {
+      document.getElementById("ordersTable").innerHTML = `<div class="empty-state"><p>❌ Failed to load orders</p></div>`;
+      return;
+    }
+    const rows = r.data || [];
+    currentOrders = rows;
     document.getElementById("ordersTotal").textContent = `${rows.length} total`;
 
     document.getElementById("ordersTable").innerHTML = rows.length === 0
@@ -217,22 +231,22 @@ async function loadOrders() {
             const pmLabel = (o.payment_method || "upi").toUpperCase();
             return `<tr id="orow-${o.id}">
               <td>${o.id}</td>
-              <td><strong>${custName}</strong></td>
-              <td><a href="tel:${custPhone}">${custPhone}</a></td>
-              <td style="max-width:140px;font-size:.8rem;color:#444">${custAddr}</td>
-              <td style="max-width:200px;font-size:.82rem">${itemStr}</td>
+              <td><strong>${escapeHtml(custName)}</strong></td>
+              <td><a href="tel:${escapeHtml(custPhone)}">${escapeHtml(custPhone)}</a></td>
+              <td style="max-width:140px;font-size:.8rem;color:#444">${escapeHtml(custAddr)}</td>
+              <td style="max-width:200px;font-size:.82rem">${escapeHtml(itemStr)}</td>
               <td><strong>₹${Number(o.total).toLocaleString("en-IN")}</strong></td>
               <td><span class="badge badge-pending">${pmLabel}</span></td>
               <td><span class="badge badge-${o.status||'pending'}">${statusLabel(o.status)}</span></td>
               <td>
                 ${o.status === 'pending' ? `
                   <div class="action-btns">
-                    <button class="btn-confirm" onclick='confirmOrder(${JSON.stringify({...o, _custName: custName, _custPhone: custPhone, items: itemStr})})'>✅ Confirm</button>
+                    <button class="btn-confirm" onclick="confirmOrder(${o.id})">✅ Confirm</button>
                     <button class="btn-cancel"  onclick="cancelOrder(${o.id})">❌ Cancel</button>
                   </div>
                 ` : o.status === 'confirmed' ? `
                   <div class="action-btns">
-                    <button class="btn-whatsapp" onclick='sendOrderWhatsApp(${JSON.stringify({...o, _custName: custName, _custPhone: custPhone, items: itemStr})})'>📲 WhatsApp</button>
+                    <button class="btn-whatsapp" onclick="sendOrderWhatsApp(${o.id})">📲 WhatsApp</button>
                     <button class="btn-cancel" onclick="cancelOrder(${o.id})">❌ Cancel</button>
                   </div>
                 ` : `<span style="color:#999;font-size:.8rem">—</span>`}
@@ -242,7 +256,7 @@ async function loadOrders() {
           }).join("")}
           </tbody>
         </table>`;
-  } catch(e) { document.getElementById("ordersTable").innerHTML = `<div class="loading">Failed to load</div>`; }
+  } catch(e) { document.getElementById("ordersTable").innerHTML = `<div class="loading">Failed to load orders</div>`; }
 }
 
 
@@ -250,8 +264,8 @@ async function loadOrders() {
 async function loadContacts() {
   try {
     const r = await apiFetch("/api/admin/contacts");
-    if (!r.success) return;
-    const rows = r.data;
+    if (!r || !r.success) return;
+    const rows = r.data || [];
     document.getElementById("contactsTotal").textContent = `${rows.length} total`;
 
     document.getElementById("contactsTable").innerHTML = rows.length === 0
@@ -261,10 +275,10 @@ async function loadContacts() {
           <tbody>${rows.map(c=>`
             <tr>
               <td>${c.id}</td>
-              <td><strong>${c.name}</strong></td>
-              <td><a href="tel:${c.phone}">${c.phone}</a></td>
-              <td>${c.subject||"-"}</td>
-              <td style="max-width:260px;word-break:break-word">${c.message||"-"}</td>
+              <td><strong>${escapeHtml(c.name)}</strong></td>
+              <td><a href="tel:${escapeHtml(c.phone)}">${escapeHtml(c.phone)}</a></td>
+              <td>${escapeHtml(c.subject||"-")}</td>
+              <td style="max-width:260px;word-break:break-word">${escapeHtml(c.message||"-")}</td>
               <td>${fmtDateTime(c.created_at)}</td>
             </tr>`).join("")}
           </tbody>
@@ -276,8 +290,8 @@ async function loadContacts() {
 async function loadReviews() {
   try {
     const r = await apiFetch("/api/admin/reviews");
-    if (!r.success) return;
-    const rows = r.data;
+    if (!r || !r.success) return;
+    const rows = r.data || [];
     const pending = rows.filter(x => x.status === "pending").length;
     document.getElementById("reviewsTotal").textContent = `${rows.length} total`;
     document.getElementById("reviewBadge").textContent  = pending;
@@ -292,10 +306,10 @@ async function loadReviews() {
           <tbody>${rows.map(rv => `
             <tr id="rvrow-${rv.id}">
               <td>${rv.id}</td>
-              <td><strong>${rv.name}</strong></td>
-              <td>${rv.location || "-"}</td>
+              <td><strong>${escapeHtml(rv.name)}</strong></td>
+              <td>${escapeHtml(rv.location || "-")}</td>
               <td>${"⭐".repeat(Math.min(5, rv.rating || 5))}</td>
-              <td style="max-width:260px;word-break:break-word;font-style:italic">"${rv.message}"</td>
+              <td style="max-width:260px;word-break:break-word;font-style:italic">"${escapeHtml(rv.message)}"</td>
               <td><span class="badge badge-${rv.status === 'approved' ? 'confirmed' : rv.status === 'rejected' ? 'cancelled' : 'pending'}">
                 ${rv.status === 'approved' ? '✅ Approved' : rv.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}
               </span></td>
@@ -342,8 +356,8 @@ async function rejectReview(id) {
 async function loadEvents() {
   try {
     const r = await apiFetch("/api/admin/events");
-    if (!r.success) return;
-    const rows = r.data;
+    if (!r || !r.success) return;
+    const rows = r.data || [];
     const newCount = rows.filter(x => !x.status || x.status === "new").length;
     document.getElementById("eventsTotal").textContent = `${rows.length} total`;
     document.getElementById("eventBadge").textContent  = newCount;
@@ -358,19 +372,19 @@ async function loadEvents() {
           <tbody>${rows.map(ev => `
             <tr>
               <td>${ev.id}</td>
-              <td><strong>${ev.name}</strong></td>
-              <td><a href="tel:${ev.phone}">${ev.phone}</a></td>
-              <td>${ev.event_type || "-"}</td>
+              <td><strong>${escapeHtml(ev.name)}</strong></td>
+              <td><a href="tel:${escapeHtml(ev.phone)}">${escapeHtml(ev.phone)}</a></td>
+              <td>${escapeHtml(ev.event_type || "-")}</td>
               <td>${ev.event_date ? new Date(ev.event_date).toLocaleDateString("en-IN") : "-"}</td>
               <td>${ev.guests || "-"}</td>
-              <td>${ev.venue || "-"}</td>
-              <td style="max-width:200px;word-break:break-word;font-size:.82rem">${ev.message || "-"}</td>
+              <td>${escapeHtml(ev.venue || "-")}</td>
+              <td style="max-width:200px;word-break:break-word;font-size:.82rem">${escapeHtml(ev.message || "-")}</td>
               <td><span class="badge badge-${ev.status === 'called' ? 'confirmed' : ev.status === 'closed' ? 'cancelled' : 'pending'}">
                 ${ev.status === 'called' ? '✅ Called' : ev.status === 'closed' ? '❌ Closed' : '⏳ New'}
               </span></td>
               <td>
                 <div class="action-btns">
-                  <button class="btn-whatsapp" onclick="callEventEnquirer(${ev.id},'${ev.name}','${ev.phone}','${(ev.event_type||'').replace(/'/g,"'")}')">📲 WhatsApp</button>
+                  <button class="btn-whatsapp" onclick="callEventEnquirer(${ev.id},'${escapeHtml(ev.name)}','${escapeHtml(ev.phone)}','${escapeHtml(ev.event_type||'')}')">📲 WhatsApp</button>
                   ${ev.status !== 'called' ? `<button class="btn-confirm" onclick="markEventCalled(${ev.id})">✅ Mark Called</button>` : ""}
                 </div>
               </td>
@@ -417,12 +431,13 @@ async function updateStatus(id, status) {
 }
 
 // ===== CONFIRM BOOKING + WHATSAPP =====
-async function confirmBooking(b) {
-  const ok = await updateStatus(b.id, "confirmed");
+async function confirmBooking(bId) {
+  const b = currentBookings.find(x => Number(x.id) === Number(bId));
+  const ok = await updateStatus(bId, "confirmed");
   if (!ok) return;
-  showToast(`✅ Booking #${b.id} confirmed!`, "green");
+  showToast(`✅ Booking #${bId} confirmed!`, "green");
   await loadBookings();
-  sendWhatsApp(b);
+  if (b) sendWhatsApp(bId);
 }
 
 function cleanPhone(p) {
@@ -431,7 +446,9 @@ function cleanPhone(p) {
   return digits.length >= 10 ? `91${digits.slice(-10)}` : "";
 }
 
-function sendWhatsApp(b) {
+function sendWhatsApp(bId) {
+  const b = currentBookings.find(x => Number(x.id) === Number(bId));
+  if (!b) { showToast("Booking not found", "red"); return; }
   const dialCode = cleanPhone(b.phone);
   if (!dialCode) { showToast("No valid phone number for this booking", "red"); return; }
   const msg = encodeURIComponent(
@@ -478,19 +495,36 @@ async function updateOrderStatus(id, status) {
 }
 
 // ===== CONFIRM ORDER + WHATSAPP =====
-async function confirmOrder(o) {
-  const ok = await updateOrderStatus(o.id, "confirmed");
+async function confirmOrder(oId) {
+  const ok = await updateOrderStatus(oId, "confirmed");
   if (!ok) return;
-  showToast(`✅ Order #${o.id} confirmed!`, "green");
+  showToast(`✅ Order #${oId} confirmed!`, "green");
   await loadOrders();
-  sendOrderWhatsApp(o);
+  sendOrderWhatsApp(oId);
 }
 
-function sendOrderWhatsApp(o) {
-  const custPhone = o._custPhone || o.phone;
+function sendOrderWhatsApp(oId) {
+  const o = currentOrders.find(x => Number(x.id) === Number(oId));
+  if (!o) { showToast("Order not found", "red"); return; }
+
+  let parsed, customer = {}, itemsList = [];
+  try {
+    parsed = typeof o.items === "string" ? JSON.parse(o.items) : o.items;
+    if (parsed && parsed.customer) {
+      customer  = parsed.customer;
+      itemsList = parsed.items || [];
+    } else {
+      itemsList = Array.isArray(parsed) ? parsed : [];
+    }
+  } catch(e) { itemsList = []; }
+
+  const itemStr   = itemsList.map(i => `${i.name} ×${i.qty}`).join(", ") || "-";
+  const custName  = customer.name  || o.phone || "Customer";
+  const custPhone = customer.phone || o.phone;
+
   const dialCode  = cleanPhone(custPhone);
   if (!dialCode) { showToast("No valid phone number for this order", "red"); return; }
-  const custName  = o._custName || "Customer";
+
   const msg = encodeURIComponent(
 `🍽️ *Sahil Palace Restaurant*
 
@@ -499,7 +533,7 @@ Namaste *${custName}* ji! 🙏
 Aapka food order *confirm* ho gaya hai! ✅
 
 📋 *Order Details (#${o.id}):*
-🛒 Items: ${o.items}
+🛒 Items: ${itemStr}
 💰 Total: ₹${Number(o.total).toLocaleString("en-IN")}
 💳 Payment Method: ${(o.payment_method || "UPI").toUpperCase()}
 
@@ -519,6 +553,16 @@ async function cancelOrder(id) {
 }
 
 // ===== HELPERS =====
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function fmtDate(d) {
   if (!d) return "-";
   return new Date(d).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
