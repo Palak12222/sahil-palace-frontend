@@ -179,11 +179,12 @@
         <span id="upiIdText">8742026903@ybl</span>
         <button class="btn-copy" onclick="copyUPI()">📋 Copy</button>
       </div>
-      <p class="upi-hint">Scan QR or tap Pay via UPI app:</p>
-      <img id="upiQrCode" src="" alt="UPI QR Code" class="upi-qr"/>
-      <a id="upiDeepLink" href="#" class="btn-upi-pay" target="_blank">📲 Pay via UPI App</a>
+      <div class="utr-box" style="margin-top:12px;text-align:left;">
+        <label style="font-size:0.85rem;font-weight:600;color:#444;display:block;margin-bottom:4px;">12-Digit UPI Transaction / UTR No. (after payment):</label>
+        <input type="text" id="upiUtrNo" placeholder="e.g. 423456789012 (from PhonePe / GPay)" style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;" maxlength="16"/>
+      </div>
     </div>
-    <button class="btn-confirm-pay" onclick="confirmPayment()">✅ Confirm Booking</button>
+    <button class="btn-confirm-pay" onclick="confirmPayment()">📩 Submit Booking Request</button>
   </div>
 </div>
 

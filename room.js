@@ -354,6 +354,7 @@ async function confirmPayment(room) {
   const targetRoom = room || selectedRoom || rooms[0];
   const method = document.querySelector('input[name="payMethod"]:checked')?.value || "upi";
   const labels = { upi: "UPI / GPay / PhonePe", card: "Debit / Credit Card" };
+  const utr = document.getElementById("upiUtrNo")?.value.trim() || "";
 
   if (pendingBookingData) {
     pendingBookingData.payment_method = method;
@@ -374,11 +375,11 @@ async function confirmPayment(room) {
   const checkout = pendingBookingData ? pendingBookingData.checkout : "";
 
   const hotelWaMsg = encodeURIComponent(
-    `🏨 *NEW ROOM BOOKING RECEIVED!*\n\n🛏️ *Room:* ${targetRoom.name}\n👤 *Guest Name:* ${guestName}\n📞 *Phone:* ${guestPhone}\n📅 *Check-in:* ${checkin}\n📅 *Check-out:* ${checkout}\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n\n_Sent from Sahil Palace Website_`
+    `🏨 *NEW ROOM BOOKING REQUEST (PENDING BANK CHECK)*\n\n🛏️ *Room:* ${targetRoom.name}\n👤 *Guest Name:* ${guestName}\n📞 *Phone:* ${guestPhone}\n📅 *Check-in:* ${checkin}\n📅 *Check-out:* ${checkout}\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n🔢 *UPI UTR / Ref No:* ${utr || "Not Provided"}\n\n⚠️ *Note for Hotel:* Please check your GPay/PhonePe for ₹${pendingPaymentTotal} payment before confirming booking on Admin Panel.`
   );
   window.open(`https://wa.me/918742026903?text=${hotelWaMsg}`, "_blank");
 
-  showToast(`✅ Room Booking submitted! Total ₹${pendingPaymentTotal.toLocaleString("en-IN")} via ${labels[method] || method.toUpperCase()}. Notification sent to Hotel!`, "success");
+  showToast(`📩 Booking Request Submitted! Hotel will verify payment & send confirmation on WhatsApp.`, "success");
 }
 
 function showToast(message, type = "success") {

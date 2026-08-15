@@ -490,11 +490,11 @@ function confirmPayment(){
   closeModal("paymentModal");
 
   const hotelWaMsg = encodeURIComponent(
-    `🏨 *NEW BOOKING / PAYMENT NOTIFICATION!*\n\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n\nPlease check Admin Panel for full details.\n\n_Sent from Sahil Palace Website_`
+    `🏨 *NEW BOOKING REQUEST (PENDING BANK CHECK)*\n\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n\n⚠️ *Note for Hotel:* Please check your GPay/PhonePe account for ₹${pendingPaymentTotal} payment before confirming booking on Admin Panel.`
   );
   window.open(`https://wa.me/918742026903?text=${hotelWaMsg}`, "_blank");
 
-  showToast(`✅ Submitted! Total ₹${pendingPaymentTotal.toLocaleString("en-IN")} via ${labels[method] || method.toUpperCase()}. Hotel notified on WhatsApp!`, "success");
+  showToast(`📩 Booking Request Submitted! Hotel will check payment & confirm on WhatsApp.`, "success");
   cart = []; updateCart();
 }
 
