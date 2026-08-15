@@ -759,6 +759,9 @@ async function placeOrder(e) {
   }
 
   const keys  = Object.keys(cart);
+  if (keys.length === 0) {
+    showToast("Your cart is empty! Please add food items to order.", "red"); return;
+  }
   let total   = 0;
   const items = keys.map(k => {
     const info = getCartItemInfo(k);
