@@ -172,7 +172,11 @@ document.getElementById("bookingFormModal").addEventListener("submit", async e=>
   if(!ci||!co){ showToast("Please select check-in and check-out dates.","error"); return; }
   if(ci>=co){ showToast("Check-out must be after check-in.","error"); return; }
   const nights = Math.ceil((new Date(co)-new Date(ci))/(1000*60*60*24));
-  const total  = room.price * nights;
+  
+  const subtotal = room.price * nights;
+  const gst = subtotal * 0.05;
+  const grandTotal = subtotal + gst;
+
   // Save booking to backend
   try {
     await fetch(`${API_BASE}/api/bookings`, {
@@ -181,8 +185,8 @@ document.getElementById("bookingFormModal").addEventListener("submit", async e=>
       body: JSON.stringify({
         room_name: room.name, room_price: room.price,
         checkin: ci, checkout: co, nights, guests: parseInt(g),
-        guest_name: nm, phone: ph, total,
-        payment_method: document.querySelector('input[name="payMethod"]:checked')?.value || "upi"
+        guest_name: nm, phone: ph, total: grandTotal,
+        payment_method: "upi"
       })
     });
   } catch(err){ console.warn("Booking save failed (offline?)", err); }
@@ -194,8 +198,10 @@ document.getElementById("bookingFormModal").addEventListener("submit", async e=>
     `📞 Phone: ${ph}`,
     `👥 Guests: ${g}`,
     `🌙 Nights: ${nights}`,
-    `💰 Rate: ₹${room.price.toLocaleString("en-IN")}/night`
-  ], total);
+    `💰 Rate: ₹${room.price.toLocaleString("en-IN")}/night`,
+    `💵 Room Price: ₹${subtotal.toLocaleString("en-IN")}`,
+    `⚡ GST (5%): ₹${gst.toLocaleString("en-IN")}`
+  ], grandTotal);
 });
 
 document.getElementById("bookingModal").addEventListener("click", e => {
@@ -451,14 +457,14 @@ let pendingPaymentTotal = 0;
 function openPaymentModal(title, lineItems, total){
   pendingPaymentTotal = total;
   document.getElementById("paymentTitle").textContent = title;
-  document.getElementById("paymentSummary").innerHTML = lineItems.map(l=>`<div>${l}</div>`).join("") + `<div style="margin-top:8px;font-weight:700;font-size:1.1rem;color:#9a7a2e">Total: ₹${total.toLocaleString("en-IN")}</div>`;
+  document.getElementById("paymentSummary").innerHTML = lineItems.map(l=>`<div>${l}</div>`).join("") + `<div style="margin-top:8px;font-weight:700;font-size:1.1rem;color:#9a7a2e">Grand Total: ₹${total.toLocaleString("en-IN")}</div>`;
   // Reset to UPI
   document.querySelectorAll(".pay-option").forEach(o=>o.classList.remove("selected"));
   document.querySelector('.pay-option[data-method="upi"]').classList.add("selected");
   document.querySelector('.pay-option[data-method="upi"] input').checked = true;
   document.getElementById("upiDetails").style.display = "block";
-  // Generate UPI string & QR
-  const upiStr = `upi://pay?pa=8742026903@ybl&pn=Sahil%20Palace&am=${total}&cu=INR&tn=${encodeURIComponent(title)}`;
+  // Generate UPI string & QR using new payee details
+  const upiStr = `upi://pay?pa=9414949982@sbi&pn=SAHIL%20PALACE&am=${total}&cu=INR&tn=${encodeURIComponent(title)}`;
   document.getElementById("upiQrCode").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiStr)}`;
   document.getElementById("upiDeepLink").href = upiStr;
   document.getElementById("paymentModal").classList.add("open");
@@ -488,6 +494,15 @@ function confirmPayment(){
   const method = document.querySelector('input[name="payMethod"]:checked')?.value || "upi";
   const labels = {upi:"UPI / GPay / PhonePe", card:"Debit / Credit Card"};
   const utr = document.getElementById("upiUtrNo")?.value.trim() || "";
+
+  if (method === "upi") {
+    const utrRegex = /^\d{12}$/;
+    if (!utrRegex.test(utr)) {
+      showToast("Please enter a valid 12-digit numeric UPI Transaction ID / UTR No.", "error");
+      return;
+    }
+  }
+
   closeModal("paymentModal");
 
   const hotelWaMsg = encodeURIComponent(

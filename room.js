@@ -241,11 +241,22 @@ function renderRoomDetailPage(room) {
   };
 
   document.getElementById("rCheckOut").onchange = () => updateSummary(room);
-  document.getElementById("bookBtn").onclick = () => submitBooking(room);
-  const confirmPayBtn = document.querySelector(".btn-confirm-pay");
-  if (confirmPayBtn) {
-    confirmPayBtn.onclick = () => confirmPayment(room);
+
+  // Bind Step 3 Confirm Button
+  const confirmBtn = document.getElementById("cardConfirmPayBtn");
+  if (confirmBtn) {
+    confirmBtn.onclick = () => confirmPayment(room);
   }
+
+  // Bind Pay Options inside card
+  document.querySelectorAll(".pay-option").forEach(opt => {
+    opt.onclick = function() {
+      document.querySelectorAll(".pay-option").forEach(o => o.classList.remove("selected"));
+      this.classList.add("selected");
+      this.querySelector("input").checked = true;
+      document.getElementById("cardUpiDetails").style.display = this.dataset.method === "upi" ? "block" : "none";
+    };
+  });
 }
 
 function goToSlide(n, room) {
@@ -277,69 +288,93 @@ function updateSummary(room) {
   document.getElementById("staySummary").style.display = "block";
 }
 
-async function submitBooking(room) {
-  const targetRoom = room || selectedRoom || rooms[0];
+let currentBookingStep = 1;
+
+function nextBookingStep(step) {
+  const targetRoom = selectedRoom || rooms[0];
   const ci = document.getElementById("rCheckIn").value;
   const co = document.getElementById("rCheckOut").value;
-  const g = document.getElementById("rGuests").value;
-  const nm = document.getElementById("rName").value.trim();
-  const ph = document.getElementById("rPhone").value.trim();
 
-  if (!ci || !co) { showToast("Please select check-in and check-out dates", "error"); return; }
-  if (ci >= co) { showToast("Check-out must be after check-in", "error"); return; }
-  if (!nm) { showToast("Please enter your name", "error"); return; }
-  if (!ph || ph.length < 10) { showToast("Please enter a valid phone number", "error"); return; }
+  if (step === 2) {
+    if (!ci || !co) { showToast("Please select check-in and check-out dates", "error"); return; }
+    if (ci >= co) { showToast("Check-out must be after check-in", "error"); return; }
+  }
 
-  const nights = Math.ceil((new Date(co) - new Date(ci)) / (1000 * 60 * 60 * 24));
-  const total = nights * targetRoom.price;
+  if (step === 3) {
+    const nm = document.getElementById("rName").value.trim();
+    const ph = document.getElementById("rPhone").value.trim();
+    if (!nm) { showToast("Please enter your name", "error"); return; }
+    if (!ph || ph.length < 10) { showToast("Please enter a valid phone number", "error"); return; }
 
-  pendingBookingData = { room_name: targetRoom.name, room_price: targetRoom.price, checkin: ci, checkout: co, nights, guests: parseInt(g), guest_name: nm, phone: ph, total, payment_method: "upi" };
+    const nights = Math.ceil((new Date(co) - new Date(ci)) / (1000 * 60 * 60 * 24));
+    const subtotal = nights * targetRoom.price;
+    const gst = subtotal * 0.05;
+    const grandTotal = subtotal + gst;
+    pendingPaymentTotal = grandTotal;
 
-  openPaymentModal(`Room: ${targetRoom.name}`, [
-    `📅 Check-in: ${fmt(ci)}`,
-    `📅 Check-out: ${fmt(co)}`,
-    `👤 Name: ${nm}`,
-    `📞 Phone: ${ph}`,
-    `👥 Guests: ${g}`,
-    `🌙 Nights: ${nights}`,
-    `💰 Rate: ₹${targetRoom.price.toLocaleString("en-IN")}/night`
-  ], total);
+    pendingBookingData = {
+      room_name: targetRoom.name,
+      room_price: targetRoom.price,
+      checkin: ci,
+      checkout: co,
+      nights,
+      guests: parseInt(document.getElementById("rGuests").value),
+      guest_name: nm,
+      phone: ph,
+      total: grandTotal,
+      payment_method: document.querySelector('input[name="payMethod"]:checked')?.value || "upi"
+    };
+
+    document.getElementById("bookingCardPaymentSummary").innerHTML = `
+      <div>🏨 <strong>Room:</strong> ${targetRoom.name}</div>
+      <div>📅 <strong>Check-in:</strong> ${fmt(ci)}</div>
+      <div>📅 <strong>Check-out:</strong> ${fmt(co)}</div>
+      <div>🌙 <strong>Nights:</strong> ${nights} (₹${targetRoom.price.toLocaleString("en-IN")}/night)</div>
+      <div>👤 <strong>Name:</strong> ${nm}</div>
+      <div>📞 <strong>Phone:</strong> ${ph}</div>
+      <hr style="border:none; border-top:1px solid #f0e9d6; margin:8px 0;"/>
+      <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+        <span>Room Price:</span>
+        <span>₹${subtotal.toLocaleString("en-IN")}</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+        <span>GST (5%):</span>
+        <span>₹${gst.toLocaleString("en-IN")}</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1rem; color:var(--gold-dark); border-top:1px solid #f0e9d6; padding-top:6px; margin-top:6px;">
+        <span>Grand Total:</span>
+        <span>₹${grandTotal.toLocaleString("en-IN")}</span>
+      </div>
+    `;
+
+    const title = `Room: ${targetRoom.name}`;
+    const upiStr = `upi://pay?pa=9414949982@sbi&pn=SAHIL%20PALACE&am=${grandTotal}&cu=INR&tn=${encodeURIComponent(title)}`;
+    document.getElementById("upiQrCode").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiStr)}`;
+    document.getElementById("upiDeepLink").href = upiStr;
+  }
+
+  // Toggle Visibility
+  document.getElementById("bookingStep1").style.display = step === 1 ? "block" : "none";
+  document.getElementById("bookingStep2").style.display = step === 2 ? "block" : "none";
+  document.getElementById("bookingStep3").style.display = step === 3 ? "block" : "none";
+
+  // Update Progress Indicator styles
+  document.getElementById("step1Indicator").style.color = step === 1 ? "var(--gold)" : "var(--muted)";
+  document.getElementById("step1Indicator").style.borderBottom = step === 1 ? "2px solid var(--gold)" : "none";
+  document.getElementById("step1Indicator").style.fontWeight = step === 1 ? "700" : "600";
+
+  document.getElementById("step2Indicator").style.color = step === 2 ? "var(--gold)" : "var(--muted)";
+  document.getElementById("step2Indicator").style.borderBottom = step === 2 ? "2px solid var(--gold)" : "none";
+  document.getElementById("step2Indicator").style.fontWeight = step === 2 ? "700" : "600";
+
+  document.getElementById("step3Indicator").style.color = step === 3 ? "var(--gold)" : "var(--muted)";
+  document.getElementById("step3Indicator").style.borderBottom = step === 3 ? "2px solid var(--gold)" : "none";
+  document.getElementById("step3Indicator").style.fontWeight = step === 3 ? "700" : "600";
+
+  currentBookingStep = step;
 }
 
 function fmt(d) { return new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }); }
-
-function openPaymentModal(title, lines, total) {
-  pendingPaymentTotal = total;
-  document.getElementById("paymentTitle").textContent = title;
-  document.getElementById("paymentSummary").innerHTML =
-    lines.map(l => `<div>${l}</div>`).join("") +
-    `<div style="margin-top:8px;font-weight:700;font-size:1.05rem;color:#9a7a2e">Total: ₹${total.toLocaleString("en-IN")}</div>`;
-
-  document.querySelectorAll(".pay-option").forEach(o => o.classList.remove("selected"));
-  document.querySelector('.pay-option[data-method="upi"]').classList.add("selected");
-  document.querySelector('.pay-option[data-method="upi"] input').checked = true;
-  document.getElementById("upiDetails").style.display = "block";
-
-  const upiStr = `upi://pay?pa=8742026903@ybl&pn=Sahil%20Palace&am=${total}&cu=INR&tn=${encodeURIComponent(title)}`;
-  document.getElementById("upiQrCode").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiStr)}`;
-  document.getElementById("upiDeepLink").href = upiStr;
-  document.getElementById("paymentModal").classList.add("open");
-}
-
-document.querySelectorAll(".pay-option").forEach(opt => {
-  opt.addEventListener("click", function() {
-    document.querySelectorAll(".pay-option").forEach(o => o.classList.remove("selected"));
-    this.classList.add("selected");
-    this.querySelector("input").checked = true;
-    document.getElementById("upiDetails").style.display = this.dataset.method === "upi" ? "block" : "none";
-  });
-});
-
-function closeModal(id) { document.getElementById(id).classList.remove("open"); }
-
-document.getElementById("paymentModal").addEventListener("click", e => {
-  if (e.target.id === "paymentModal") closeModal("paymentModal");
-});
 
 function copyUPI() {
   const upi = document.getElementById("upiIdText").textContent;
@@ -356,6 +391,14 @@ async function confirmPayment(room) {
   const labels = { upi: "UPI / GPay / PhonePe", card: "Debit / Credit Card" };
   const utr = document.getElementById("upiUtrNo")?.value.trim() || "";
 
+  if (method === "upi") {
+    const utrRegex = /^\d{12}$/;
+    if (!utrRegex.test(utr)) {
+      showToast("Please enter a valid 12-digit numeric UPI Transaction ID / UTR No.", "error");
+      return;
+    }
+  }
+
   if (pendingBookingData) {
     pendingBookingData.payment_method = method;
     try {
@@ -367,15 +410,17 @@ async function confirmPayment(room) {
     } catch (e) { console.warn("Booking save failed:", e.message); }
   }
 
-  closeModal("paymentModal");
-
   const guestName = pendingBookingData ? pendingBookingData.guest_name : "Guest";
   const guestPhone = pendingBookingData ? pendingBookingData.phone : "";
   const checkin = pendingBookingData ? pendingBookingData.checkin : "";
   const checkout = pendingBookingData ? pendingBookingData.checkout : "";
+  const nights = pendingBookingData ? pendingBookingData.nights : 1;
+  
+  const subtotal = nights * targetRoom.price;
+  const gst = subtotal * 0.05;
 
   const hotelWaMsg = encodeURIComponent(
-    `🏨 *NEW ROOM BOOKING REQUEST (PENDING BANK CHECK)*\n\n🛏️ *Room:* ${targetRoom.name}\n👤 *Guest Name:* ${guestName}\n📞 *Phone:* ${guestPhone}\n📅 *Check-in:* ${checkin}\n📅 *Check-out:* ${checkout}\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n🔢 *UPI UTR / Ref No:* ${utr || "Not Provided"}\n\n⚠️ *Note for Hotel:* Please check your GPay/PhonePe for ₹${pendingPaymentTotal} payment before confirming booking on Admin Panel.`
+    `🏨 *NEW ROOM BOOKING REQUEST (PENDING BANK CHECK)*\n\n🛏️ *Room:* ${targetRoom.name}\n👤 *Guest Name:* ${guestName}\n📞 *Phone:* ${guestPhone}\n📅 *Check-in:* ${checkin}\n📅 *Check-out:* ${checkout}\n🌙 *Nights:* ${nights}\n💵 *Subtotal:* ₹${subtotal}\n⚡ *GST (5%):* ₹${gst}\n💰 *Total Amount:* ₹${pendingPaymentTotal}\n💳 *Payment Method:* ${labels[method] || method.toUpperCase()}\n🔢 *UPI UTR / Ref No:* ${utr || "Not Provided"}\n\n⚠️ *Note for Hotel:* Please check your GPay/PhonePe for ₹${pendingPaymentTotal} payment before confirming booking on Admin Panel.`
   );
   window.open(`https://wa.me/918742026903?text=${hotelWaMsg}`, "_blank");
 

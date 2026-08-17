@@ -3,8 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Room Details – Sahil Palace & Restaurant</title>
-  <meta name="description" content="View room details, amenities and photos at Sahil Palace & Restaurant, Sangaria."/>
+  <title>AC Rooms &amp; Suites | Room Booking at Sahil Palace, Sangaria</title>
+  <meta name="description" content="Explore Deluxe, Executive, and Family AC rooms at Sahil Palace Hotel in Sangaria. Rates from ₹1000/night with free high-speed WiFi, LED TV, hot water &amp; 24/7 service."/>
+  <meta name="keywords" content="hotel rooms Sangaria, room booking Sangaria, deluxe room Sangaria, family suite Sangaria, Sahil Palace rooms, budget stay Sangaria"/>
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Book Rooms at Sahil Palace &amp; Restaurant, Sangaria" />
+  <meta property="og:description" content="Deluxe, Executive &amp; Family AC rooms with modern amenities starting from ₹1000/night in Sangaria." />
+  <meta property="og:image" content="images/room_photo1.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    "name": "Sahil Palace & Restaurant - Accommodation",
+    "telephone": "+918742026903",
+    "priceRange": "₹1000 - ₹3000",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Sangaria",
+      "addressRegion": "Rajasthan",
+      "addressCountry": "IN"
+    }
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="room.css"/>
@@ -111,88 +135,119 @@
     <!-- RIGHT: Booking Card -->
     <div class="room-right">
       <div class="booking-card">
-        <div class="booking-price">
-          <span class="price-amount" id="bookPrice">₹0</span>
-          <span class="price-night">/ night</span>
+        <!-- Step Indicators (Progress bar) -->
+        <div class="booking-steps-indicator" style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 20px; font-weight: 600; color: var(--muted); border-bottom: 1px solid #f0e9d6; padding-bottom: 10px;">
+          <span id="step1Indicator" class="active-step" style="color: var(--gold); border-bottom: 2px solid var(--gold); padding-bottom: 4px;">1. Dates</span>
+          <span id="step2Indicator" style="padding-bottom: 4px;">2. Details</span>
+          <span id="step3Indicator" style="padding-bottom: 4px;">3. Payment</span>
         </div>
-        <div class="booking-rating">⭐⭐⭐⭐⭐ <span>4.8 / 5</span></div>
-        <hr/>
-        <div class="form-group">
-          <label>Check-in Date</label>
-          <input type="date" id="rCheckIn" required/>
+
+        <!-- Step 1: Select Dates & Guests -->
+        <div id="bookingStep1">
+          <div class="booking-price">
+            <span class="price-amount" id="bookPrice">₹0</span>
+            <span class="price-night">/ night</span>
+          </div>
+          <div class="booking-rating">⭐⭐⭐⭐⭐ <span>4.8 / 5</span></div>
+          <hr/>
+          <div class="form-group">
+            <label>Check-in Date</label>
+            <input type="date" id="rCheckIn" required/>
+          </div>
+          <div class="form-group">
+            <label>Check-out Date</label>
+            <input type="date" id="rCheckOut" required/>
+          </div>
+          <div class="form-group">
+            <label>Guests</label>
+            <select id="rGuests">
+              <option>1</option><option selected>2</option>
+              <option>3</option><option>4</option>
+            </select>
+          </div>
+          <div class="stay-summary" id="staySummary" style="display:none">
+            <div class="stay-row"><span>Nights</span><span id="nightCount">0</span></div>
+            <div class="stay-row"><span>Rate</span><span id="rateVal">₹0/night</span></div>
+            <div class="stay-row total-row"><span>Subtotal</span><span id="totalVal">₹0</span></div>
+          </div>
+          <button class="btn-book-now" type="button" onclick="nextBookingStep(2)">
+            Next: Guest Details ➔
+          </button>
         </div>
-        <div class="form-group">
-          <label>Check-out Date</label>
-          <input type="date" id="rCheckOut" required/>
+
+        <!-- Step 2: Guest Details -->
+        <div id="bookingStep2" style="display:none">
+          <h3 style="font-family:'Playfair Display', serif; margin-bottom: 16px; font-size: 1.25rem;">👤 Guest Details</h3>
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="rName" placeholder="Full Name" required/>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="rPhone" placeholder="10-digit number" required/>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 16px;">
+            <button class="btn-book-now" type="button" onclick="nextBookingStep(1)" style="background: #f5f5f5; color: #333; border: 1px solid #ddd;">
+              ← Back
+            </button>
+            <button class="btn-book-now" type="button" onclick="nextBookingStep(3)">
+              Next: Payment ➔
+            </button>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Guests</label>
-          <select id="rGuests">
-            <option>1</option><option selected>2</option>
-            <option>3</option><option>4</option>
-          </select>
+
+        <!-- Step 3: Payment & Confirm -->
+        <div id="bookingStep3" style="display:none">
+          <h3 style="font-family:'Playfair Display', serif; margin-bottom: 12px; font-size: 1.25rem;">💳 Payment</h3>
+          <div class="payment-summary" id="bookingCardPaymentSummary" style="background:#fdf8ec; border-radius:10px; padding:12px; font-size:0.85rem; margin-bottom:12px; line-height: 1.6;"></div>
+          
+          <div class="pay-options" style="margin-bottom: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <label class="pay-option selected" data-method="upi" style="padding: 8px 12px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; border: 2px solid var(--gold); border-radius: 8px; cursor: pointer; background: #fdf8ec;">
+              <input type="radio" name="payMethod" value="upi" checked style="display: none;"/>
+              <span class="pay-icon" style="font-size:1.1rem;">📱</span>
+              <span>UPI / GPay</span>
+            </label>
+            <label class="pay-option" data-method="card" style="padding: 8px 12px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; border: 2px solid #e8e8e8; border-radius: 8px; cursor: pointer;">
+              <input type="radio" name="payMethod" value="card" style="display: none;"/>
+              <span class="pay-icon" style="font-size:1.1rem;">💳</span>
+              <span>Card Pay</span>
+            </label>
+          </div>
+
+          <div class="upi-details" id="cardUpiDetails" style="text-align: center;">
+            <div class="upi-id-box" style="padding: 8px 12px; font-size: 0.9rem; background: #f5f5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; font-weight: 600;">
+              <span id="upiIdText">9414949982@sbi</span>
+              <button type="button" class="btn-copy" onclick="copyUPI()">📋 Copy</button>
+            </div>
+            
+            <p class="upi-hint" style="margin: 8px 0; font-size: 0.8rem; color: #666;">Scan QR or tap to pay via UPI app:</p>
+            <div style="text-align: center; margin: 8px 0;">
+              <img id="upiQrCode" src="images/payment_upi_qr.jpg" alt="UPI QR Code" class="upi-qr" style="width: 140px; height: 140px; border: 1px solid #eee; padding: 4px; border-radius: 8px; margin: 0 auto 8px; display: block;"/>
+            </div>
+            <a id="upiDeepLink" href="#" class="btn-upi-pay" style="display: block; text-align: center; background: #27ae60; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 12px; font-size: 0.85rem;">📲 Pay via UPI App</a>
+            
+            <div class="utr-box" style="margin-top:8px;text-align:left;">
+              <label style="font-size:0.78rem;font-weight:600;color:#444;display:block;margin-bottom:4px;">12-Digit UPI Transaction / UTR No. (after payment):</label>
+              <input type="text" id="upiUtrNo" placeholder="e.g. 423456789012" style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:0.85rem;" maxlength="16"/>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 16px;">
+            <button class="btn-book-now" type="button" onclick="nextBookingStep(2)" style="background: #f5f5f5; color: #333; border: 1px solid #ddd; padding: 12px 10px;">
+              ← Back
+            </button>
+            <button class="btn-confirm-pay" id="cardConfirmPayBtn" type="button" style="padding: 12px 10px; font-size: 0.95rem;">
+              Submit Booking 📩
+            </button>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" id="rName" placeholder="Full Name" required/>
-        </div>
-        <div class="form-group">
-          <label>Phone Number</label>
-          <input type="tel" id="rPhone" placeholder="10-digit number" required/>
-        </div>
-        <div class="stay-summary" id="staySummary" style="display:none">
-          <div class="stay-row"><span>Nights</span><span id="nightCount">0</span></div>
-          <div class="stay-row"><span>Rate</span><span id="rateVal">₹0/night</span></div>
-          <div class="stay-row total-row"><span>Total</span><span id="totalVal">₹0</span></div>
-        </div>
-        <button class="btn-book-now" id="bookBtn" onclick="submitBooking()">
-          Book Now 🏨
-        </button>
+
         <p class="book-note">📞 Need help? Call <a href="tel:8742026903">8742026903</a></p>
       </div>
     </div>
 
   </div>
 </main>
-
-<!-- PAYMENT MODAL -->
-<div class="modal-overlay" id="paymentModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('paymentModal')">✕</button>
-    <h2>💳 Payment</h2>
-    <p class="modal-room-name" id="paymentTitle">Complete Your Payment</p>
-    <div class="payment-summary" id="paymentSummary"></div>
-    <div class="pay-options" style="grid-template-columns: 1fr 1fr;">
-      <label class="pay-option selected" data-method="upi">
-        <input type="radio" name="payMethod" value="upi" checked/>
-        <span class="pay-icon">📱</span>
-        <span>UPI / GPay / PhonePe</span>
-      </label>
-      <label class="pay-option" data-method="card">
-        <input type="radio" name="payMethod" value="card"/>
-        <span class="pay-icon">💳</span>
-        <span>Debit / Credit Card</span>
-      </label>
-    </div>
-    <div class="upi-details" id="upiDetails">
-      <div class="upi-id-box">
-        <span id="upiIdText">8742026903@ybl</span>
-        <button class="btn-copy" onclick="copyUPI()">📋 Copy</button>
-      </div>
-      <p class="upi-hint" style="margin-top: 10px; font-size: 0.9rem; color: #666; text-align: center;">Scan QR or tap Pay via UPI app:</p>
-      <div style="text-align: center; margin: 10px 0;">
-        <img id="upiQrCode" src="" alt="UPI QR Code" class="upi-qr" style="width: 150px; height: 150px; border: 1px solid #eee; padding: 4px; border-radius: 8px;"/>
-      </div>
-      <a id="upiDeepLink" href="#" class="btn-upi-pay" target="_blank" style="display: block; text-align: center; background: #27ae60; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 12px;">📲 Pay via UPI App</a>
-      
-      <div class="utr-box" style="margin-top:12px;text-align:left;">
-        <label style="font-size:0.85rem;font-weight:600;color:#444;display:block;margin-bottom:4px;">12-Digit UPI Transaction / UTR No. (after payment):</label>
-        <input type="text" id="upiUtrNo" placeholder="e.g. 423456789012 (from PhonePe / GPay)" style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;" maxlength="16"/>
-      </div>
-    </div>
-    <button class="btn-confirm-pay" onclick="confirmPayment()">📩 Submit Booking Request</button>
-  </div>
-</div>
 
 <!-- TOAST -->
 <div id="siteToast"></div>

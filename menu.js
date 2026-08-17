@@ -685,27 +685,66 @@ function updateCart() {
 }
 
 // ===== CHECKOUT MODAL =====
+let currentFoodStep = 1;
+
+function nextFoodStep(step) {
+  if (step === 2) {
+    const name = document.getElementById("cfName").value.trim();
+    const phone = document.getElementById("cfPhone").value.trim();
+    const addr = document.getElementById("cfAddress").value.trim();
+    const areaSelect = document.getElementById("cfArea");
+    const area = areaSelect ? areaSelect.value : "";
+
+    if (!name || !phone || phone.length < 10) {
+      showToast("Please fill in name and valid phone number", "red"); return;
+    }
+    if (!area) {
+      showToast("Please select your delivery area location within Sangaria (Max 10km)", "red"); return;
+    }
+    if (area === "out_of_range") {
+      showToast("⚠️ Delivery is available only within 10km of Sangaria! Call 8742026903 for special catering.", "red"); return;
+    }
+    if (!addr) {
+      showToast("Please enter your full delivery address", "red"); return;
+    }
+
+    // Calculate totals for Step 2
+    const keys = Object.keys(cart);
+    let subtotal = 0;
+    document.getElementById("modalSummary").innerHTML = keys.map(k => {
+      const info = getCartItemInfo(k);
+      const itemTotal = info.price * cart[k];
+      subtotal += itemTotal;
+      return `<div class="cs-item">
+        <span>${info.name} × ${cart[k]}</span>
+        <strong>₹${itemTotal.toLocaleString("en-IN")}</strong>
+      </div>`;
+    }).join("");
+
+    const gst = subtotal * 0.05;
+    const grandTotal = subtotal + gst;
+
+    document.getElementById("foodSubtotalVal").textContent = `₹${subtotal.toLocaleString("en-IN")}`;
+    document.getElementById("foodGstVal").textContent = `₹${gst.toLocaleString("en-IN")}`;
+    document.getElementById("modalTotal").textContent = `₹${grandTotal.toLocaleString("en-IN")}`;
+
+    // UPI pay link setup
+    const upiStr = `upi://pay?pa=9414949982@sbi&pn=SAHIL%20PALACE&am=${grandTotal}&cu=INR&tn=Food%20Order`;
+    document.getElementById("upiQR").src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiStr)}`;
+    document.getElementById("upiPayLink").href = upiStr;
+  }
+
+  document.getElementById("foodCheckoutStep1").style.display = step === 1 ? "block" : "none";
+  document.getElementById("foodCheckoutStep2").style.display = step === 2 ? "block" : "none";
+  currentFoodStep = step;
+}
+
 function checkout() {
   const keys = Object.keys(cart);
   if (!keys.length) { showToast("Your cart is empty! Add items first.", "red"); return; }
 
-  let total = 0;
-  document.getElementById("modalSummary").innerHTML = keys.map(k => {
-    const info = getCartItemInfo(k);
-    const itemTotal = info.price * cart[k];
-    total += itemTotal;
-    return `<div class="cs-item">
-      <span>${info.name} × ${cart[k]}</span>
-      <strong>₹${itemTotal.toLocaleString("en-IN")}</strong>
-    </div>`;
-  }).join("");
-
-  document.getElementById("modalTotal").textContent = `₹${total.toLocaleString("en-IN")}`;
-
-  // Set UPI QR
-  const upiStr = `upi://pay?pa=8742026903@ybl&pn=Sahil%20Palace&am=${total}&cu=INR&tn=Food%20Order`;
-  document.getElementById("upiQR").src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiStr)}`;
-  document.getElementById("upiPayLink").href = upiStr;
+  // Go to step 1
+  nextFoodStep(1);
 
   document.getElementById("checkoutModal").classList.add("open");
   document.body.style.overflow = "hidden";
@@ -739,7 +778,7 @@ document.querySelectorAll(".pay-opt").forEach(opt => {
 
 // Copy UPI ID
 function copyUPI() {
-  const upi = "8742026903@ybl";
+  const upi = "9414949982@sbi";
   navigator.clipboard.writeText(upi)
     .then(() => showToast("✅ UPI ID copied!"))
     .catch(() => prompt("Copy UPI ID:", upi));
@@ -755,6 +794,7 @@ async function placeOrder(e) {
   const areaSelect = document.getElementById("cfArea");
   const area  = areaSelect ? areaSelect.value : "";
   const pm    = document.querySelector('input[name="payMethod"]:checked')?.value || "upi";
+  const utr   = document.getElementById("foodUtrNo")?.value.trim() || "";
 
   if (!name || !phone || phone.length < 10) {
     showToast("Please fill in name and valid phone number", "red"); return;
@@ -765,23 +805,37 @@ async function placeOrder(e) {
   if (area === "out_of_range") {
     showToast("⚠️ Delivery is available only within 10km of Sangaria! Call 8742026903 for special catering.", "red"); return;
   }
+  if (!addr) {
+    showToast("Please enter your full delivery address", "red"); return;
+  }
+  if (pm === "upi") {
+    const utrRegex = /^\d{12}$/;
+    if (!utrRegex.test(utr)) {
+      showToast("Please enter a valid 12-digit numeric UPI Transaction ID / UTR No.", "red");
+      return;
+    }
+  }
 
   const keys  = Object.keys(cart);
   if (keys.length === 0) {
     showToast("Your cart is empty! Please add food items to order.", "red"); return;
   }
-  let total   = 0;
+  
+  let subtotal = 0;
   const items = keys.map(k => {
     const info = getCartItemInfo(k);
-    const subtotal = info.price * cart[k];
-    total += subtotal;
+    const itemSubtotal = info.price * cart[k];
+    subtotal += itemSubtotal;
     return {
       name:     info.name,
       qty:      cart[k],
       price:    info.price,
-      subtotal: subtotal
+      subtotal: itemSubtotal
     };
   });
+
+  const gst = subtotal * 0.05;
+  const grandTotal = subtotal + gst;
 
   btn.textContent = "Placing Order..."; btn.disabled = true;
   const fullAddress = `${area} | ${addr}`;
@@ -790,7 +844,7 @@ async function placeOrder(e) {
     const res  = await fetch(`${API_BASE}/api/orders`, {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ customer_name: name, phone, address: fullAddress, items, total, payment_method: pm })
+      body:    JSON.stringify({ customer_name: name, phone, address: fullAddress, items, total: grandTotal, payment_method: pm })
     });
     const data = await res.json();
 
@@ -807,7 +861,7 @@ async function placeOrder(e) {
 
       // Trigger automatic WhatsApp notification to Hotel (+91 8742026903)
       const hotelWaMsg = encodeURIComponent(
-        `🍽️ *NEW FOOD ORDER RECEIVED!* (#${data.orderId})\n\n👤 *Customer:* ${name}\n📞 *Phone:* ${phone}\n📍 *Delivery Area:* ${area}\n🏠 *Address:* ${addr}\n🛒 *Items:* ${itemSummary}\n💰 *Total:* ₹${total}\n💳 *Payment Method:* ${pm.toUpperCase()}\n\n_Sent from Sahil Palace Website_`
+        `🍽️ *NEW FOOD ORDER RECEIVED!* (#${data.orderId})\n\n👤 *Customer:* ${name}\n📞 *Phone:* ${phone}\n📍 *Delivery Area:* ${area}\n🏠 *Address:* ${addr}\n🛒 *Items:* ${itemSummary}\n💵 *Subtotal:* ₹${subtotal}\n⚡ *GST (5%):* ₹${gst}\n💰 *Grand Total:* ₹${grandTotal}\n💳 *Payment Method:* ${pm.toUpperCase()}\n🔢 *UPI UTR / Ref No:* ${utr || "Not Provided"}\n\n_Sent from Sahil Palace Website_`
       );
       window.open(`https://wa.me/918742026903?text=${hotelWaMsg}`, "_blank");
 
